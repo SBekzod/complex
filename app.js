@@ -3,6 +3,7 @@ const express = require('express')
 
 //---------------
 const myapp = express()
+myapp.use(express.static('public'))
 myapp.set('views', 'views')
 myapp.set('view engine', 'ejs')
 
