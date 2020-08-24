@@ -3,8 +3,11 @@ const express = require('express')
 
 //---------------
 const myapp = express()
+myapp.set('views', 'views')
+myapp.set('view engine', 'ejs')
+
 myapp.get('/', function(req, res) {
-    res.send('Hello')
+    res.render('home-guest')
 })
 
 
