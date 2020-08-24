@@ -1,19 +1,14 @@
 const http = require('http')
 const express = require('express')
-const commute = require('./commute')
+const firstRouter = require('./router')
 
 //---------------
 const myapp = express()
 myapp.use(express.static('public'))
 myapp.set('views', 'views')
 myapp.set('view engine', 'ejs')
-console.log(commute.makeSound())
 
-
-myapp.get('/', function(req, res) {
-    res.render('home-guest')
-})
-
+myapp.use('/', firstRouter)
 
 //---------------
 const server = http.createServer(myapp)
