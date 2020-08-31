@@ -17,12 +17,12 @@ exports.about = function (req, res) {
 }
 
 exports.register = function (req, res) {
-    // console.log(req.body)
-    const user = new User(req.body)
-    console.log(user.planet)
-    console.log(user.data.username)
-
-    // let user = new User(req.body)
-    // user.register()
-    res.send("Thanks on register")
+    let user = new User(req.body)
+    user.register()
+    if(user.error.length) {
+        res.send(user.error)
+    } else {
+        res.send("No errors")
+    }
+   
 }
