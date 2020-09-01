@@ -1,5 +1,5 @@
 const validator = require('validator')
-const { Db } = require('mongodb')
+const db = require('../db')
 
 // constructor
 let User = function (data) {
@@ -38,11 +38,14 @@ User.prototype.register = function () {
     this.cleanUp()
     this.validate()
     // If inputs are appropriate then make records on database
-    db.collection('users').insertOne({ 'username': this.data.username, 'email': this.data.email, 'password': this.data.password },
-        function (err, data) {
-            if(err) throw new Error(err)
-            else console.log('Successfully inserted to User collection')
-        })
+    if (this.error.length == 0) {
+        db.collection('users').insertOne({ 'username': this.data.username, 'email': this.data.email, 'password': this.data.password },
+            function (err, data) {
+                if (err) throw new Error(err)
+                else console.log('Successfully inserted to User collection')
+            })
+
+    }
 }
 
 module.exports = User
