@@ -1,14 +1,15 @@
-const Mongodb = require('mongodb')
+const dotenv = require('dotenv')
+dotenv.config()
 
-const url = 'mongodb+srv://todouser:todo14@cluster0.b91ez.mongodb.net/Complex?retryWrites=true&w=majority'
-Mongodb.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
+const Mongodb = require('mongodb')
+Mongodb.connect(process.env.CONNECTIONURL, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
     if (err) throw new Error(err)
     else {
         module.exports = client.db()
         console.log('Connected to Mongodb')
 
         const server = require('./app')
-        server.listen(3000, function () {
+        server.listen(process.env.PORT, function () {
             console.log('Connected to the Server')
         })
     }
