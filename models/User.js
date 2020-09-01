@@ -1,4 +1,5 @@
 const validator = require('validator')
+const { Db } = require('mongodb')
 
 // constructor
 let User = function (data) {
@@ -15,13 +16,13 @@ User.prototype.validate = function () {
     if (this.data.password == "") this.error.push('password should not be empty')
     if (this.data.password.length > 0 && this.data.password.length < 8 || this.data.password.length > 15)
         this.error.push('password should be at least eight characters long and less then fifteen characters')
-    
+
 }
 
-User.prototype.cleanUp = function() {
-    if(typeof(this.data.username) != 'string') this.data.username = ''
-    if(typeof(this.data.password) != 'string') this.data.password = ''
-    if(typeof(this.data.email) != 'string') this.data.email = ''
+User.prototype.cleanUp = function () {
+    if (typeof (this.data.username) != 'string') this.data.username = ''
+    if (typeof (this.data.password) != 'string') this.data.password = ''
+    if (typeof (this.data.email) != 'string') this.data.email = ''
 
     // avoiding bogus
     this.data = {
@@ -36,8 +37,12 @@ User.prototype.register = function () {
     // Validate user information
     this.cleanUp()
     this.validate()
-
     // If inputs are appropriate then make records on database
+    db.collection('users').insertOne({ 'username': this.data.username, 'email': this.data.email, 'password': this.data.password },
+        function (err, data) {
+            if(err) throw new Error(err)
+            else console.log('Successfully inserted to User collection')
+        })
 }
 
 module.exports = User
