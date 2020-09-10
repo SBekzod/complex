@@ -1,5 +1,6 @@
 const validator = require('validator')
 const db = require('../db')
+const { use } = require('../router')
 
 // constructor
 let User = function (data) {
@@ -30,6 +31,23 @@ User.prototype.cleanUp = function () {
         email: this.data.email.trim().toLowerCase(),
         password: this.data.password
     }
+
+}
+
+User.prototype.login = function (callback) {
+    this.cleanUp()
+    db.collection('users').findOne({ "username": this.data.username }, (err, data) => {
+        if (err) {
+            this.error.push('bad connection')
+        } else if (data == null) {
+            this.error.push('No user like this')
+        } else if(data.password != this.data.password){
+            this.error.push('Wrong paswword')
+        } else {
+            this.result = 'Successful: you provided valid login details'
+        }
+        callback('achieved')
+    })
 
 }
 
