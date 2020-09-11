@@ -3,11 +3,16 @@ const User = require('../models/User')
 
 ////----------------------------------
 
-exports.login = function (req, res) {
-    console.log(req.body)
+exports.login = async function (req, res) {
     let user = new User(req.body)
-    user.login().then(datas => res.send(datas))
-        .catch(err => res.send(err))
+    try{
+        const result = await user.login()
+        res.send(result)
+    } catch(err){
+        res.send(err)
+    }
+    
+    console.log('Final')
 }
 
 exports.logout = function (req, res) {
@@ -28,7 +33,7 @@ exports.register = function (req, res) {
     if (user.error.length) {
         res.send(user.error)
     } else {
-        res.send("No errors")
+        res.send("Successfully registered")
     }
 
 }

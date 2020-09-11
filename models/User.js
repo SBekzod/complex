@@ -35,11 +35,11 @@ User.prototype.cleanUp = function () {
 }
 
 User.prototype.login = function () {
+    this.cleanUp()
+    
     return new Promise((resolve, reject) => {
-
-        this.cleanUp()
         db.collection('users').findOne({ "username": this.data.username }, (err, data) => {
-            console.log('Got answer')
+            console.log('later')
             if (err) reject('bad connection')
             else if (data == null) reject('No user like this')
             else if (data.password != this.data.password) reject('Wrong paswword')
