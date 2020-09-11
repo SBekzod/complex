@@ -1,27 +1,13 @@
 const User = require('../models/User')
 
+
 ////----------------------------------
 
 exports.login = function (req, res) {
+    console.log(req.body)
     let user = new User(req.body)
-    user.login(function (message) {
-        if (message == 'achieved') {
-            if (user.error.length > 0) {
-                res.send(user.error)
-            } else {
-                res.send(user.result)
-            }
-        }
-    })
-    // user.login().then(response => {
-    //     console.log(user.error)
-    //     if (user.error.length > 0) {
-    //         res.send(user.error)
-    //     } else {
-    //         res.send(user.result)
-    //     }
-    // })
-
+    user.login().then(datas => res.send(datas))
+        .catch(err => res.send(err))
 }
 
 exports.logout = function (req, res) {

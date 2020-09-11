@@ -34,20 +34,20 @@ User.prototype.cleanUp = function () {
 
 }
 
-User.prototype.login = function (callback) {
-    this.cleanUp()
-    db.collection('users').findOne({ "username": this.data.username }, (err, data) => {
-        if (err) {
-            this.error.push('bad connection')
-        } else if (data == null) {
-            this.error.push('No user like this')
-        } else if(data.password != this.data.password){
-            this.error.push('Wrong paswword')
-        } else {
-            this.result = 'Successful: you provided valid login details'
-        }
-        callback('achieved')
+User.prototype.login = function () {
+    return new Promise((resolve, reject) => {
+
+        this.cleanUp()
+        db.collection('users').findOne({ "username": this.data.username }, (err, data) => {
+            console.log('Got answer')
+            if (err) reject('bad connection')
+            else if (data == null) reject('No user like this')
+            else if (data.password != this.data.password) reject('Wrong paswword')
+            else resolve('Successful: you provided valid login details')
+        })
+
     })
+
 
 }
 
