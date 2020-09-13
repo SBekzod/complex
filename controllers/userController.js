@@ -12,7 +12,7 @@ exports.login = async function (req, res) {
         res.send(err)
     }
     
-    console.log('Final')
+    // console.log('Final')
 }
 
 exports.logout = function (req, res) {

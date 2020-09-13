@@ -1,6 +1,6 @@
 const validator = require('validator')
 const db = require('../db')
-const { use } = require('../router')
+const bcrypt = require('bcryptjs')
 
 // constructor
 let User = function (data) {
@@ -39,10 +39,10 @@ User.prototype.login = function () {
     
     return new Promise((resolve, reject) => {
         db.collection('users').findOne({ "username": this.data.username }, (err, data) => {
-            console.log('later')
+            // console.log('later')
             if (err) reject('bad connection')
             else if (data == null) reject('No user like this')
-            else if (data.password != this.data.password) reject('Wrong paswword')
+            else if (!bcrypt.compareSync(this.data.password, data.password)) reject('Wrong paswword')
             else resolve('Successful: you provided valid login details')
         })
 
@@ -57,6 +57,9 @@ User.prototype.register = function () {
     this.validate()
     // If inputs are appropriate then make records on database
     if (this.error.length == 0) {
+        // hashing codes before saving onto db
+        let salt = bcrypt.genSaltSync(10)
+        this.data.password = bcrypt.hashSync(this.data.password, salt)
         db.collection('users').insertOne({ 'username': this.data.username, 'email': this.data.email, 'password': this.data.password },
             function (err, data) {
                 if (err) throw new Error(err)
