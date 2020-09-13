@@ -1,17 +1,17 @@
 const User = require('../models/User')
 
-
 ////----------------------------------
 
 exports.login = async function (req, res) {
     let user = new User(req.body)
-    try{
+    try {
         const result = await user.login()
+        req.session.user = { username: user.username, school: 'Cambridge' }
         res.send(result)
-    } catch(err){
+    } catch (err) {
         res.send(err)
     }
-    
+
     // console.log('Final')
 }
 
@@ -19,8 +19,12 @@ exports.logout = function (req, res) {
 }
 
 exports.home = function (req, res) {
-    // res.render('index', )
-    res.render('home-guest', { username: 'Damir', surname: 'Sanakulov' })
+    if (req.session.user) {
+        res.send('User has sessions and school named: ' + req.session.user.school)
+    } else {
+        res.render('home-guest', { username: 'Damir', surname: 'Sanakulov' })
+    }
+
 }
 
 exports.about = function (req, res) {
