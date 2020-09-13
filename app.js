@@ -2,18 +2,20 @@ const http = require('http')
 const express = require('express')
 const firstRouter = require('./router')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
 
 //---------------
 const myapp = express()
 let sessionOpt = session({
     secret: 'JS is cool',
+    store: new MongoStore({ client: require('./db') }),
     resave: false,
     saveUninitialized: false,
-    cookie: {maxAge: 1000*60*2, httpOnly: true} 
+    cookie: { maxAge: 1000 * 60 * 2, httpOnly: true }
 })
 
 myapp.use(sessionOpt)
-myapp.use(express.urlencoded({extended: true}))
+myapp.use(express.urlencoded({ extended: true }))
 myapp.use(express.json())
 
 myapp.set('views', 'views')

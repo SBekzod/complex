@@ -1,12 +1,12 @@
 const validator = require('validator')
-const db = require('../db')
+const db = require('../db').db()
 const bcrypt = require('bcryptjs')
 
 // constructor
 let User = function (data) {
     this.data = data
     this.error = []
-}
+} 
 
 User.prototype.validate = function () {
     if (this.data.username == "") this.error.push('username should not be empty')
