@@ -9,23 +9,28 @@ userController.login = async function (req, res) {
     try {
         const result = await user.login()
         req.session.user = { username: user.data.username, school: 'Cambridge' }
-        res.send(result)
+        req.session.save(function () {
+            res.redirect('/')
+        })
     } catch (err) {
         res.send(err)
     }
 
     // console.log('Final')
-} 
+}
 
 userController.logout = function (req, res) {
+    req.session.destroy(function () {
+        res.redirect('/')
+    })
 }
 
 userController.home = function (req, res) {
     if (req.session.user) {
-        console.log(req.session.user.username)
-        res.render('home-dashboard', {username: req.session.user.username})
+        // console.log(req.session.user.username)
+        res.render('home-dashboard', { username: req.session.user.username })
     } else {
-        res.render('home-guest', { username: 'Damir', surname: 'Sanakulov' })
+        res.render('home-guest', { username: '', surname: '' })
     }
 
 }
