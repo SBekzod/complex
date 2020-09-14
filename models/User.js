@@ -38,16 +38,14 @@ User.prototype.login = function () {
     this.cleanUp()
     
     return new Promise((resolve, reject) => {
-        db.collection('users').findOne({ "username": this.data.username }, (err, data) => {
-            // console.log('later')
-            if (err) reject('bad connection')
-            else if (data == null) reject('No user like this')
+        db.collection('users').findOne({ "username": this.data.username }).then((data) => {
+            if (data == null) reject('No user like this')
             else if (!bcrypt.compareSync(this.data.password, data.password)) reject('Wrong paswword')
             else resolve('Successful: you provided valid login details')
+        }).catch(function(err){
+            reject(err)
         })
-
     })
-
 
 }
 
