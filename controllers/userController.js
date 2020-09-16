@@ -34,7 +34,7 @@ userController.home = function (req, res) {
         // console.log(req.session.user.username)
         res.render('home-dashboard', { username: req.session.user.username })
     } else {
-        res.render('home-guest', { errors: req.flash('errors') })
+        res.render('home-guest', { errors: req.flash('errors'), regErrors: req.flash('regErrors') })
     }
 
 }
@@ -47,7 +47,11 @@ userController.register = function (req, res) {
     let user = new User(req.body)
     user.register()
     if (user.error.length) {
-        res.send(user.error)
+        console.log(user.error)
+        req.session.flash.regErrors = user.error
+        req.session.save(function(){
+            res.redirect('/')
+        })
     } else {
         res.send("Successfully registered")
     }
