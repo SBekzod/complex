@@ -43,17 +43,20 @@ userController.about = function (req, res) {
     res.send('This page is about us')
 }
 
-userController.register = function (req, res) {
+userController.register = async function (req, res) {
     let user = new User(req.body)
-    user.register()
+    await user.register()
     if (user.error.length) {
-        console.log(user.error)
+        // console.log(user.error)
         req.session.flash.regErrors = user.error
         req.session.save(function(){
             res.redirect('/')
         })
     } else {
-        res.send("Successfully registered")
+        req.session.user = { username: user.data.username, school: 'Cambridge' }
+        req.session.save(function () {
+            res.redirect('/')
+        })
     }
 
 }
