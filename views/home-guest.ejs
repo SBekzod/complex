@@ -17,13 +17,9 @@
 
 <body>
   <header class="header-bar mb-3">
-    
+
     <div class="container d-flex flex-column flex-md-row align-items-center p-3">
-      <% if(username && surname) { %>
-      <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">OurApp <%=username+' '+surname%> </a></h4>
-      <% } else { %>
-        <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">OurApp <%=surname%> </a></h4>
-        <% } %>
+      <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">OurApp</a></h4>
       <form action="/login" method="POST" class="mb-0 pt-2 pt-md-0">
         <div class="row align-items-center">
           <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
@@ -44,6 +40,10 @@
   <!-- header ends here -->
 
   <div class="container py-md-5">
+
+    <% errors.forEach(function(message) { %> 
+      <div class="alert alert-danger text-center"><%=message%></div>
+    <% }) %>
 
     <div class="row align-items-center">
       <div class="col-lg-7 py-3 py-md-5">

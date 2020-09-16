@@ -3,6 +3,7 @@ const express = require('express')
 const firstRouter = require('./router')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
+const flash = require('connect-flash')
 
 //---------------
 const myapp = express()
@@ -13,6 +14,7 @@ let sessionOpt = session({
     saveUninitialized: false,
     cookie: { maxAge: 1000 * 60 * 2, httpOnly: true }
 })
+myapp.use(flash())
 
 myapp.use(sessionOpt)
 myapp.use(express.urlencoded({ extended: true }))
