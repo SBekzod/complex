@@ -8,7 +8,7 @@ userController.login = async function (req, res) {
     // console.log(user.data.username)
     try {
         const result = await user.login()
-        req.session.user = { username: user.data.username, school: 'Cambridge' }
+        req.session.user = { username: user.data.username, avatar: user.avatar }
         req.session.save(function () {
             res.redirect('/')
         })
@@ -32,7 +32,7 @@ userController.logout = function (req, res) {
 userController.home = function (req, res) {
     if (req.session.user) {
         // console.log(req.session.user.username)
-        res.render('home-dashboard', { username: req.session.user.username })
+        res.render('home-dashboard', { username: req.session.user.username, avatar: req.session.user.avatar })
     } else {
         res.render('home-guest', { errors: req.flash('errors'), regErrors: req.flash('regErrors') })
     }
@@ -53,7 +53,7 @@ userController.register = async function (req, res) {
             res.redirect('/')
         })
     } else {
-        req.session.user = { username: user.data.username, school: 'Cambridge' }
+        req.session.user = { username: user.data.username, avatar: user.avatar }
         req.session.save(function () {
             res.redirect('/')
         })

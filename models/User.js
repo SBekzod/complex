@@ -1,6 +1,7 @@
 const validator = require('validator')
 const db = require('../db').db()
 const bcrypt = require('bcryptjs')
+const md5 = require('md5')
 
 // constructor
 let User = function (data) {
@@ -45,16 +46,22 @@ User.prototype.cleanUp = function () {
 }
 
 User.prototype.login = function () {
-    this.cleanUp()
-
-    return new Promise((resolve, reject) => {
-        db.collection('users').findOne({ "username": this.data.username }).then((data) => {
+    return new Promise(async (resolve, reject) => {
+        this.cleanUp()
+        try{
+            let data = await db.collection('users').findOne({ "username": this.data.username })
             if (data == null) reject('No user like this')
             else if (!bcrypt.compareSync(this.data.password, data.password)) reject('Wrong paswword')
-            else resolve('Successful: you provided valid login details')
-        }).catch(function (err) {
+            else {
+                resolve('Successful: you provided valid login details')
+                // console.log(data)
+                this.data = data
+                this.getAvatar()
+            } 
+        } catch(err) {
             reject(err)
-        })
+        }
+
     })
 
 }
@@ -72,15 +79,21 @@ User.prototype.register = function () {
             // hashing codes before saving onto db
             let salt = bcrypt.genSaltSync(10)
             this.data.password = bcrypt.hashSync(this.data.password, salt)
-            db.collection('users').insertOne({ 'username': this.data.username, 'email': this.data.email, 'password': this.data.password },
-                function (err, data) {
-                    if (err) throw new Error(err)
-                    else console.log('Successfully inserted to User collection')
-                })
+            try{
+                let data = await db.collection('users').insertOne({ 'username': this.data.username, 'email': this.data.email, 'password': this.data.password })
+                console.log('Successfully inserted to User collection')
+                this.getAvatar()
+            } catch(err) {
+                this.error.push(err)
+            }
         }
         resolve()
     })
 
+}
+
+User.prototype.getAvatar = function () {
+    this.avatar = `https://gravatar.com/avatar/${md5(this.data.email)}?s=128`
 }
 
 module.exports = User
