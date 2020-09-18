@@ -24,6 +24,10 @@ myapp.set('views', 'views')
 myapp.set('view engine', 'ejs')
 
 myapp.use(express.static('public'))
+myapp.use(function(req, res, next){
+    res.locals.user = req.session.user
+    next()
+})
 myapp.use('/', router)
 
 //---------------

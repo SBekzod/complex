@@ -13,8 +13,8 @@ userController.login = async function (req, res) {
             res.redirect('/')
         })
     } catch (err) {
-        req.flash('errors', err)
-        // req.session.flash.errors = [err]
+        // req.flash('errors', err)
+        req.session.flash.errors = [err]
         req.session.save(function(){
             res.redirect('/')
         })
@@ -32,7 +32,7 @@ userController.logout = function (req, res) {
 userController.home = function (req, res) {
     if (req.session.user) {
         // console.log(req.session.user.username)
-        res.render('home-dashboard', { username: req.session.user.username, avatar: req.session.user.avatar })
+        res.render('home-dashboard')
     } else {
         res.render('home-guest', { errors: req.flash('errors'), regErrors: req.flash('regErrors') })
     }

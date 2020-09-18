@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="main.css">
 </head>
 
+<% if(user) { %>
+
 <body>
     <header class="header-bar mb-3">
         <div class="container d-flex flex-column flex-md-row align-items-center p-3">
@@ -25,7 +27,7 @@
                 <span class="text-white mr-2 header-chat-icon" title="Chat" data-toggle="tooltip"
                     data-placement="bottom"><i class="fas fa-comment"></i></span>
                 <a href="#" class="mr-2"><img title="My Profile" data-toggle="tooltip" data-placement="bottom"
-                        style="width: 32px; height: 32px; border-radius: 16px;" src="<%= avatar %>"></a>
+                        style="width: 32px; height: 32px; border-radius: 16px;" src="<%= user.avatar %>"></a>
                 <a class="btn btn-sm btn-success mr-2" href="/create-post">Create Post</a>
                 <form action="/logout" method="POST" class="d-inline">
                     <button class="btn btn-sm btn-secondary">Sign Out</button>
@@ -33,4 +35,33 @@
             </div>
         </div>
     </header>
-    <!-- header ends here -->
+
+    <% } else { %>
+
+    <body>
+        <header class="header-bar mb-3">
+
+            <div class="container d-flex flex-column flex-md-row align-items-center p-3">
+                <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">OurApp</a></h4>
+                <form action="/login" method="POST" class="mb-0 pt-2 pt-md-0">
+                    <div class="row align-items-center">
+                        <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
+                            <input name="username" class="form-control form-control-sm input-dark" type="text"
+                                placeholder="Username" autocomplete="off">
+                        </div>
+                        <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
+                            <input name="password" class="form-control form-control-sm input-dark" type="password"
+                                placeholder="Password">
+                        </div>
+                        <div class="col-md-auto">
+                            <button class="btn btn-primary btn-sm">Sign In</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </header>
+
+        <% } %>
+
+
+        <!-- header ends here -->
