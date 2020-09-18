@@ -60,3 +60,14 @@ userController.register = async function (req, res) {
     }
 
 }
+
+userController.mustBeLoggedIn = function(req, res, next) {
+    if(req.session.user) {
+        return next()
+    } else {
+        req.flash('errors', 'You must be logged in to post!')
+        req.session.save(function(){
+            res.redirect('/')
+        })
+    }
+}

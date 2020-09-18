@@ -1,11 +1,17 @@
 const express = require('express')
+const router = express.Router()
 const userController = require('./controllers/userController')
+const postController = require('./controllers/postController')
 
-const firstRouter = express.Router()
-firstRouter.get('/', userController.home)
-firstRouter.get('/about', userController.about)
-firstRouter.post('/register', userController.register)
-firstRouter.post('/login', userController.login)
-firstRouter.post('/logout', userController.logout)
+// ruser related routes
+router.get('/', userController.home)
+router.get('/about', userController.about)
+router.post('/register', userController.register)
+router.post('/login', userController.login)
+router.post('/logout', userController.logout)
 
-module.exports = firstRouter
+//post related routes
+router.get('/create-post', userController.mustBeLoggedIn , postController.viewCreateScreen)
+
+
+module.exports = router

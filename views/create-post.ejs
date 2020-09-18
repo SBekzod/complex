@@ -17,9 +17,9 @@
       <div class="flex-row my-3 my-md-0">
         <a href="#" class="text-white mr-2 header-search-icon" title="Search" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-search"></i></a>
         <span class="text-white mr-2 header-chat-icon" title="Chat" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-comment"></i></span>
-        <a href="#" class="mr-2"><img title="My Profile" data-toggle="tooltip" data-placement="bottom" style="width: 32px; height: 32px; border-radius: 16px;" src="<%= avatar %>"></a>
-        <a class="btn btn-sm btn-success mr-2" href="/create-post">Create Post</a>
-        <form action="/logout" method="POST" class="d-inline">
+        <a href="#" class="mr-2"><img title="My Profile" data-toggle="tooltip" data-placement="bottom" style="width: 32px; height: 32px; border-radius: 16px;" src="https://gravatar.com/avatar/f64fc44c03a8a7eb1d52502950879659?s=128"></a>
+        <a class="btn btn-sm btn-success mr-2" href="#">Create Post</a>
+        <form action="#" method="POST" class="d-inline">
           <button class="btn btn-sm btn-secondary">Sign Out</button>
         </form>
       </div>     
@@ -28,10 +28,19 @@
   <!-- header ends here -->
   
   <div class="container py-md-5 container--narrow">
-    <div class="text-center">
-      <h2>Hello <strong> <%=username%></strong>, your feed is empty.</h2>
-      <p class="lead text-muted">Your feed displays the latest posts from the people you follow. If you don&rsquo;t have any friends to follow that&rsquo;s okay; you can use the &ldquo;Search&rdquo; feature in the top menu bar to find content written by people with similar interests and then follow them.</p>
-    </div>  
+    <form action="#" method="POST">
+      <div class="form-group">
+        <label for="post-title" class="text-muted mb-1"><small>Title</small></label>
+        <input required name="title" id="post-title" class="form-control form-control-lg form-control-title" type="text" placeholder="" autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="post-body" class="text-muted mb-1"><small>Body Content</small></label>
+        <textarea required name="body" id="post-body" class="body-content tall-textarea form-control" type="text"></textarea>
+      </div>
+      
+      <button class="btn btn-primary">Save New Post</button>
+    </form>
   </div>
   
   <!-- footer begins -->

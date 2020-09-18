@@ -1,6 +1,6 @@
 const http = require('http')
 const express = require('express')
-const firstRouter = require('./router')
+const router = require('./router')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash')
@@ -14,8 +14,8 @@ let sessionOpt = session({
     saveUninitialized: false,
     cookie: { maxAge: 1000 * 60 * 2, httpOnly: true }
 })
-myapp.use(flash())
 
+myapp.use(flash())
 myapp.use(sessionOpt)
 myapp.use(express.urlencoded({ extended: true }))
 myapp.use(express.json())
@@ -24,7 +24,7 @@ myapp.set('views', 'views')
 myapp.set('view engine', 'ejs')
 
 myapp.use(express.static('public'))
-myapp.use('/', firstRouter)
+myapp.use('/', router)
 
 //---------------
 const server = http.createServer(myapp)
