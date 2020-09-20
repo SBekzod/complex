@@ -8,7 +8,7 @@ userController.login = async function (req, res) {
     // console.log(user.data.username)
     try {
         const result = await user.login()
-        req.session.user = { username: user.data.username, avatar: user.avatar }
+        req.session.user = { username: user.data.username, avatar: user.avatar, autherId: user._id }
         req.session.save(function () {
             res.redirect('/')
         })
@@ -53,7 +53,7 @@ userController.register = async function (req, res) {
             res.redirect('/')
         })
     } else {
-        req.session.user = { username: user.data.username, avatar: user.avatar }
+        req.session.user = { username: user.data.username, avatar: user.avatar, autherId: user._id }
         req.session.save(function () {
             res.redirect('/')
         })

@@ -7,6 +7,7 @@ const md5 = require('md5')
 let User = function (data) {
     this.data = data
     this.error = []
+    this._id
 }
 
 User.prototype.validate = function () {
@@ -56,6 +57,7 @@ User.prototype.login = function () {
                 resolve('Successful: you provided valid login details')
                 // console.log(data)
                 this.data = data
+                this._id = data._id
                 this.getAvatar()
             } 
         } catch(err) {
@@ -82,6 +84,7 @@ User.prototype.register = function () {
             try{
                 let data = await db.collection('users').insertOne({ 'username': this.data.username, 'email': this.data.email, 'password': this.data.password })
                 console.log('Successfully inserted to User collection')
+                this._id = data.ops[0]._id
                 this.getAvatar()
             } catch(err) {
                 this.error.push(err)
