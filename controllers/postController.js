@@ -21,3 +21,7 @@ postController.create = async function (req, res) {
     }
 
 }
+
+postController.viewSingle = function(req, res) {
+    res.render('single-post-screen')
+}
