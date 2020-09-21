@@ -28,10 +28,11 @@ Post.prototype.validate = function () {
 }
 
 Post.prototype.create = function () {
+
     return new Promise(async (resolve, reject) => {
         this.cleanUp()
         this.validate()
-        if(this.error.length == 0) {
+        if (this.error.length == 0) {
             try {
                 await db.insertOne(this.data)
                 resolve()
@@ -42,9 +43,26 @@ Post.prototype.create = function () {
         } else {
             reject(this.error)
         }
-        
+
     })
 
+}
+
+// Non OOP method on FPC
+Post.findAndShowMessage = function (messageID) {
+
+    return new Promise(async (resolve, reject)=> {
+        if (typeof messageID != 'string') {
+            reject('the request is suspicious')
+        } else {
+            try {
+                let message = await db.findOne(ObjectID(messageID))
+                resolve(message)
+            } catch (err) {
+                reject(err)
+            }
+        }
+    })
 }
 
 module.exports = Post

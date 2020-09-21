@@ -2,6 +2,7 @@ const validator = require('validator')
 const db = require('../db').db()
 const bcrypt = require('bcryptjs')
 const md5 = require('md5')
+const ObjectID = require('mongodb').ObjectID
 
 // constructor
 let User = function (data) {
@@ -22,7 +23,7 @@ User.prototype.validate = function () {
             this.error.push('password should be at least eight characters long and less then fifteen characters')
 
         if (this.data.username.length >= 5 && this.data.username.length <= 20 && validator.isAlphanumeric(this.data.username)) {
-            let usernameExits = await db.collection('users').findOne({ 'username': this.data.username })
+            let usernameExits = await db.collection('users').findOne({'username': this.data.username})
             if (usernameExits) this.error.push('the username that you are using has been already used')
             // console.log('I passed here later')
         }
@@ -49,8 +50,8 @@ User.prototype.cleanUp = function () {
 User.prototype.login = function () {
     return new Promise(async (resolve, reject) => {
         this.cleanUp()
-        try{
-            let data = await db.collection('users').findOne({ "username": this.data.username })
+        try {
+            let data = await db.collection('users').findOne({"username": this.data.username})
             if (data == null) reject('No user like this')
             else if (!bcrypt.compareSync(this.data.password, data.password)) reject('Wrong paswword')
             else {
@@ -59,8 +60,8 @@ User.prototype.login = function () {
                 this.data = data
                 this._id = data._id
                 this.getAvatar()
-            } 
-        } catch(err) {
+            }
+        } catch (err) {
             reject(err)
         }
 
@@ -81,12 +82,16 @@ User.prototype.register = function () {
             // hashing codes before saving onto db
             let salt = bcrypt.genSaltSync(10)
             this.data.password = bcrypt.hashSync(this.data.password, salt)
-            try{
-                let data = await db.collection('users').insertOne({ 'username': this.data.username, 'email': this.data.email, 'password': this.data.password })
+            try {
+                let data = await db.collection('users').insertOne({
+                    'username': this.data.username,
+                    'email': this.data.email,
+                    'password': this.data.password
+                })
                 console.log('Successfully inserted to User collection')
                 this._id = data.ops[0]._id
                 this.getAvatar()
-            } catch(err) {
+            } catch (err) {
                 this.error.push(err)
             }
         }
@@ -97,6 +102,22 @@ User.prototype.register = function () {
 
 User.prototype.getAvatar = function () {
     this.avatar = `https://gravatar.com/avatar/${md5(this.data.email)}?s=128`
+}
+
+// Non OOP method on FPC
+User.findAuthor = function (authorId) {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            let author = await db.collection('users').findOne(ObjectID(authorId))
+            author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
+            resolve(author)
+        } catch (err) {
+            reject(err)
+        }
+
+    })
+
 }
 
 module.exports = User
