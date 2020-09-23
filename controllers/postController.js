@@ -31,7 +31,13 @@ postController.viewSingle = async function (req, res) {
 
         res.render('single-post-screen', {author: author, message: message})
     } catch (err) {
-        res.send('there is no connection or no such message')
+        // res.send('there is no connection or no such message')
+        res.render('error-404')
     }
 
+}
+
+postController.testing = function (req, res) {
+    console.log('***********************')
+    console.log(req.body)
 }
