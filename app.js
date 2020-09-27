@@ -12,7 +12,7 @@ let sessionOpt = session({
     store: new MongoStore({ client: require('./db') }),
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 2, httpOnly: true }
+    cookie: { maxAge: 1000 * 60 * 10, httpOnly: true }
 })
 
 myapp.use(flash())

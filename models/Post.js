@@ -65,4 +65,18 @@ Post.findAndShowMessage = function (messageID) {
     })
 }
 
+// Non OOP method on FPC
+Post.findAllMessages = function(authorId) {
+
+    return new Promise( async function (resolve, reject) {
+        if(typeof authorId != 'string' ) {
+            reject('suspicious request')
+        } else {
+            let list = await db.find({autherId: ObjectID(authorId)}).toArray()
+            resolve(list)
+        }
+    })
+    
+}
+
 module.exports = Post
