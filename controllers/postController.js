@@ -28,29 +28,27 @@ postController.viewSingle = async function (req, res) {
     try {
         let message = await Post.findAndShowMessage(messageID)
         let author = await User.findAuthor(message.autherId)
-        console.log(author)
 
         res.render('single-post-screen', {author: author, message: message})
     } catch (err) {
-        // res.send('there is no connection or no such message')
         res.render('error-404')
     }
 
 }
 
 postController.testing = function (req, res) {
-    // console.log('***********************')
     console.log(req.body)
 }
 
-
 postController.goToProfile = async function (req, res) {
-    const authorId = req.session.user.autherId
-    const avatar = req.session.user.avatar
-    const username = req.session.user.username
-    // console.log(authorId)
-    // console.log('*** starting findAllMessages ***')
-    let listOfMessages = await Post.findAllMessages(authorId)
-    // console.log(listOfMessages)
-    res.render('profile-posts', {allMessages: listOfMessages, avatar: avatar, username: username})
+    let authorId = req.params.id
+    try {
+        let listOfMessages = await Post.findAllMessages(authorId)
+        let author = await User.findAuthor(authorId)
+        res.render('profile-posts', {allMessages: listOfMessages, avatar: author.avatar, username: author.username})
+    } catch (err) {
+        res.render('error-404')
+    }
+
+
 }

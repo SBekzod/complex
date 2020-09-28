@@ -111,6 +111,7 @@ User.findAuthor = function (authorId) {
         try {
             let author = await db.collection('users').findOne(ObjectID(authorId))
             author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
+            delete author.password
             resolve(author)
         } catch (err) {
             reject(err)
