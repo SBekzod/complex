@@ -76,15 +76,12 @@ userController.ifUserExists = async function (req, res, next) {
     let username = req.params.username
     try {
         let author = await User.findAuthorByUsername(username)
-        if (!author) {
-            throw new Error('No user with tis username')
-        }
         req.author = author
         next()
 
     } catch (err) {
-        // next(err)
-        res.render('error-404')
+        next(err)
+        // res.render('error-404')
     }
 
 

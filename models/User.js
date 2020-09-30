@@ -23,7 +23,7 @@ User.prototype.validate = function () {
             this.error.push('password should be at least eight characters long and less then fifteen characters')
 
         if (this.data.username.length >= 5 && this.data.username.length <= 20 && validator.isAlphanumeric(this.data.username)) {
-            let usernameExits = await db.collection('users').findOne({'username': this.data.username})
+            let usernameExits = await db.collection('users').findOne({ 'username': this.data.username })
             if (usernameExits) this.error.push('the username that you are using has been already used')
             // console.log('I passed here later')
         }
@@ -51,7 +51,7 @@ User.prototype.login = function () {
     return new Promise(async (resolve, reject) => {
         this.cleanUp()
         try {
-            let data = await db.collection('users').findOne({"username": this.data.username})
+            let data = await db.collection('users').findOne({ "username": this.data.username })
             if (data == null) reject('No user like this')
             else if (!bcrypt.compareSync(this.data.password, data.password)) reject('Wrong paswword')
             else {
@@ -109,16 +109,10 @@ User.findAuthorByUsername = function (username) {
 
     return new Promise(async (resolve, reject) => {
         try {
-            let author = await db.collection('users').findOne({"username": username})
-<<<<<<< HEAD
-            if(author) {
-                author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
-                delete author.password
-            }
-=======
+            let author = await db.collection('users').findOne({ "username": username })
+            if(author == null) throw new Error('No user with this name')
             author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
             delete author.password
->>>>>>> 5f7c7597b94434bf615c9c9f714fcac085f70f13
             resolve(author)
         } catch (err) {
             reject(err)
@@ -134,6 +128,7 @@ User.findAuthorByAuthorId = function (authorID) {
     return new Promise(async (resolve, reject) => {
         try {
             let author = await db.collection('users').findOne(ObjectID(authorID))
+            if(author == null) throw new Error('No user with this id')
             author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
             delete author.password
             resolve(author)
