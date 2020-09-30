@@ -22,7 +22,7 @@ postController.create = async function (req, res) {
 
 }
 
-postController.viewSingle = async function (req, res) {
+postController.viewSingle = async function (req, res, next) {
     let messageID = req.params.id
     try {
         let message = await Post.findAndShowMessage(messageID)
@@ -34,6 +34,7 @@ postController.viewSingle = async function (req, res) {
 
         res.render('single-post-screen', { author: author, message: message })
     } catch (err) {
+        // next(err)
         res.render('error-404')
     }
 
@@ -51,4 +52,41 @@ postController.goToProfilePosts = async function (req, res) {
     } catch (err) {
         res.render(err)
     }
+}
+
+postController.viewEditScreen = async function (req, res) {
+    let messageId = req.params.id
+    try {
+        let message = await Post.findAndShowMessage(messageId)
+        // console.log(message)
+        res.render('edit-post', { message: message })
+    } catch (err) {
+        res.render('error-404')
+    }
+
+}
+
+postController.editPost = async function (req, res, next) {
+
+    try {
+        let messageId = req.params.id,
+            message = await Post.findAndShowMessage(messageId),
+            author = await User.findAuthorByAuthorId(message.autherId)
+
+        // checking is an Auther a visitor
+        if (req.session.user.authorId != author._id) {
+            throw new Error('You do not have right to edit')
+        }
+
+        // creating post object
+        req.body.messageId = messageId
+        let post = new Post(req.body)
+        await post.editPost()
+        res.redirect("/post/" + messageId)
+
+    } catch (err) {
+        // next(err)
+        res.render('error-404')
+    }
+
 }

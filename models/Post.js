@@ -48,6 +48,20 @@ Post.prototype.create = function () {
 
 }
 
+Post.prototype.editPost = function () {
+
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            let newPost = await db.findOneAndUpdate({ _id: ObjectID(this.data.messageId) }, { $set: { title: `${this.data.title}`, body: `${this.data.body}` } })
+            resolve(newPost)
+        } catch (err) {
+            reject(err)
+        }
+
+    })
+}
+
 // Non OOP method on FPC
 Post.findAndShowMessage = function (messageID) {
 
@@ -57,6 +71,8 @@ Post.findAndShowMessage = function (messageID) {
         } else {
             try {
                 let message = await db.findOne(ObjectID(messageID))
+                // console.log(message)
+                if (message == null) throw new Error('No message with this messageId')
                 resolve(message)
             } catch (err) {
                 reject(err)
@@ -73,7 +89,7 @@ Post.findAllMessages = function (authorId) {
             reject('suspicious request')
         } else {
             try {
-                let list = await db.find({autherId: ObjectID(authorId)}).toArray()
+                let list = await db.find({ autherId: ObjectID(authorId) }).toArray()
                 resolve(list)
             } catch (err) {
                 reject('problem in connection to db')

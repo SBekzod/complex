@@ -14,9 +14,11 @@ router.post('/logout', userController.logout)
 router.get('/profile/:username', userController.mustBeLoggedIn, userController.ifUserExists, postController.goToProfilePosts)
 
 //post related routes
-router.get('/create-post', userController.mustBeLoggedIn , postController.viewCreateScreen)
+router.get('/create-post', userController.mustBeLoggedIn, postController.viewCreateScreen)
 router.post('/create-post', userController.mustBeLoggedIn, postController.create)
 router.post('/test', userController.mustBeLoggedIn, postController.testing)
-router.get('/post/:id', postController.viewSingle)
+router.get('/post/:id', userController.mustBeLoggedIn, postController.viewSingle)
+router.get('/post/:id/edit', userController.mustBeLoggedIn, postController.viewEditScreen)
+router.post('/post/:id/edit-post', userController.mustBeLoggedIn, postController.editPost)
 
 module.exports = router

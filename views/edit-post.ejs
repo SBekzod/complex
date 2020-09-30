@@ -1,0 +1,24 @@
+<%- include('includes/header') %>
+<!-- header ends here -->
+
+<div class="container py-md-5 container--narrow">
+
+
+  <form action="/post/<%=message._id%>/edit-post" method="POST">
+    <div class="form-group">
+      <label for="post-title" class="text-muted mb-1"><small>Title</small></label>
+      <input name="title" id="post-title" class="form-control form-control-lg form-control-title" type="text"
+        placeholder="<%=message.title%>" autocomplete="off">
+    </div>
+
+    <div class="form-group">
+      <label for="post-body" class="text-muted mb-1"><small>Body Content</small></label>
+      <textarea placeholder="<%=message.body%>" name="body" id="post-body" class="body-content tall-textarea form-control" type="text"></textarea>
+    </div>
+
+    <button class="btn btn-primary">Update Post</button>
+  </form>
+</div>
+
+<!-- footer begins -->
+<%- include('includes/footer')%>
