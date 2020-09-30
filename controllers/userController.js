@@ -15,7 +15,7 @@ userController.login = async function (req, res) {
     } catch (err) {
         // req.flash('errors', err)
         req.session.flash.errors = [err]
-        req.session.save(function(){
+        req.session.save(function () {
             res.redirect('/')
         })
     }
@@ -49,7 +49,7 @@ userController.register = async function (req, res) {
     if (user.error.length) {
         // console.log(user.error)
         req.session.flash.regErrors = user.error
-        req.session.save(function(){
+        req.session.save(function () {
             res.redirect('/')
         })
     } else {
@@ -61,13 +61,31 @@ userController.register = async function (req, res) {
 
 }
 
-userController.mustBeLoggedIn = function(req, res, next) {
-    if(req.session.user) {
+userController.mustBeLoggedIn = function (req, res, next) {
+    if (req.session.user) {
         return next()
     } else {
         req.flash('errors', 'You must be logged in to post!')
-        req.session.save(function(){
+        req.session.save(function () {
             res.redirect('/')
         })
     }
+}
+
+userController.ifUserExists = async function (req, res, next) {
+    let username = req.params.username
+    try {
+        let author = await User.findAuthorByUsername(username)
+        if (!author) {
+            throw new Error('No user with tis username')
+        }
+        req.author = author
+        next()
+
+    } catch (err) {
+        // next(err)
+        res.render('error-404')
+    }
+
+
 }
