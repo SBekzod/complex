@@ -19,5 +19,4 @@ router.post('/create-post', userController.mustBeLoggedIn, postController.create
 router.post('/test', userController.mustBeLoggedIn, postController.testing)
 router.get('/post/:id', postController.viewSingle)
 
-
 module.exports = router
