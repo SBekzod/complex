@@ -110,10 +110,15 @@ User.findAuthorByUsername = function (username) {
     return new Promise(async (resolve, reject) => {
         try {
             let author = await db.collection('users').findOne({"username": username})
+<<<<<<< HEAD
             if(author) {
                 author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
                 delete author.password
             }
+=======
+            author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
+            delete author.password
+>>>>>>> 5f7c7597b94434bf615c9c9f714fcac085f70f13
             resolve(author)
         } catch (err) {
             reject(err)

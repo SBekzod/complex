@@ -46,6 +46,6 @@ postController.goToProfile = async function (req, res) {
         let listOfMessages = await Post.findAllMessages(author._id)
         res.render('profile-posts', {allMessages: listOfMessages, avatar: author.avatar, username: author.username})
     } catch (err) {
-        res.render('error-404')
+        res.render(err)
     }
 }
