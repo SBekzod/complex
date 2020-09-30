@@ -51,7 +51,7 @@ Post.prototype.create = function () {
 // Non OOP method on FPC
 Post.findAndShowMessage = function (messageID) {
 
-    return new Promise(async (resolve, reject)=> {
+    return new Promise(async (resolve, reject) => {
         if (typeof messageID != 'string') {
             reject('the request is suspicious')
         } else {
@@ -66,17 +66,22 @@ Post.findAndShowMessage = function (messageID) {
 }
 
 // Non OOP method on FPC
-Post.findAllMessages = function(authorId) {
+Post.findAllMessages = function (authorId) {
 
-    return new Promise( async function (resolve, reject) {
-        if(typeof authorId != 'string' ) {
+    return new Promise(async function (resolve, reject) {
+        if (typeof authorId != 'object') {
             reject('suspicious request')
         } else {
-            let list = await db.find({autherId: ObjectID(authorId)}).toArray()
-            resolve(list)
+            try {
+                let list = await db.find({autherId: ObjectID(authorId)}).toArray()
+                resolve(list)
+            } catch (err) {
+                reject('problem in connection to db')
+            }
+
         }
     })
-    
+
 }
 
 module.exports = Post

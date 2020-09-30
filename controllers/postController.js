@@ -27,7 +27,7 @@ postController.viewSingle = async function (req, res) {
     let messageID = req.params.id
     try {
         let message = await Post.findAndShowMessage(messageID)
-        let author = await User.findAuthor(message.autherId)
+        let author = await User.findAuthorByAuthorId(message.autherId)
 
         res.render('single-post-screen', {author: author, message: message})
     } catch (err) {
@@ -41,13 +41,17 @@ postController.testing = function (req, res) {
 }
 
 postController.goToProfile = async function (req, res) {
-    let authorId = req.params.id
+    let username = req.params.username
+    // console.log(username)
     try {
+        let author = await User.findAuthorByUsername(username)
+        // console.log(author)
+        let authorId = author._id
         let listOfMessages = await Post.findAllMessages(authorId)
-        let author = await User.findAuthor(authorId)
+        // console.log(listOfMessages)
         res.render('profile-posts', {allMessages: listOfMessages, avatar: author.avatar, username: author.username})
     } catch (err) {
-        res.render('error-404')
+        res.render(err)
     }
 
 

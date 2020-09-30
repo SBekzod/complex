@@ -105,11 +105,28 @@ User.prototype.getAvatar = function () {
 }
 
 // Non OOP method on FPC
-User.findAuthor = function (authorId) {
+User.findAuthorByUsername = function (username) {
 
     return new Promise(async (resolve, reject) => {
         try {
-            let author = await db.collection('users').findOne(ObjectID(authorId))
+            let author = await db.collection('users').findOne({"username": username})
+            author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
+            delete author.password
+            resolve(author)
+        } catch (err) {
+            reject(err)
+        }
+
+    })
+
+}
+
+// Non OOP method on FPC
+User.findAuthorByAuthorId = function (authorID) {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            let author = await db.collection('users').findOne(ObjectID(authorID))
             author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
             delete author.password
             resolve(author)
