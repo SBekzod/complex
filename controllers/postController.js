@@ -3,12 +3,11 @@ const Post = require('../models/Post')
 const User = require('../models/User')
 
 postController.viewCreateScreen = function (req, res) {
-    res.render('create-post', {avatar: req.session.user.avatar, postErrors: req.flash('postErrors')})
+    res.render('create-post', { avatar: req.session.user.avatar, postErrors: req.flash('postErrors') })
 }
 
 postController.create = async function (req, res) {
-    // console.log(req.session.user)
-    req.body.autherId = req.session.user.autherId
+    req.body.autherId = req.session.user.authorId
     let post = new Post(req.body)
     try {
         await post.create()
@@ -29,7 +28,11 @@ postController.viewSingle = async function (req, res) {
         let message = await Post.findAndShowMessage(messageID)
         let author = await User.findAuthorByAuthorId(message.autherId)
 
-        res.render('single-post-screen', {author: author, message: message})
+        if (req.session.user) {
+            req.session.user.authorId == author._id ? author.isVisitorAuthor = true : author.isVisitorAuthor = false
+        }
+
+        res.render('single-post-screen', { author: author, message: message })
     } catch (err) {
         res.render('error-404')
     }
@@ -40,11 +43,11 @@ postController.testing = function (req, res) {
     console.log(req.body)
 }
 
-postController.goToProfile = async function (req, res) {
+postController.goToProfilePosts = async function (req, res) {
     try {
         let author = req.author
         let listOfMessages = await Post.findAllMessages(author._id)
-        res.render('profile-posts', {allMessages: listOfMessages, avatar: author.avatar, username: author.username})
+        res.render('profile-posts', { allMessages: listOfMessages, avatar: author.avatar, username: author.username })
     } catch (err) {
         res.render(err)
     }

@@ -80,8 +80,8 @@ userController.ifUserExists = async function (req, res, next) {
         next()
 
     } catch (err) {
-        next(err)
-        // res.render('error-404')
+        // next(err)
+        res.render('error-404')
     }
 
 
