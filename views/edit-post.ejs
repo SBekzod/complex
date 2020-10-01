@@ -3,6 +3,14 @@
 
 <div class="container py-md-5 container--narrow">
 
+  <% if(editSuccess != '') { %>
+  <div class="alert alert-success text-center">
+    <%= editSuccess %>
+  </div>
+  <% } %>
+
+  <a href="/post/<%= message._id %>">&laquo;Go back</a>
+
 
   <form action="/post/<%=message._id%>/edit-post" method="POST">
     <div class="form-group">
@@ -13,7 +21,12 @@
 
     <div class="form-group">
       <label for="post-body" class="text-muted mb-1"><small>Body Content</small></label>
-      <textarea placeholder="<%=message.body%>" name="body" id="post-body" class="body-content tall-textarea form-control" type="text"></textarea>
+      <textarea placeholder="<%=message.body%>" name="body" id="post-body"
+        class="body-content tall-textarea form-control" type="text"></textarea>
+    </div>
+
+    <div class="form-group" hidden>
+      <input name="authorId" value="<%=message.autherId%>" />
     </div>
 
     <button class="btn btn-primary">Update Post</button>

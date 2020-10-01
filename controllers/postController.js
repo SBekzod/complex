@@ -3,7 +3,7 @@ const Post = require('../models/Post')
 const User = require('../models/User')
 
 postController.viewCreateScreen = function (req, res) {
-    res.render('create-post', { avatar: req.session.user.avatar, postErrors: req.flash('postErrors') })
+    res.render('create-post', { avatar: req.session.user.avatar, postErrors: req.flash('postErrors'), success: req.flash('success') })
 }
 
 postController.create = async function (req, res) {
@@ -11,7 +11,8 @@ postController.create = async function (req, res) {
     let post = new Post(req.body)
     try {
         await post.create()
-        res.send('Success')
+        req.session.flash.success = 'Post is successfully posted'
+        res.redirect('/create-post')
 
     } catch (err) {
         req.session.flash.postErrors = err
@@ -41,7 +42,7 @@ postController.viewSingle = async function (req, res, next) {
 }
 
 postController.testing = function (req, res) {
-    console.log(req.body)
+    // console.log(req.body)
 }
 
 postController.goToProfilePosts = async function (req, res) {
@@ -57,9 +58,19 @@ postController.goToProfilePosts = async function (req, res) {
 postController.viewEditScreen = async function (req, res) {
     let messageId = req.params.id
     try {
-        let message = await Post.findAndShowMessage(messageId)
+        let message = await Post.findAndShowMessage(messageId),
+            author = await User.findAuthorByAuthorId(message.autherId)
+
+        if (req.session.user.authorId == author._id) {
+            res.render('edit-post', { message: message, editSuccess: req.flash('editSuccess') })
+        } else {
+            req.session.flash.permitErrors = 'you do not have right to see that page'
+            req.session.save(function () {
+                res.redirect('/')
+            })
+        }
         // console.log(message)
-        res.render('edit-post', { message: message })
+
     } catch (err) {
         res.render('error-404')
     }
@@ -69,20 +80,14 @@ postController.viewEditScreen = async function (req, res) {
 postController.editPost = async function (req, res, next) {
 
     try {
-        let messageId = req.params.id,
-            message = await Post.findAndShowMessage(messageId),
-            author = await User.findAuthorByAuthorId(message.autherId)
-
-        // checking is an Auther a visitor
-        if (req.session.user.authorId != author._id) {
-            throw new Error('You do not have right to edit')
-        }
-
+        let messageId = req.params.id
         // creating post object
         req.body.messageId = messageId
         let post = new Post(req.body)
         await post.editPost()
-        res.redirect("/post/" + messageId)
+        // directing the page to editing page with result
+        req.session.flash.editSuccess = 'The Post is updated'
+        res.redirect("/post/" + messageId + '/edit')
 
     } catch (err) {
         // next(err)

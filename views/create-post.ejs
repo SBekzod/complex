@@ -3,9 +3,15 @@
 
 <div class="container py-md-5 container--narrow">
 
+  <% if(success != '') { %>
+  <div class="alert alert-success text-center"><%= success %></div>
+  <% } %>
+
   <% if(postErrors) { postErrors.forEach(function(ele) { %>
   <div class="alert alert-danger text-center"><%= ele %></div>
   <% } ) } %>
+
+  <a href="/">&laquo;Go back</a>
 
   <form action="/create-post" method="POST">
     <div class="form-group">

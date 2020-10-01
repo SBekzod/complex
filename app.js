@@ -4,6 +4,7 @@ const router = require('./router')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash')
+const markDown = require('marked')
 
 //---------------
 const myapp = express()
@@ -24,7 +25,7 @@ myapp.set('views', 'views')
 myapp.set('view engine', 'ejs')
 
 myapp.use(express.static('public'))
-myapp.use(function(req, res, next){
+myapp.use(function (req, res, next) {
     res.locals.user = req.session.user
     next()
 })

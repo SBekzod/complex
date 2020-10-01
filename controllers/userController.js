@@ -32,7 +32,7 @@ userController.logout = function (req, res) {
 userController.home = function (req, res) {
     if (req.session.user) {
         // console.log(req.session.user.username)
-        res.render('home-dashboard')
+        res.render('home-dashboard', {permitErrors: req.flash('permitErrors')})
     } else {
         res.render('home-guest', { errors: req.flash('errors'), regErrors: req.flash('regErrors') })
     }
@@ -69,6 +69,14 @@ userController.mustBeLoggedIn = function (req, res, next) {
         req.session.save(function () {
             res.redirect('/')
         })
+    }
+}
+
+userController.mustBeAuthorVisitor = function (req, res, next) {
+    if (req.body.authorId != req.session.user.authorId) {
+        next('you do not have right to edit')
+    } else {
+        next()
     }
 }
 
