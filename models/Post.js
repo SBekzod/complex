@@ -48,7 +48,7 @@ Post.prototype.create = function () {
 
 }
 
-Post.prototype.editPost = function () {
+Post.prototype.editPost = function () { 
 
     return new Promise(async (resolve, reject) => {
 
