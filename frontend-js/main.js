@@ -1,3 +1,7 @@
 import Search from './modules/search'
 
-new Search()
+let search = new Search()
+// search.settingValue = 'Anyong'
+search.simpleChangeValue('AnyongHaseyo')
+let text = search.gettingValue
+search.getAimedAlert(text)

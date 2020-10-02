@@ -1,5 +1,26 @@
 export default class Search {
     constructor() {
-        alert('Search js is successfully organized')
+        this.a = 'hello'
+        this.b = "BYE"
+    }
+
+    getAlert() {
+        alert(this.a)
+    }
+
+    getAimedAlert(target) {
+        alert(target)
+    }
+
+    get gettingValue () {
+        return this.b
+    }
+
+    set settingValue (c) {
+        this.b = c
+    }
+
+    simpleChangeValue(d) {
+        this.b = d
     }
 }
