@@ -7,13 +7,16 @@ export default class Search {
     this.insertHTML()
     this.overlay = document.querySelector(".search-overlay")
     this.searchInput = document.getElementById("live-search-field")
+    this.resultOutput = document.querySelector(".live-search-results")
 
     this.headerSearchIcon = document.getElementById("009")
     this.closeIcon = document.querySelector(".close-live-search")
     this.loaderIcon = document.querySelector(".circle-loader")
+    this.results = document.getElementById("results")
 
     this.typingWaitTimer
     this.prevValue = ""
+    this.data = []
 
     this.events()
   }
@@ -51,7 +54,9 @@ export default class Search {
 
     let value = this.searchInput.value
     if (value != '' && value != this.prevValue) {
-      // showing Icon loader
+      this.results.remove
+      // hiding results, and showing Icon loader
+      this.resultOutput.classList.remove("live-search-results--visible")
       this.showIconLoader()
 
       // renewal waiting time
@@ -64,8 +69,12 @@ export default class Search {
 
   sendRequset() {
     // console.log(this.searchInput.value)
-    axios.post("/search", { searchTerm: this.searchInput.value }).then((data) => {
-      console.log(data)
+    axios.post("/search", { searchTerm: this.searchInput.value }).then((resp) => {
+      if (resp.data.length) {
+        this.data = resp.data
+        this.renderResult()
+      }
+
     }).catch((err) => {
       if (err.response.status === 500) {
         alert("Your request for " + this.searchInput.value + " was not fulfilled")
@@ -74,12 +83,31 @@ export default class Search {
 
   }
 
+  renderResult() {
+    // hiding icon loader, showing results
+    this.hideIconLoader()
+    this.resultOutput.classList.add("live-search-results--visible")
+
+    this.data.forEach(ele => {
+      this.results.insertAdjacentHTML("beforebegin",
+        `<a href="#" class="list-group-item list-group-item-action">
+            <img class="avatar-tiny" src="${ele.avatar}"> <strong>${ele.title}</strong>
+            <span class="text-muted small">by ${ele.username} on ${ele.createdDate} ${ele.createdDate} </span>
+          </a>`)
+    })
+
+  }
+
   showIconLoader() {
     this.loaderIcon.classList.add("circle-loader--visible")
   }
 
+  hideIconLoader() {
+    this.loaderIcon.classList.remove("circle-loader--visible")
+  }
+
   insertHTML() {
-    document.body.insertAdjacentHTML('beforeend', `<div class="search-overlay">
+    document.body.insertAdjacentHTML('afterbegin', `<div class="search-overlay">
         <div class="search-overlay-top shadow-sm">
           <div class="container container--narrow">
             <label for="live-search-field" class="search-overlay-icon"><i class="fas fa-search"></i></label>
@@ -94,23 +122,8 @@ export default class Search {
             <div class="live-search-results">
               <div class="list-group shadow-sm">
                 <div class="list-group-item active"><strong>Search Results</strong> (4 items found)</div>
-    
-                <a href="#" class="list-group-item list-group-item-action">
-                  <img class="avatar-tiny" src="https://gravatar.com/avatar/b9216295c1e3931655bae6574ac0e4c2?s=128"> <strong>Example Post #1</strong>
-                  <span class="text-muted small">by barksalot on 0/14/2019</span>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                  <img class="avatar-tiny" src="https://gravatar.com/avatar/b9408a09298632b5151200f3449434ef?s=128"> <strong>Example Post #2</strong>
-                  <span class="text-muted small">by brad on 0/12/2019</span>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                  <img class="avatar-tiny" src="https://gravatar.com/avatar/b9216295c1e3931655bae6574ac0e4c2?s=128"> <strong>Example Post #3</strong>
-                  <span class="text-muted small">by barksalot on 0/14/2019</span>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                  <img class="avatar-tiny" src="https://gravatar.com/avatar/b9408a09298632b5151200f3449434ef?s=128"> <strong>Example Post #4</strong>
-                  <span class="text-muted small">by brad on 0/12/2019</span>
-                </a>
+                <div id="results"></div>  
+
               </div>
             </div>
           </div>
