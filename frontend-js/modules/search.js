@@ -10,6 +10,9 @@ export default class Search {
     this.closeIcon = document.querySelector(".close-live-search")
     this.loaderIcon = document.querySelector(".circle-loader")
 
+    this.typingWaitTimer
+    this.prevValue = ""
+
     this.events()
   }
 
@@ -42,11 +45,26 @@ export default class Search {
   }
 
   keyPressedHandler() {
-    this.showIconLoader()
+    console.log('process')
+    let value = this.searchInput.value
+    if(value != '' && value != this.prevValue) {
+      // showing Icon loader
+      this.showIconLoader()
+
+      // starting user keyup event
+      clearTimeout(this.typingWaitTimer)
+      this.prevValue = value
+      this.typingWaitTimer = setTimeout(this.sendRequset, 3000)
+    }
+    
   }
 
   showIconLoader() {
     this.loaderIcon.classList.add("circle-loader--visible")
+  }
+
+  sendRequset() {
+    alert('waited for 3000 from lasat keyup and request is being send right away!')
   }
 
   insertHTML() {
