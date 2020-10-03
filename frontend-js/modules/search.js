@@ -8,11 +8,13 @@ export default class Search {
     this.overlay = document.querySelector(".search-overlay")
     this.searchInput = document.getElementById("live-search-field")
     this.resultOutput = document.querySelector(".live-search-results")
+    this.donotExist = document.getElementById("donotExists") // this is null
 
     this.headerSearchIcon = document.getElementById("009")
     this.closeIcon = document.querySelector(".close-live-search")
     this.loaderIcon = document.querySelector(".circle-loader")
     this.results = document.getElementById("results")
+    this.resultCounts = document.getElementById("resultCounts")
 
     this.typingWaitTimer
     this.prevValue = ""
@@ -54,7 +56,6 @@ export default class Search {
 
     let value = this.searchInput.value
     if (value != '' && value != this.prevValue) {
-      this.results.remove
       // hiding results, and showing Icon loader
       this.resultOutput.classList.remove("live-search-results--visible")
       this.showIconLoader()
@@ -70,10 +71,8 @@ export default class Search {
   sendRequset() {
     // console.log(this.searchInput.value)
     axios.post("/search", { searchTerm: this.searchInput.value }).then((resp) => {
-      if (resp.data.length) {
-        this.data = resp.data
-        this.renderResult()
-      }
+      this.data = resp.data
+      this.renderResult()
 
     }).catch((err) => {
       if (err.response.status === 500) {
@@ -88,13 +87,19 @@ export default class Search {
     this.hideIconLoader()
     this.resultOutput.classList.add("live-search-results--visible")
 
-    this.data.forEach(ele => {
-      this.results.insertAdjacentHTML("beforebegin",
-        `<a href="#" class="list-group-item list-group-item-action">
-            <img class="avatar-tiny" src="${ele.avatar}"> <strong>${ele.title}</strong>
-            <span class="text-muted small">by ${ele.username} on ${ele.createdDate} ${ele.createdDate} </span>
-          </a>`)
-    })
+    if (this.data.length > 0) {
+      this.resultCounts.innerHTML = `${this.data.length} items found`
+      this.results.innerHTML = this.data.map(ele => {
+        return `<a href="/post/${ele._id}" class="list-group-item list-group-item-action">
+              <img class="avatar-tiny" src="${ele.avatar}"> <strong>${ele.title}</strong>
+              <span class="text-muted small">by ${ele.username} on ${ele.createdDate} ${ele.createdDate} </span>
+            </a>`
+      }).join('')
+
+    } else {
+      this.resultCounts.innerHTML = " 0 items found"
+      this.results.innerHTML = `<div class="text-center">No results</div>`
+    }
 
   }
 
@@ -121,7 +126,7 @@ export default class Search {
             <div class="circle-loader"></div>
             <div class="live-search-results">
               <div class="list-group shadow-sm">
-                <div class="list-group-item active"><strong>Search Results</strong> (4 items found)</div>
+                <div class="list-group-item active"><strong>Search Results</strong><div id="resultCounts"></div></div>
                 <div id="results"></div>  
 
               </div>
