@@ -18,6 +18,7 @@ export default class Search {
     this.events()
   }
 
+
   // Events
   events() {
     this.headerSearchIcon.addEventListener("click", (e) => {
@@ -33,15 +34,15 @@ export default class Search {
     })
   }
 
+
   // Methods
   openOverlay() {
     this.overlay.classList.add("search-overlay--visible")
     setTimeout(() => {
       this.searchInput.focus()
     }, 50)
-
-
   }
+
   closeOverlay() {
     this.overlay.classList.remove("search-overlay--visible")
   }
@@ -53,24 +54,28 @@ export default class Search {
       // showing Icon loader
       this.showIconLoader()
 
-      // starting user keyup event
+      // renewal waiting time
       clearTimeout(this.typingWaitTimer)
       this.prevValue = value
-      this.typingWaitTimer = setTimeout(() => this.sendRequset(), 3000)
+      this.typingWaitTimer = setTimeout(() => this.sendRequset(), 700)
     }
+
+  }
+
+  sendRequset() {
+    // console.log(this.searchInput.value)
+    axios.post("/search", { searchTerm: this.searchInput.value }).then((data) => {
+      console.log(data)
+    }).catch((err) => {
+      if (err.response.status === 500) {
+        alert("Your request for " + this.searchInput.value + " was not fulfilled")
+      }
+    })
 
   }
 
   showIconLoader() {
     this.loaderIcon.classList.add("circle-loader--visible")
-  }
-
-  sendRequset() {
-    // console.log(this.searchInput.value)
-    axios.post("/search", { searchingValue: this.searchInput.value }).then(() => {
-    }).catch(() => {
-      alert("Your request for " + this.searchInput.value + " was failed!")
-    })
   }
 
   insertHTML() {

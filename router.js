@@ -20,5 +20,6 @@ router.post('/test', userController.mustBeLoggedIn, postController.testing)
 router.get('/post/:id', postController.viewSingle)
 router.get('/post/:id/edit', userController.mustBeLoggedIn, postController.viewEditScreen)
 router.post('/post/:id/edit-post', userController.mustBeAuthorVisitor, postController.editPost)
+router.post('/search', postController.search)
 
 module.exports = router

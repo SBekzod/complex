@@ -48,7 +48,7 @@ Post.prototype.create = function () {
 
 }
 
-Post.prototype.editPost = function () { 
+Post.prototype.editPost = function () {
 
     return new Promise(async (resolve, reject) => {
 
@@ -61,6 +61,8 @@ Post.prototype.editPost = function () {
 
     })
 }
+
+
 
 // Non OOP method on FPC
 Post.findAndShowMessage = function (messageID) {
@@ -98,6 +100,24 @@ Post.findAllMessages = function (authorId) {
         }
     })
 
+}
+
+// Non OOP method on FPC
+Post.search = function (term) {
+    return new Promise(async function (resolve, reject) {
+        if(typeof(term) == 'string') {
+            try {
+                let posts = await db.find({ title: { $regex: `${term}` } }).toArray()
+                // if(posts.length == 0) reject('no posts were found')
+                resolve(posts)
+            } catch (err) {
+                reject(err)
+            }
+        } else {
+            reject('malicious request')
+        }
+
+    })
 }
 
 module.exports = Post

@@ -104,13 +104,14 @@ User.prototype.getAvatar = function () {
     this.avatar = `https://gravatar.com/avatar/${md5(this.data.email)}?s=128`
 }
 
+
 // Non OOP method on FPC
 User.findAuthorByUsername = function (username) {
 
     return new Promise(async (resolve, reject) => {
         try {
             let author = await db.collection('users').findOne({ "username": username })
-            if(author == null) throw new Error('No user with this name')
+            if (author == null) throw new Error('No user with this name')
             author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
             delete author.password
             resolve(author)
@@ -128,7 +129,7 @@ User.findAuthorByAuthorId = function (authorID) {
     return new Promise(async (resolve, reject) => {
         try {
             let author = await db.collection('users').findOne(ObjectID(authorID))
-            if(author == null) throw new Error('No user with this id')
+            if (author == null) throw new Error('No user with this id')
             author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
             delete author.password
             resolve(author)
@@ -139,5 +140,14 @@ User.findAuthorByAuthorId = function (authorID) {
     })
 
 }
+
+// // Non OOP method on FPC
+// User.editingPostWithUserInfo = function (list) {
+//     return new Promise((resolve, reject) => {
+//         let newList = list.map(ele => {
+
+//         })
+//     })
+// }
 
 module.exports = User

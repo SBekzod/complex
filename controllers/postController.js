@@ -1,6 +1,7 @@
 const postController = module.exports
 const Post = require('../models/Post')
 const User = require('../models/User')
+const { post } = require('../router')
 
 postController.viewCreateScreen = function (req, res) {
     res.render('create-post', { avatar: req.session.user.avatar, postErrors: req.flash('postErrors'), success: req.flash('success') })
@@ -92,6 +93,25 @@ postController.editPost = async function (req, res, next) {
     } catch (err) {
         // next(err)
         res.render('error-404')
+    }
+
+}
+
+postController.search = async function (req, res) {
+    // console.log(req.body)
+    try {
+        let posts = await Post.search(req.body.searchTerm)
+        // adding user information to posts array
+        for (let i = 0; i < posts.length; i++) {
+            let ele = posts[i]
+            let author = await User.findAuthorByAuthorId(ele.autherId)
+            ele.username = author.username
+            ele.avatar = author.avatar
+        }
+
+        res.json(posts)
+    } catch (err) {
+        res.sendStatus(500)
     }
 
 }
