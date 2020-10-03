@@ -1,38 +1,56 @@
 export default class Search {
 
-    // Select DOM elements
-    constructor() {
-        this.insertHTML()
-        this.overlay = document.querySelector(".search-overlay")
+  // Select DOM elements
+  constructor() {
+    this.insertHTML()
+    this.overlay = document.querySelector(".search-overlay")
+    this.searchInput = document.getElementById("live-search-field")
 
-        this.headerSearchIcon = document.getElementById("009")
-        this.closeIcon = document.querySelector(".close-live-search")
+    this.headerSearchIcon = document.getElementById("009")
+    this.closeIcon = document.querySelector(".close-live-search")
+    this.loaderIcon = document.querySelector(".circle-loader")
 
-        this.events()
-    }
+    this.events()
+  }
 
-    // Events
-    events() {
-        this.headerSearchIcon.addEventListener("click", (e) => {
-            e.preventDefault()
-            this.openOverlay()
-        })
-        this.closeIcon.addEventListener("click", (e) => {
-            e.preventDefault()
-            this.closeOverlay()
-        })
-    }
+  // Events
+  events() {
+    this.headerSearchIcon.addEventListener("click", (e) => {
+      e.preventDefault()
+      this.openOverlay()
+    })
+    this.closeIcon.addEventListener("click", (e) => {
+      e.preventDefault()
+      this.closeOverlay()
+    })
+    this.searchInput.addEventListener('keyup', (e) => {
+      this.keyPressedHandler()
+    })
+  }
 
-    // Methods
-    openOverlay() {
-        this.overlay.classList.add("search-overlay--visible")
-    }
-    closeOverlay() {
-        this.overlay.classList.remove("search-overlay--visible")
-    }
+  // Methods
+  openOverlay() {
+    this.overlay.classList.add("search-overlay--visible")
+    setTimeout(() => {
+      this.searchInput.focus()
+    }, 50)
 
-    insertHTML() {
-        document.body.insertAdjacentHTML('beforeend', `<div class="search-overlay">
+
+  }
+  closeOverlay() {
+    this.overlay.classList.remove("search-overlay--visible")
+  }
+
+  keyPressedHandler() {
+    this.showIconLoader()
+  }
+
+  showIconLoader() {
+    this.loaderIcon.classList.add("circle-loader--visible")
+  }
+
+  insertHTML() {
+    document.body.insertAdjacentHTML('beforeend', `<div class="search-overlay">
         <div class="search-overlay-top shadow-sm">
           <div class="container container--narrow">
             <label for="live-search-field" class="search-overlay-icon"><i class="fas fa-search"></i></label>
@@ -44,7 +62,7 @@ export default class Search {
         <div class="search-overlay-bottom">
           <div class="container container--narrow py-3">
             <div class="circle-loader"></div>
-            <div class="live-search-results live-search-results--visible">
+            <div class="live-search-results">
               <div class="list-group shadow-sm">
                 <div class="list-group-item active"><strong>Search Results</strong> (4 items found)</div>
     
@@ -69,7 +87,7 @@ export default class Search {
           </div>
         </div>
       </div>`)
-    }
+  }
 
 
 }

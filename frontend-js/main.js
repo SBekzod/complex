@@ -1,6 +1,8 @@
 import Search from './modules/search'
 
-let search = new Search()
+if (document.getElementById("009")) {
+    let search = new Search()
+}
 
 
 // $(document).ready(function(){
