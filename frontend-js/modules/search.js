@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default class Search {
 
   // Select DOM elements
@@ -45,18 +47,18 @@ export default class Search {
   }
 
   keyPressedHandler() {
-    console.log('process')
+
     let value = this.searchInput.value
-    if(value != '' && value != this.prevValue) {
+    if (value != '' && value != this.prevValue) {
       // showing Icon loader
       this.showIconLoader()
 
       // starting user keyup event
       clearTimeout(this.typingWaitTimer)
       this.prevValue = value
-      this.typingWaitTimer = setTimeout(this.sendRequset, 3000)
+      this.typingWaitTimer = setTimeout(() => this.sendRequset(), 3000)
     }
-    
+
   }
 
   showIconLoader() {
@@ -64,7 +66,11 @@ export default class Search {
   }
 
   sendRequset() {
-    alert('waited for 3000 from lasat keyup and request is being send right away!')
+    // console.log(this.searchInput.value)
+    axios.post("/search", { searchingValue: this.searchInput.value }).then(() => {
+    }).catch(() => {
+      alert("Your request for " + this.searchInput.value + " was failed!")
+    })
   }
 
   insertHTML() {
