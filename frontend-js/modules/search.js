@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default class Search {
+class Search {
 
   // Select DOM elements
   constructor() {
@@ -16,7 +16,7 @@ export default class Search {
     this.results = document.getElementById("results")
     this.resultCounts = document.getElementById("resultCounts")
 
-    this.typingWaitTimer
+    this.typingWaitTimer = 0
     this.prevValue = ""
     this.data = []
 
@@ -138,3 +138,5 @@ export default class Search {
 
 
 }
+
+export default Search

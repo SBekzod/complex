@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const md5 = require('md5')
 const ObjectID = require('mongodb').ObjectID
 
+
 // constructor
 let User = function (data) {
     this.data = data

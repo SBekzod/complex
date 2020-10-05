@@ -1,6 +1,7 @@
 const db = require('../db').db().collection('post')
 const ObjectID = require('mongodb').ObjectID
 
+
 // Constructor
 let Post = function (data) {
     this.data = data

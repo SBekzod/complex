@@ -1,7 +1,8 @@
-const postController = module.exports
 const Post = require('../models/Post')
 const User = require('../models/User')
 const { post } = require('../router')
+
+const postController = module.exports
 
 postController.viewCreateScreen = function (req, res) {
     res.render('create-post', { avatar: req.session.user.avatar, postErrors: req.flash('postErrors'), success: req.flash('success') })
