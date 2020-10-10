@@ -48,10 +48,13 @@ postController.testing = function (req, res) {
 }
 
 postController.goToProfilePosts = async function (req, res) {
+
+    // console.log(req)
+
     try {
         let author = req.author
         let listOfMessages = await Post.findAllMessages(author._id)
-        res.render('profile-posts', { allMessages: listOfMessages, avatar: author.avatar, username: author.username })
+        res.render('profile-posts', { allMessages: listOfMessages, avatar: author.avatar, username: author.username, isVisitorTheOwner: req.isVisitorTheOwner })
     } catch (err) {
         res.render(err)
     }
@@ -116,3 +119,5 @@ postController.search = async function (req, res) {
     }
 
 }
+
+

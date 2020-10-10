@@ -93,3 +93,12 @@ userController.ifUserExists = async function (req, res, next) {
     }
 
 }
+
+userController.isVisitorTheOwner = function (req, res, next) {
+    let isVisitorTheOwner = false
+    if(req.author.username == req.session.user.username) {
+        isVisitorTheOwner = true
+    }
+    req.isVisitorTheOwner = isVisitorTheOwner
+    next()
+}

@@ -27,3 +27,20 @@ followController.unsubscribe = function (req, res) {
 
 }
 
+followController.isVisitorFollowing = async function(req, res, next) {
+
+    let followId = req.author._id
+    let subscriberId = req.session.user.authorId
+    let follow = new Follow(followId, subscriberId)
+
+    try {
+        let isVisitorFollowing = await follow.isVisitorFollowing()
+        req.isVisitorFollowing = isVisitorFollowing
+    } catch (err) {
+        res.send(err)
+    }
+
+    next()
+
+}
+

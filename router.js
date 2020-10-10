@@ -12,7 +12,8 @@ router.post('/login', userController.login)
 router.post('/logout', userController.logout)
 
 // profile related routes
-router.get('/profile/:username', userController.mustBeLoggedIn, userController.ifUserExists, postController.goToProfilePosts)
+router.get('/profile/:username', userController.mustBeLoggedIn, userController.ifUserExists,
+    userController.isVisitorTheOwner, followController.isVisitorFollowing, postController.goToProfilePosts)
 
 // post related routes
 router.get('/create-post', userController.mustBeLoggedIn, postController.viewCreateScreen)

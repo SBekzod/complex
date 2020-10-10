@@ -16,7 +16,7 @@ Follow.prototype.subscribeToUsername = function () {
         } else {
 
             try {
-                // Check first whether the user is subscribed or not
+                // check first whether the user is subscribed or not
                 let sub_history = await db.findOne({
                     followId: this.data.followId,
                     subscriberId: ObjectID(this.data.subscriberId)
@@ -26,7 +26,13 @@ Follow.prototype.subscribeToUsername = function () {
                     return
                 }
 
-                // Subscribe the user to the chosen followId
+                // checking if the user is not the owner of the page
+                if (this.data.followId == this.data.subscriberId) {
+                    reject('User can not subscribe to himself')
+                    return
+                }
+
+                // subscribe the user to the chosen followId
                 let result = await db.insertOne({
                     followId: this.data.followId,
                     subscriberId: ObjectID(this.data.subscriberId)
@@ -41,6 +47,28 @@ Follow.prototype.subscribeToUsername = function () {
 
     })
 
+}
+
+Follow.prototype.isVisitorFollowing = function () {
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            let sub_history = await db.findOne({
+                followId: this.data.followId,
+                subscriberId: ObjectID(this.data.subscriberId)
+            })
+            console.log(sub_history)
+            if (sub_history != null) {
+                resolve(true)
+            } else {
+                resolve(false)
+            }
+        } catch (err) {
+            reject('Error in database connection')
+        }
+
+
+    })
 }
 
 module.exports = Follow
