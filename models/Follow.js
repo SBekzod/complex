@@ -21,6 +21,7 @@ Follow.prototype.subscribeToUsername = function () {
                     followId: this.data.followId,
                     subscriberId: ObjectID(this.data.subscriberId)
                 })
+                // console.log(sub_history)
                 if (sub_history != null) {
                     reject('already subscribed to this user')
                     return
@@ -57,7 +58,7 @@ Follow.prototype.isVisitorFollowing = function () {
                 followId: this.data.followId,
                 subscriberId: ObjectID(this.data.subscriberId)
             })
-            console.log(sub_history)
+            // console.log(sub_history)
             if (sub_history != null) {
                 resolve(true)
             } else {

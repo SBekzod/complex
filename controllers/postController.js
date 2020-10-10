@@ -1,6 +1,7 @@
 const Post = require('../models/Post')
 const User = require('../models/User')
 const { post } = require('../router')
+const { isVisitorFollowing } = require('./followController')
 
 const postController = module.exports
 
@@ -50,11 +51,12 @@ postController.testing = function (req, res) {
 postController.goToProfilePosts = async function (req, res) {
 
     // console.log(req)
-
     try {
         let author = req.author
         let listOfMessages = await Post.findAllMessages(author._id)
-        res.render('profile-posts', { allMessages: listOfMessages, avatar: author.avatar, username: author.username, isVisitorTheOwner: req.isVisitorTheOwner })
+        res.render('profile-posts', { allMessages: listOfMessages, avatar: author.avatar, username: author.username, 
+            isVisitorTheOwner: req.isVisitorTheOwner, isVisitorFollowing: req.isVisitorFollowing,
+            sucFollow: req.flash('sucFollow'), failFollow: req.flash('failFollow') })
     } catch (err) {
         res.render(err)
     }

@@ -17,9 +17,11 @@ followController.subscribe = async function (req, res) {
 
         await follow.subscribeToUsername()
         // res.send('Fulfilled')
+        req.session.flash.sucFollow = 'Successfully subscribed!'
         res.redirect(`/profile/${username}`)
     } catch (err) {
-        res.send(err)
+        req.session.flash.failFollow = 'Fail to subscribe, already subscribed!'
+        res.redirect(`/profile/${username}`)
     }
 }
 
@@ -31,10 +33,12 @@ followController.isVisitorFollowing = async function(req, res, next) {
 
     let followId = req.author._id
     let subscriberId = req.session.user.authorId
-    let follow = new Follow(followId, subscriberId)
+    let data = {followId: followId, subscriberId: subscriberId}
+    let follow = new Follow(data)
 
     try {
         let isVisitorFollowing = await follow.isVisitorFollowing()
+        // console.log(isVisitorFollowing)
         req.isVisitorFollowing = isVisitorFollowing
     } catch (err) {
         res.send(err)

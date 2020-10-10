@@ -1,11 +1,31 @@
 <%- include('includes/header') %>
 
 <div class="container py-md-5 container--narrow">
+
+    <% if(sucFollow != '') { %>
+    <div class="alert alert-success text-center">
+        <%= sucFollow %>
+    </div>
+    <% } %>
+    <% if(failFollow != '') { %>
+    <div class="alert alert-danger text-center">
+        <%= failFollow %>
+    </div>
+    <% } %>
+
     <h2><img class="avatar-small" src="<%= avatar %>"> <%= username %>
+
+        <% if(user && isVisitorFollowing) { %>
+        <form class="ml-2 d-inline" action="/unfollow/<%= username %>" method="POST">
+            <button class="btn btn-danger btn-sm">Stop Following<i class="fas fa-user-times"></i></button>
+        </form>
+        <% } else if(user && !isVisitorFollowing && !isVisitorTheOwner) { %>
         <form class="ml-2 d-inline" action="/follow/<%= username %>" method="POST">
             <button class="btn btn-primary btn-sm">Follow <i class="fas fa-user-plus"></i></button>
-            <!-- <button class="btn btn-danger btn-sm">Stop Following <i class="fas fa-user-times"></i></button> -->
+            <% } %>
         </form>
+
+
     </h2>
 
     <div class="profile-nav nav nav-tabs pt-2 mb-4">
