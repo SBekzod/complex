@@ -51,6 +51,7 @@ Follow.prototype.subscribeToUsername = function () {
 }
 
 Follow.prototype.isVisitorFollowing = function () {
+    
     return new Promise(async (resolve, reject) => {
 
         try {
@@ -68,6 +69,24 @@ Follow.prototype.isVisitorFollowing = function () {
             reject('Error in database connection')
         }
 
+
+    })
+}
+
+
+Follow.prototype.unsubscribe = function () {
+    return new Promise(async (resolve, reject) => {
+
+        try{
+            await db.deleteOne({
+                followId: this.data.followId,
+                subscriberId: ObjectID(this.data.subscriberId)
+            })
+            resolve('deleted')
+        } catch(err) {
+            reject(err)
+        }
+        
 
     })
 }

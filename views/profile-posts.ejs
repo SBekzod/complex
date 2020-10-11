@@ -22,8 +22,9 @@
         <% } else if(user && !isVisitorFollowing && !isVisitorTheOwner) { %>
         <form class="ml-2 d-inline" action="/follow/<%= username %>" method="POST">
             <button class="btn btn-primary btn-sm">Follow <i class="fas fa-user-plus"></i></button>
-            <% } %>
         </form>
+        <% } %>
+
 
 
     </h2>

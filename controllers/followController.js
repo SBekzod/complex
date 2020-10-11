@@ -11,7 +11,7 @@ followController.subscribe = async function (req, res) {
         let author = await User.findAuthorByUsername(username),
             followId = author._id,
             subscriberId = req.session.user.authorId,
-            data = {followId: followId, subscriberId: subscriberId}
+            data = { followId: followId, subscriberId: subscriberId }
 
         let follow = new Follow(data)
 
@@ -25,15 +25,30 @@ followController.subscribe = async function (req, res) {
     }
 }
 
-followController.unsubscribe = function (req, res) {
+followController.unsubscribe = async function (req, res) {
 
+    let followId = req.author._id,
+        username = req.params.username,
+        subscriberId = req.session.user.authorId,
+        data = { followId: followId, subscriberId: subscriberId }
+    let follow = new Follow(data)
+    let result 
+
+    try {
+        result = await follow.unsubscribe()
+    } catch (err) {
+        res.send(err)
+    }
+
+    req.session.flash.sucFollow = 'Unsubscribed successfully!'
+    res.redirect(`/profile/${username}`)
 }
 
-followController.isVisitorFollowing = async function(req, res, next) {
+followController.isVisitorFollowing = async function (req, res, next) {
 
     let followId = req.author._id
     let subscriberId = req.session.user.authorId
-    let data = {followId: followId, subscriberId: subscriberId}
+    let data = { followId: followId, subscriberId: subscriberId }
     let follow = new Follow(data)
 
     try {

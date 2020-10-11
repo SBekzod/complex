@@ -26,5 +26,6 @@ router.post('/search', postController.search)
 
 // follow related routes
 router.post('/follow/:username', userController.mustBeLoggedIn, followController.subscribe)
+router.post('/unfollow/:username', userController.mustBeLoggedIn, userController.ifUserExists, followController.unsubscribe)
 
 module.exports = router
