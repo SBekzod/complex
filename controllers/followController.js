@@ -11,7 +11,7 @@ followController.subscribe = async function (req, res) {
         let author = await User.findAuthorByUsername(username),
             followId = author._id,
             subscriberId = req.session.user.authorId,
-            data = { followId: followId, subscriberId: subscriberId }
+            data = {followId: followId, subscriberId: subscriberId}
 
         let follow = new Follow(data)
 
@@ -30,9 +30,9 @@ followController.unsubscribe = async function (req, res) {
     let followId = req.author._id,
         username = req.params.username,
         subscriberId = req.session.user.authorId,
-        data = { followId: followId, subscriberId: subscriberId }
+        data = {followId: followId, subscriberId: subscriberId}
     let follow = new Follow(data)
-    let result 
+    let result
 
     try {
         result = await follow.unsubscribe()
@@ -48,7 +48,7 @@ followController.isVisitorFollowing = async function (req, res, next) {
 
     let followId = req.author._id
     let subscriberId = req.session.user.authorId
-    let data = { followId: followId, subscriberId: subscriberId }
+    let data = {followId: followId, subscriberId: subscriberId}
     let follow = new Follow(data)
 
     try {
@@ -62,4 +62,124 @@ followController.isVisitorFollowing = async function (req, res, next) {
     next()
 
 }
+
+followController.goToProfileFollowers = async function (req, res) {
+    let authorId = req.author._id
+
+    try {
+        let listOfFollowersId = await Follow.getListOfFollowerId(authorId)
+        let listOfFollowersAuthor = []
+
+        // getting subscribed users author object information
+        for (let i = 0; i < listOfFollowersId.length; i++) {
+            let subscriberId = listOfFollowersId[i].subscriberId
+            listOfFollowersAuthor[i] = await User.findAuthorByAuthorId(subscriberId)
+        }
+
+        // console.log(listOfFollowersAuthor)
+        res.render('profile-followers', {
+            allMessages: req.listOfMessages,
+            avatar: req.author.avatar,
+            username: req.author.username,
+            isVisitorTheOwner: req.isVisitorTheOwner,
+            isVisitorFollowing: req.isVisitorFollowing,
+            sucFollow: req.flash('sucFollow'),
+            failFollow: req.flash('failFollow'),
+            listOfFollowersAuthor: listOfFollowersAuthor,
+            numberOfFollowings: req.numberOfFollowings
+        })
+
+    } catch (err) {
+        res.session.flash.genError = err
+        res.redirect(`/profile/${req.author.username}`)
+    }
+
+}
+
+followController.goToProfileFollowings = async function (req, res) {
+
+    let authorId = req.author._id
+    // console.log(authorId)
+
+    try {
+        let listOfFollowingsId = await Follow.getListOfFollowingId(authorId)
+        let listOfFollowingsAuthor = []
+        // console.log(listOfFollowingsId)
+
+        // getting following users author object information
+        for (let i = 0; i < listOfFollowingsId.length; i++) {
+            let followId = listOfFollowingsId[i].followId
+            listOfFollowingsAuthor[i] = await User.findAuthorByAuthorId(followId)
+        }
+
+        // console.log(listOfFollowingsAuthor)
+        res.render('profile-followings', {
+            allMessages: req.listOfMessages,
+            avatar: req.author.avatar,
+            username: req.author.username,
+            isVisitorTheOwner: req.isVisitorTheOwner,
+            isVisitorFollowing: req.isVisitorFollowing,
+            sucFollow: req.flash('sucFollow'),
+            failFollow: req.flash('failFollow'),
+            listOfFollowingsAuthor: listOfFollowingsAuthor,
+            numberOfFollowers: req.numberOfFollowers
+        })
+
+    } catch (err) {
+        res.session.flash.genError = err
+        res.redirect(`/profile/${req.author.username}`)
+    }
+
+
+}
+
+followController.profileFollowingsAspect = async function (req, res, next) {
+
+    let authorId = req.author._id
+    // console.log(authorId)
+
+    try {
+        let listOfFollowingsId = await Follow.getListOfFollowingId(authorId)
+        let listOfFollowingsAuthor = []
+        // console.log(listOfFollowingsId)
+
+        // getting following users author object information
+        for (let i = 0; i < listOfFollowingsId.length; i++) {
+            let followId = listOfFollowingsId[i].followId
+            listOfFollowingsAuthor[i] = await User.findAuthorByAuthorId(followId)
+        }
+
+        req.numberOfFollowings = listOfFollowingsAuthor.length
+        next()
+
+    } catch (err) {
+        res.send(err)
+    }
+
+
+}
+
+followController.profileFollowersAspect = async function (req, res, next) {
+    let authorId = req.author._id
+
+    try {
+        let listOfFollowersId = await Follow.getListOfFollowerId(authorId)
+        let listOfFollowersAuthor = []
+
+        // getting subscribed users author object information
+        for (let i = 0; i < listOfFollowersId.length; i++) {
+            let subscriberId = listOfFollowersId[i].subscriberId
+            listOfFollowersAuthor[i] = await User.findAuthorByAuthorId(subscriberId)
+        }
+
+        req.numberOfFollowers = listOfFollowersAuthor.length
+        next()
+
+    } catch (err) {
+        res.send(err)
+    }
+
+}
+
+
 

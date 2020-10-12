@@ -40,6 +40,15 @@ body, .tooltip
   top: -1px;
 }
 
+.avatar-normal {
+  width: 64px;
+  height: 64px;
+  border-radius: 32px;
+  margin-right: 5px;
+  position: relative;
+  top: -3px;
+}
+
 .form-control-title {
   font-size: 2rem;
   font-weight: 500;

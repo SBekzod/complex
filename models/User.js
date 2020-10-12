@@ -89,7 +89,7 @@ User.prototype.register = function () {
                     'email': this.data.email,
                     'password': this.data.password
                 })
-                console.log('Successfully inserted to User collection')
+                // console.log('Successfully inserted to User collection')
                 this._id = data.ops[0]._id
                 this.getAvatar()
             } catch (err) {

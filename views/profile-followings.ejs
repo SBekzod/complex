@@ -12,11 +12,7 @@
             <%= failFollow %>
         </div>
     <% } %>
-    <% if(genError != '') { %>
-        <div class="alert alert-danger text-center">
-            <%= genError %>
-        </div>
-    <% } %>
+
 
     <h2><img class="avatar-small" src="<%= avatar %>"> <%= username %>
 
@@ -34,20 +30,20 @@
 
     <div class="profile-nav nav nav-tabs pt-2 mb-4">
         <a href="/profile/<%= username %>"
-           class="profile-nav-link nav-item nav-link active">Posts: <%= allMessages.length %></a>
+           class="profile-nav-link nav-item nav-link">Posts: <%= allMessages.length %></a>
         <a href="/profile/<%= username %>/followers" class="profile-nav-link nav-item nav-link ">Followers: <%= numberOfFollowers %></a>
-        <a href="/profile/<%= username %>/followings" class="profile-nav-link nav-item nav-link ">Following: <%= numberOfFollowings %></a>
+        <a href="/profile/<%= username %>/followings"
+           class="profile-nav-link nav-item nav-link active">Following: <%= listOfFollowingsAuthor.length %></a>
     </div>
 
-    <% if(!allMessages) { %>
-        <div>No messages</div>
+    <% if(!listOfFollowingsAuthor ) { %>
+        <div>No Followers</div>
     <% } else { %>
         <div class="list-group">
-            <% allMessages.forEach(function(ele){ %>
-                <a href="/post/<%= ele._id %>" class="list-group-item list-group-item-action">
-                    <img class="avatar-tiny" src="<%= avatar %>">
-                    <strong><%= ele.body %></strong> on
-                    <%= ele.createdDate.getFullYear() + '/' + (ele.createdDate.getMonth() + 1) + '/' + ele.createdDate.getDate() %>
+            <% listOfFollowingsAuthor.forEach(function(ele){ %>
+                <a href="/profile/<%= ele.username %>" class="list-group-item list-group-item-action">
+                    <img class="avatar-normal" src="<%= ele.avatar %>">
+                    <strong><%= ele.username %></strong>
                 </a>
             <% }) %>
         </div>

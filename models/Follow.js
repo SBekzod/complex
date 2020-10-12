@@ -73,7 +73,6 @@ Follow.prototype.isVisitorFollowing = function () {
     })
 }
 
-
 Follow.prototype.unsubscribe = function () {
     return new Promise(async (resolve, reject) => {
 
@@ -89,6 +88,37 @@ Follow.prototype.unsubscribe = function () {
         
 
     })
+}
+
+
+// Non OOP on FPC
+Follow.getListOfFollowerId = function(authorId) {
+
+    return new Promise(async (resolve, reject)=> {
+        try {
+            let resultList = await db.find({followId: authorId}).toArray()
+            resolve(resultList)
+        } catch (err) {
+            reject(err)
+        }
+
+    })
+
+}
+
+// Non OOP on FPC
+Follow.getListOfFollowingId = function(authorId) {
+
+    return new Promise(async (resolve, reject)=> {
+        try {
+            let resultList = await db.find({subscriberId: authorId}).toArray()
+            resolve(resultList)
+        } catch (err) {
+            reject(err)
+        }
+
+    })
+
 }
 
 module.exports = Follow

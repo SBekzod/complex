@@ -8,7 +8,7 @@ userController.login = async function (req, res) {
     // console.log(user.data.username)
     try {
         const result = await user.login()
-        req.session.user = { username: user.data.username, avatar: user.avatar, authorId: user._id }
+        req.session.user = {username: user.data.username, avatar: user.avatar, authorId: user._id}
         req.session.save(function () {
             res.redirect('/')
         })
@@ -34,7 +34,7 @@ userController.home = function (req, res) {
         // console.log(req.session.user.username)
         res.render('home-dashboard', {permitErrors: req.flash('permitErrors')})
     } else {
-        res.render('home-guest', { errors: req.flash('errors'), regErrors: req.flash('regErrors') })
+        res.render('home-guest', {errors: req.flash('errors'), regErrors: req.flash('regErrors')})
     }
 
 }
@@ -53,7 +53,7 @@ userController.register = async function (req, res) {
             res.redirect('/')
         })
     } else {
-        req.session.user = { username: user.data.username, avatar: user.avatar, authorId: user._id }
+        req.session.user = {username: user.data.username, avatar: user.avatar, authorId: user._id}
         req.session.save(function () {
             res.redirect('/')
         })
@@ -96,7 +96,7 @@ userController.ifUserExists = async function (req, res, next) {
 
 userController.isVisitorTheOwner = function (req, res, next) {
     let isVisitorTheOwner = false
-    if(req.author.username == req.session.user.username) {
+    if (req.author.username == req.session.user.username) {
         isVisitorTheOwner = true
     }
     req.isVisitorTheOwner = isVisitorTheOwner

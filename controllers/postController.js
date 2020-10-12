@@ -1,12 +1,16 @@
 const Post = require('../models/Post')
 const User = require('../models/User')
-const { post } = require('../router')
-const { isVisitorFollowing } = require('./followController')
+const {post} = require('../router')
+const {isVisitorFollowing} = require('./followController')
 
 const postController = module.exports
 
 postController.viewCreateScreen = function (req, res) {
-    res.render('create-post', { avatar: req.session.user.avatar, postErrors: req.flash('postErrors'), success: req.flash('success') })
+    res.render('create-post', {
+        avatar: req.session.user.avatar,
+        postErrors: req.flash('postErrors'),
+        success: req.flash('success')
+    })
 }
 
 postController.create = async function (req, res) {
@@ -36,7 +40,7 @@ postController.viewSingle = async function (req, res, next) {
             req.session.user.authorId == author._id ? author.isVisitorAuthor = true : author.isVisitorAuthor = false
         }
 
-        res.render('single-post-screen', { author: author, message: message })
+        res.render('single-post-screen', {author: author, message: message})
     } catch (err) {
         // next(err)
         res.render('error-404')
@@ -54,9 +58,31 @@ postController.goToProfilePosts = async function (req, res) {
     try {
         let author = req.author
         let listOfMessages = await Post.findAllMessages(author._id)
-        res.render('profile-posts', { allMessages: listOfMessages, avatar: author.avatar, username: author.username, 
-            isVisitorTheOwner: req.isVisitorTheOwner, isVisitorFollowing: req.isVisitorFollowing,
-            sucFollow: req.flash('sucFollow'), failFollow: req.flash('failFollow') })
+        res.render('profile-posts', {
+            allMessages: listOfMessages,
+            avatar: author.avatar,
+            username: author.username,
+            isVisitorTheOwner: req.isVisitorTheOwner,
+            isVisitorFollowing: req.isVisitorFollowing,
+            numberOfFollowers: req.numberOfFollowers,
+            numberOfFollowings: req.numberOfFollowings,
+            sucFollow: req.flash('sucFollow'),
+            failFollow: req.flash('failFollow'),
+            genError: req.flash('genError')
+        })
+    } catch (err) {
+        res.render(err)
+    }
+}
+
+postController.profileFollowAspect = async function (req, res, next) {
+
+    // res.send('FOLLOWERS')
+
+    try {
+        let author = req.author
+        req.listOfMessages = await Post.findAllMessages(author._id)
+        next()
     } catch (err) {
         res.render(err)
     }
@@ -69,7 +95,7 @@ postController.viewEditScreen = async function (req, res) {
             author = await User.findAuthorByAuthorId(message.autherId)
 
         if (req.session.user.authorId == author._id) {
-            res.render('edit-post', { message: message, editSuccess: req.flash('editSuccess') })
+            res.render('edit-post', {message: message, editSuccess: req.flash('editSuccess')})
         } else {
             req.session.flash.permitErrors = 'you do not have right to see that page'
             req.session.save(function () {
