@@ -142,13 +142,10 @@ User.findAuthorByAuthorId = function (authorID) {
 
 }
 
-// // Non OOP method on FPC
-// User.editingPostWithUserInfo = function (list) {
-//     return new Promise((resolve, reject) => {
-//         let newList = list.map(ele => {
+// Non OOP on FPC
 
-//         })
-//     })
-// }
+User.attachAvatar = function() {
+
+}
 
 module.exports = User

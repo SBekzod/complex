@@ -1,5 +1,6 @@
 const db = require('../db').db().collection('follow')
 const ObjectID = require('mongodb').ObjectID
+const User = require('./User')
 
 
 let Follow = function (data) {
@@ -51,7 +52,7 @@ Follow.prototype.subscribeToUsername = function () {
 }
 
 Follow.prototype.isVisitorFollowing = function () {
-    
+
     return new Promise(async (resolve, reject) => {
 
         try {
@@ -76,25 +77,25 @@ Follow.prototype.isVisitorFollowing = function () {
 Follow.prototype.unsubscribe = function () {
     return new Promise(async (resolve, reject) => {
 
-        try{
+        try {
             await db.deleteOne({
                 followId: this.data.followId,
                 subscriberId: ObjectID(this.data.subscriberId)
             })
             resolve('deleted')
-        } catch(err) {
+        } catch (err) {
             reject(err)
         }
-        
+
 
     })
 }
 
 
 // Non OOP on FPC
-Follow.getListOfFollowerId = function(authorId) {
+Follow.getListOfFollowerId = function (authorId) {
 
-    return new Promise(async (resolve, reject)=> {
+    return new Promise(async (resolve, reject) => {
         try {
             let resultList = await db.find({followId: authorId}).toArray()
             resolve(resultList)
@@ -107,9 +108,9 @@ Follow.getListOfFollowerId = function(authorId) {
 }
 
 // Non OOP on FPC
-Follow.getListOfFollowingId = function(authorId) {
+Follow.getListOfFollowingId = function (authorId) {
 
-    return new Promise(async (resolve, reject)=> {
+    return new Promise(async (resolve, reject) => {
         try {
             let resultList = await db.find({subscriberId: authorId}).toArray()
             resolve(resultList)
@@ -120,5 +121,37 @@ Follow.getListOfFollowingId = function(authorId) {
     })
 
 }
+
+// Non OOP on FPC
+Follow.getFollowersById = function (authorId) {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            // aggregating two database combined search
+            let followers = await db.aggregate([
+                {$match: {followId: authorId}},
+                {$lookup: {from: "users", localField: "subscriberId", foreignField: "_id", as: "userDoc"}},
+                {$project: {
+                    username: {$arrayElemAt: ["$userDoc.username", 0]},
+                    email: {$arrayElemAt: ["$userDoc.email", 0]}
+                }}
+            ]).toArray()
+
+            // adding avatars to the followers list array
+            followers = followers.map(function (ele) {
+                let user = new User(ele)
+                user.getAvatar()
+                return {username: ele.username, avatar: user.avatar}
+            })
+            resolve(followers)
+
+        } catch (err) {
+            reject(err)
+        }
+
+    })
+
+}
+
 
 module.exports = Follow

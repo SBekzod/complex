@@ -67,16 +67,9 @@ followController.goToProfileFollowers = async function (req, res) {
     let authorId = req.author._id
 
     try {
-        let listOfFollowersId = await Follow.getListOfFollowerId(authorId)
-        let listOfFollowersAuthor = []
 
-        // getting subscribed users author object information
-        for (let i = 0; i < listOfFollowersId.length; i++) {
-            let subscriberId = listOfFollowersId[i].subscriberId
-            listOfFollowersAuthor[i] = await User.findAuthorByAuthorId(subscriberId)
-        }
+        let listOfFollowersAuthor = await Follow.getFollowersById(authorId)
 
-        // console.log(listOfFollowersAuthor)
         res.render('profile-followers', {
             allMessages: req.listOfMessages,
             avatar: req.author.avatar,
@@ -90,8 +83,7 @@ followController.goToProfileFollowers = async function (req, res) {
         })
 
     } catch (err) {
-        res.session.flash.genError = err
-        res.redirect(`/profile/${req.author.username}`)
+        res.send(err)
     }
 
 }
