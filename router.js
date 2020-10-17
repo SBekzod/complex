@@ -5,7 +5,7 @@ const postController = require('./controllers/postController')
 const followController = require('./controllers/followController')
 
 // user related routes
-router.get('/', userController.home)
+router.get('/', userController.mustBeLoggedInRes, followController.getFollowingIds, postController.getPostsWithInfo, userController.home)
 router.get('/about', userController.about)
 router.post('/register', userController.register)
 router.post('/login', userController.login)

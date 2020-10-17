@@ -30,12 +30,8 @@ userController.logout = function (req, res) {
 }
 
 userController.home = function (req, res) {
-    if (req.session.user) {
-        // console.log(req.session.user.username)
-        res.render('home-dashboard', {permitErrors: req.flash('permitErrors')})
-    } else {
-        res.render('home-guest', {errors: req.flash('errors'), regErrors: req.flash('regErrors')})
-    }
+    let followPostsWithInfo = req.followPostsWithinfo
+    res.render('home-dashboard', {permitErrors: req.flash('permitErrors')})
 
 }
 
@@ -69,6 +65,14 @@ userController.mustBeLoggedIn = function (req, res, next) {
         req.session.save(function () {
             res.redirect('/')
         })
+    }
+}
+
+userController.mustBeLoggedInRes = function (req, res, next) {
+    if (req.session.user) {
+        return next()
+    } else {
+        res.render('home-guest', {errors: req.flash('errors'), regErrors: req.flash('regErrors')})
     }
 }
 

@@ -143,8 +143,7 @@ User.findAuthorByAuthorId = function (authorID) {
 }
 
 // Non OOP on FPC
-
-User.attachAvatar = function() {
+User.attachAvatar = function(email) {
 
 }
 

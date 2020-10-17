@@ -1,7 +1,5 @@
 const Post = require('../models/Post')
 const User = require('../models/User')
-const {post} = require('../router')
-const {isVisitorFollowing} = require('./followController')
 
 const postController = module.exports
 
@@ -147,5 +145,18 @@ postController.search = async function (req, res) {
     }
 
 }
+
+postController.getPostsWithInfo = async function (req, res, next) {
+    console.log(req.followIdList)
+    try {
+        req.followPostsWithinfo = await Post.getFollowPosts(req.followIdList)
+        next()
+    } catch {
+        res.render('home-guest', {errors: req.flash('errors'), regErrors: req.flash('regErrors')})
+    }
+
+}
+
+
 
 

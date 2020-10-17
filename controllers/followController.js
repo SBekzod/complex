@@ -173,5 +173,18 @@ followController.profileFollowersAspect = async function (req, res, next) {
 
 }
 
+followController.getFollowingIds = async function (req, res, next) {
+    let authorId = req.session.user.authorId
+
+    try {
+        req.followIdList = await Follow.getFollowingPostsAndInfo(authorId)
+        next()
+    } catch {
+        res.render('home-guest', {errors: req.flash('errors'), regErrors: req.flash('regErrors')})
+    }
+
+
+}
+
 
 

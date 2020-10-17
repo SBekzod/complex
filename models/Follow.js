@@ -1,6 +1,7 @@
 const db = require('../db').db().collection('follow')
 const ObjectID = require('mongodb').ObjectID
 const User = require('./User')
+const Post = require('./Post')
 
 
 let Follow = function (data) {
@@ -131,10 +132,12 @@ Follow.getFollowersById = function (authorId) {
             let followers = await db.aggregate([
                 {$match: {followId: authorId}},
                 {$lookup: {from: "users", localField: "subscriberId", foreignField: "_id", as: "userDoc"}},
-                {$project: {
-                    username: {$arrayElemAt: ["$userDoc.username", 0]},
-                    email: {$arrayElemAt: ["$userDoc.email", 0]}
-                }}
+                {
+                    $project: {
+                        username: {$arrayElemAt: ["$userDoc.username", 0]},
+                        email: {$arrayElemAt: ["$userDoc.email", 0]}
+                    }
+                }
             ]).toArray()
 
             // adding avatars to the followers list array
@@ -151,6 +154,26 @@ Follow.getFollowersById = function (authorId) {
 
     })
 
+}
+
+// Non OOP on FPC
+Follow.getFollowingPostsAndInfo = function (authorId) {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            // getting followers list of Ids
+            let listOfAuthors = await db.find({subscriberId: ObjectID(authorId)}).toArray()
+            listOfAuthors = listOfAuthors.map(ele => {
+                return ele.followId
+            })
+            resolve(listOfAuthors)
+
+        } catch {
+            reject()
+        }
+
+    })
 }
 
 

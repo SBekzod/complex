@@ -54,7 +54,12 @@ Post.prototype.editPost = function () {
     return new Promise(async (resolve, reject) => {
 
         try {
-            let newPost = await db.findOneAndUpdate({ _id: ObjectID(this.data.messageId) }, { $set: { title: `${this.data.title}`, body: `${this.data.body}` } })
+            let newPost = await db.findOneAndUpdate({_id: ObjectID(this.data.messageId)}, {
+                $set: {
+                    title: `${this.data.title}`,
+                    body: `${this.data.body}`
+                }
+            })
             resolve(newPost)
         } catch (err) {
             reject(err)
@@ -62,7 +67,6 @@ Post.prototype.editPost = function () {
 
     })
 }
-
 
 
 // Non OOP method on FPC
@@ -92,7 +96,7 @@ Post.findAllMessages = function (authorId) {
             reject('suspicious request')
         } else {
             try {
-                let list = await db.find({ autherId: ObjectID(authorId) }).toArray()
+                let list = await db.find({autherId: ObjectID(authorId)}).toArray()
                 resolve(list)
             } catch (err) {
                 reject('problem in connection to db')
@@ -106,9 +110,9 @@ Post.findAllMessages = function (authorId) {
 // Non OOP method on FPC
 Post.search = function (term) {
     return new Promise(async function (resolve, reject) {
-        if(typeof(term) == 'string') {
+        if (typeof (term) == 'string') {
             try {
-                let posts = await db.find({ title: { $regex: `${term}` } }).toArray()
+                let posts = await db.find({title: {$regex: `${term}`}}).toArray()
                 // if(posts.length == 0) reject('no posts were found')
                 resolve(posts)
             } catch (err) {
@@ -118,6 +122,29 @@ Post.search = function (term) {
             reject('malicious request')
         }
 
+    })
+}
+
+// Non OOP on FPC
+Post.getFollowPosts = function (list) {
+
+    return new Promise(async (resolve, reject) => {
+        let followPosts = await db.aggregate([
+            {$match: {autherId: {$in: list}}},
+            {$sort: {createdDate: -1}},
+            {$lookup: {from: "users", localField: "autherId", foreignField: "_id", as: "authorList"}},
+        ]).toArray()
+
+        followPosts = followPosts.map(ele => {
+            return {
+                title: ele.title,
+                body: ele.body,
+                username: ele.authorList[0].username,
+                email: ele.authorList[0].email
+            }
+        })
+
+        resolve(followPosts)
     })
 }
 
