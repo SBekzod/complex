@@ -37,6 +37,7 @@ userController.home = function (req, res) {
 }
 
 userController.about = function (req, res) {
+
     res.send('This page is about us')
 }
 
