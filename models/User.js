@@ -24,7 +24,7 @@ User.prototype.validate = function () {
             this.error.push('password should be at least eight characters long and less then fifteen characters')
 
         if (this.data.username.length >= 5 && this.data.username.length <= 20 && validator.isAlphanumeric(this.data.username)) {
-            let usernameExits = await db.collection('users').findOne({ 'username': this.data.username })
+            let usernameExits = await db.collection('users').findOne({'username': this.data.username})
             if (usernameExits) this.error.push('the username that you are using has been already used')
             // console.log('I passed here later')
         }
@@ -52,7 +52,7 @@ User.prototype.login = function () {
     return new Promise(async (resolve, reject) => {
         this.cleanUp()
         try {
-            let data = await db.collection('users').findOne({ "username": this.data.username })
+            let data = await db.collection('users').findOne({"username": this.data.username})
             if (data == null) reject('No user like this')
             else if (!bcrypt.compareSync(this.data.password, data.password)) reject('Wrong paswword')
             else {
@@ -111,7 +111,7 @@ User.findAuthorByUsername = function (username) {
 
     return new Promise(async (resolve, reject) => {
         try {
-            let author = await db.collection('users').findOne({ "username": username })
+            let author = await db.collection('users').findOne({"username": username})
             if (author == null) throw new Error('No user with this name')
             author.avatar = `https://gravatar.com/avatar/${md5(author.email)}?s=128`
             delete author.password
@@ -143,8 +143,33 @@ User.findAuthorByAuthorId = function (authorID) {
 }
 
 // Non OOP on FPC
-User.attachAvatar = function(email) {
+User.getPostsAndInfo = function (username) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // getting followings' all posts
+            let followingPosts = await db.collection('users').aggregate([
+                {$match: {username: username}},
+                {$lookup: {from: 'follow', localField: '_id', foreignField: 'subscriberId', as: 'followingAuthors'}}
+            ]).toArray()
 
+            followingPosts = followingPosts[0].followingAuthors.map(ele => {
+                return ele.followId
+            })
+
+            let followingPostsInfo = await db.collection('post').aggregate([
+                {$match: {autherId: {$in: followingPosts}}},
+                {$sort: {createdDate: -1}},
+            ]).toArray()
+
+            followingPostsInfo = followingPostsInfo.map(ele => {
+                return {title: ele.title, body: ele.body, username: 'secret'}
+            })
+
+            resolve(followingPostsInfo)
+        } catch {
+            reject()
+        }
+    })
 }
 
 module.exports = User

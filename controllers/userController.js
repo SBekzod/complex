@@ -32,7 +32,7 @@ userController.logout = function (req, res) {
 userController.home = function (req, res) {
     let followPostsWithInfo = req.followPostsWithinfo
     // console.log(followPostsWithInfo)
-    res.render('home-dashboard', { followPosts: followPostsWithInfo ,permitErrors: req.flash('permitErrors')})
+    res.render('home-dashboard', {followPosts: followPostsWithInfo, permitErrors: req.flash('permitErrors')})
 
 }
 
@@ -107,4 +107,20 @@ userController.isVisitorTheOwner = function (req, res, next) {
     }
     req.isVisitorTheOwner = isVisitorTheOwner
     next()
+}
+
+userController.getPostsAndInfo = async function (req, res) {
+
+    if (!req.session.user) {
+        res.render('error-404')
+    } else {
+        let username = req.session.user.username
+        try {
+            let followPosts = await User.getPostsAndInfo(username)
+            res.render('home-dashboard', { permitErrors: [] ,followPosts: followPosts})
+        } catch {
+            res.render('error-404')
+        }
+    }
+
 }
