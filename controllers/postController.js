@@ -147,7 +147,7 @@ postController.search = async function (req, res) {
 }
 
 postController.getPostsWithInfo = async function (req, res, next) {
-    console.log(req.followIdList)
+    // console.log(req.followIdList)
     try {
         req.followPostsWithinfo = await Post.getFollowPosts(req.followIdList)
         next()

@@ -31,7 +31,8 @@ userController.logout = function (req, res) {
 
 userController.home = function (req, res) {
     let followPostsWithInfo = req.followPostsWithinfo
-    res.render('home-dashboard', {permitErrors: req.flash('permitErrors')})
+    // console.log(followPostsWithInfo)
+    res.render('home-dashboard', { followPosts: followPostsWithInfo ,permitErrors: req.flash('permitErrors')})
 
 }
 
