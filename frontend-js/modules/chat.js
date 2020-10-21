@@ -1,6 +1,7 @@
 class Chat {
 
     constructor() {
+        this.openedChat = false
         this.chatWrapper = document.querySelector('#chat-wrapper')
         this.openIcon = document.querySelector('#open007')
         this.injectHTML()
@@ -30,7 +31,15 @@ class Chat {
     }
 
     showChat() {
+        if(!this.openedChat) {
+            this.openConnection()
+        }
+        this.openedChat = true
         this.chatWrapper.classList.add('chat--visible')
+    }
+
+    openConnection() {
+        alert('CONNECTION is opened!')
     }
 
 
