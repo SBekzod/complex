@@ -34,4 +34,17 @@ myapp.use('/', router)
 
 //---------------
 const server = http.createServer(myapp)
+
+const io = require('socket.io')(server)
+
+io.on('connection', function(socket) {
+    console.log('server was ready, the connection is set')
+
+    // user send message to every connected users
+    socket.on('sentMessageByBrowser', function (data) {
+        io.emit('sentByServer', {messageBack: data.message, username: data.username})
+    })
+
+})
+
 module.exports = server

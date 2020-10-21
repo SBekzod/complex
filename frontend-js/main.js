@@ -9,9 +9,11 @@ if(document.querySelector("#chat-wrapper")) {
     new Chat()
 }
 
+
 // Using JQuery and Axios here
-// $(document).ready(function(){
+$(document).ready(function(){
+
 //     $("#009").click(function(){
 //           alert('You clicked');
 //     });
-// });
+});

@@ -6,6 +6,11 @@ class Chat {
         this.openIcon = document.querySelector('#open007')
         this.injectHTML()
         this.closeIcon = document.querySelector('.chat-title-bar-close')
+        // handling with user typing in forms
+        this.chatForm = document.querySelector('#chatForm')
+        this.chatField = document.querySelector('#chatField')
+        this.chatLog = document.querySelector('#chat')
+        // this.socket = ''
         this.events()
     }
 
@@ -17,7 +22,12 @@ class Chat {
         this.closeIcon.addEventListener('click', () => {
             this.chatWrapper.classList.remove('chat--visible')
         })
+        this.chatForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+            this.submitToChat()
+        })
     }
+
 
     injectHTML() {
         this.chatWrapper.innerHTML = `
@@ -31,15 +41,32 @@ class Chat {
     }
 
     showChat() {
-        if(!this.openedChat) {
+        if (!this.openedChat) {
             this.openConnection()
         }
         this.openedChat = true
         this.chatWrapper.classList.add('chat--visible')
     }
 
+    submitToChat() {
+        let inputText = this.chatField.value
+        let username = this.chatWrapper.getAttribute('username')
+        this.socket.emit('sentMessageByBrowser', {message: inputText, username: username})
+        this.chatField.value = ''
+        this.chatField.focus()
+    }
+
+    renderTheMessage(data) {
+        this.chatLog.insertAdjacentHTML('beforeend', `<p>${data.username}` + ": " + `${data.messageBack}</p>`)
+    }
+
     openConnection() {
-        alert('CONNECTION is opened!')
+        this.socket = io()
+
+        this.socket.on('sentByServer', (data) => {
+            this.renderTheMessage(data)
+        })
+        // alert('connection from browser to server on process!')
     }
 
 
