@@ -25,6 +25,7 @@ myapp.set('views', 'views')
 myapp.set('view engine', 'ejs')
 
 myapp.use(express.static('public'))
+// enabling user object from session within each ejs pages
 myapp.use(function (req, res, next) {
     res.locals.user = req.session.user
     next()
