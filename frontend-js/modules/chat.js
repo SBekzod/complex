@@ -6,15 +6,14 @@ class Chat {
         this.openIcon = document.querySelector('#open007')
         this.injectHTML()
         this.closeIcon = document.querySelector('.chat-title-bar-close')
-        // handling with user typing in forms
         this.chatForm = document.querySelector('#chatForm')
         this.chatField = document.querySelector('#chatField')
         this.chatLog = document.querySelector('#chat')
-        // this.socket = ''
+        // events happen when user makes actions
         this.events()
     }
 
-    // events
+    // method events
     events() {
         this.openIcon.addEventListener('click', () => {
             this.showChat()
