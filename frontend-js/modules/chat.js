@@ -55,7 +55,7 @@ class Chat {
         this.chatField.focus()
     }
 
-    renderTheMessage(data) {
+    renderOthersMessage(data) {
         this.chatLog.insertAdjacentHTML('beforeend', `
         <!-- template for messages from others -->
         <div class="chat-other">
@@ -69,11 +69,32 @@ class Chat {
         `)
     }
 
+    renderOwnMessage(data) {
+        this.chatLog.insertAdjacentHTML('beforeend', `
+        <!-- template for your own message -->
+          <div class="chat-self">
+            <div class="chat-message">
+              <div class="chat-message-inner">
+                ${data.message}
+              </div>
+            </div>
+            <img class="chat-avatar avatar-tiny" src="${data.avatar}">
+          </div>
+          <!-- end template-->
+        `)
+    }
+
     openConnection() {
         this.socket = io()
 
         this.socket.on('sentByServer', (data) => {
-            this.renderTheMessage(data)
+
+            // checking whether author is user
+            let sender = this.chatWrapper.getAttribute('username')
+            console.log(sender)
+            if(sender == data.username) this.renderOwnMessage(data)
+            else this.renderOthersMessage(data)
+
         })
 
     }
