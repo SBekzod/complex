@@ -37,12 +37,19 @@ const server = http.createServer(myapp)
 
 const io = require('socket.io')(server)
 
+// getting connected user's session data
+io.use(function(socket, next){
+    sessionOpt(socket.request, socket.request.res, next)
+})
+
 io.on('connection', function(socket) {
     console.log('server was ready, the connection is set')
 
-    // user send message to every connected users
+    let user = socket.request.session.user
+    // user send message to server
     socket.on('sentMessageByBrowser', function (data) {
-        io.emit('sentByServer', {messageBack: data.message, username: data.username})
+        // then, server is sending the message to every connected user
+        io.emit('sentByServer', {message: data.message, username: user.username, avatar: user.avatar})
     })
 
 })

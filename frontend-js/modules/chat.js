@@ -10,7 +10,7 @@ class Chat {
         this.chatForm = document.querySelector('#chatForm')
         this.chatField = document.querySelector('#chatField')
         this.chatLog = document.querySelector('#chat')
-        // this.socket = ''
+        this.socket = ''
         this.events()
     }
 
@@ -50,14 +50,23 @@ class Chat {
 
     submitToChat() {
         let inputText = this.chatField.value
-        let username = this.chatWrapper.getAttribute('username')
-        this.socket.emit('sentMessageByBrowser', {message: inputText, username: username})
+        this.socket.emit('sentMessageByBrowser', {message: inputText})
         this.chatField.value = ''
         this.chatField.focus()
     }
 
     renderTheMessage(data) {
-        this.chatLog.insertAdjacentHTML('beforeend', `<p>${data.username}` + ": " + `${data.messageBack}</p>`)
+        this.chatLog.insertAdjacentHTML('beforeend', `
+        <!-- template for messages from others -->
+        <div class="chat-other">
+            <a href="/profile/${data.username}"><img class="avatar-tiny" src="${data.avatar}"></a>
+            <div class="chat-message"><div class="chat-message-inner">
+              <a href="/profile/${data.username}"><strong>${data.username}:</strong></a>
+              ${data.message}
+            </div></div>
+        </div>
+      <!-- end template-->
+        `)
     }
 
     openConnection() {
@@ -66,7 +75,7 @@ class Chat {
         this.socket.on('sentByServer', (data) => {
             this.renderTheMessage(data)
         })
-        // alert('connection from browser to server on process!')
+
     }
 
 
