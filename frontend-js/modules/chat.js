@@ -103,9 +103,7 @@ class Chat {
         // receiving server's message called sentByServer
         this.socket.on('sentByServer', (data) => {
             // checking for being the author of message
-            if (data.username != this.socket_username) {
-                this.renderOthersMessage(data)
-            }
+            this.renderOthersMessage(data)
 
         })
 

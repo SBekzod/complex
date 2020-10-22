@@ -55,7 +55,7 @@ io.on('connection', function (socket) {
     socket.on('sentMessageByBrowser', function (data) {
 
         // then, server is sending the message to every connected user except the sender
-        io.emit('sentByServer', {message: data.message, username: user.username, avatar: user.avatar})
+        socket.broadcast.emit('sentByServer', {message: data.message, username: user.username, avatar: user.avatar})
 
     })
 
