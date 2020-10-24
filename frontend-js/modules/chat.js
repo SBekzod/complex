@@ -1,3 +1,5 @@
+import sanitizeHTML from 'sanitize-html'
+
 class Chat {
 
     constructor() {
@@ -48,7 +50,7 @@ class Chat {
     }
 
     submitToChat() {
-        let inputText = this.chatField.value
+        let inputText = sanitizeHTML(this.chatField.value, {allowedTags: [], allowedAttributes: {}})
         this.socket.emit('sentMessageByBrowser', {message: inputText, sender_name: this.socket_username})
         this.renderOwnMessage(inputText)
         this.chatField.value = ''

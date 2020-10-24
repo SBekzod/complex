@@ -4,7 +4,9 @@ const router = require('./router')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash')
-const markDown = require('marked')
+// const markDown = require('marked')
+const sanitizer = require('sanitize-html')
+
 
 //---------------
 const myapp = express()
@@ -56,7 +58,7 @@ io.on('connection', function (socket) {
     socket.on('sentMessageByBrowser', function (data) {
 
         // then, server is sending the message to every connected user except the sender
-        socket.broadcast.emit('sentByServer', {message: data.message, username: user.username, avatar: user.avatar})
+        socket.broadcast.emit('sentByServer', {message: sanitizer(data.message, {allowedTags: [], allowedAttributes: {}}), username: user.username, avatar: user.avatar})
 
     })
 
