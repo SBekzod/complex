@@ -37,7 +37,7 @@ const server = http.createServer(myapp)
 
 const io = require('socket.io')(server)
 
-// getting connected user's session data
+// getting connected user's session data via socket
 io.use(function (socket, next) {
     sessionOpt(socket.request, socket.request.res, next)
 })
@@ -49,6 +49,7 @@ io.on('connection', function (socket) {
     // welcome connected user and provide with session data via socket connection
     if (user) {
         socket.emit('welcome', {username: user.username, avatar: user.avatar})
+        socket.broadcast.emit('newUserJoined', {joinedUser: user.username})
     }
 
     // user send message to server

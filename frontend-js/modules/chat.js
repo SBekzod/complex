@@ -88,15 +88,24 @@ class Chat {
         this.chatLog.insertAdjacentHTML('beforeend', `<p>welcome ${this.socket_username}</p>`)
     }
 
+    newUserInfo() {
+        this.chatLog.insertAdjacentHTML("beforeend", `<p class="newUser">new user ${this.socket_newUser} joined</p>`)
+    }
+
     openConnection() {
         this.socket = io()
-        // this.userGreetings()
 
         // receiving server's message called welcome and getting session data via socket connection
         this.socket.on('welcome', (data) => {
             this.socket_username = data.username
             this.socket_avatar = data.avatar
             this.userGreetings()
+        })
+
+        // receiving server's new user joined message
+        this.socket.on('newUserJoined', (data)=> {
+            this.socket_newUser = data.joinedUser
+            this.newUserInfo()
         })
 
         // receiving server's message called sentByServer

@@ -387,3 +387,7 @@ textarea.tall-textarea {
   outline: none;
   font-size: .75rem;
 }
+
+.newUser {
+  font-size: 10px;
+}
