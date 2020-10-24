@@ -10,10 +10,7 @@ if(document.querySelector("#chat-wrapper")) {
 }
 
 
-// Using JQuery and Axios here
+// Using JQuery here
 $(document).ready(function(){
 
-//     $("#009").click(function(){
-//           alert('You clicked');
-//     });
 });

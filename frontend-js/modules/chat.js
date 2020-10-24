@@ -1,4 +1,5 @@
 import sanitizeHTML from 'sanitize-html'
+import DOMPurify from 'dompurify'
 
 class Chat {
 
@@ -72,7 +73,7 @@ class Chat {
     }
 
     renderOwnMessage(inputText) {
-        this.chatLog.insertAdjacentHTML('beforeend', `
+        this.chatLog.insertAdjacentHTML('beforeend', DOMPurify.sanitize(`
         <!-- template for your own message -->
           <div class="chat-self">
             <div class="chat-message">
@@ -83,7 +84,7 @@ class Chat {
             <img class="chat-avatar avatar-tiny" src="${this.socket_avatar}">
           </div>
           <!-- end template-->
-        `)
+        `))
     }
 
     userGreetings() {
@@ -105,7 +106,7 @@ class Chat {
         })
 
         // receiving server's new user joined message
-        this.socket.on('newUserJoined', (data)=> {
+        this.socket.on('newUserJoined', (data) => {
             this.socket_newUser = data.joinedUser
             this.newUserInfo()
         })
