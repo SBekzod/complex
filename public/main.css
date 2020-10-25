@@ -322,7 +322,7 @@ textarea.tall-textarea {
 .chat-log {
   padding: 8px;
   flex: 1;
-  overflow: auto;
+  overflow: scroll;
 }
 
 .chat-self,

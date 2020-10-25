@@ -59,22 +59,24 @@ class Chat {
     }
 
     renderOthersMessage(data) {
-        this.chatLog.insertAdjacentHTML('beforeend', `
-        <!-- template for messages from others -->
-        <div class="chat-other">
-            <a href="/profile/${data.username}"><img class="avatar-tiny" src="${data.avatar}"></a>
-            <div class="chat-message"><div class="chat-message-inner">
-              <a href="/profile/${data.username}"><strong>${data.username}:</strong></a>
-              ${data.message}
-            </div></div>
-        </div>
-      <!-- end template-->
-        `)
+        this.chatLog.insertAdjacentHTML('beforeend', DOMPurify.sanitize(`
+            <!-- template for messages from others -->
+            <div class="chat-other">
+                <a href="/profile/${data.username}"><img class="avatar-tiny" src="${data.avatar}"></a>
+                <div class="chat-message"><div class="chat-message-inner">
+                  <a href="/profile/${data.username}"><strong>${data.username}:</strong></a>
+                  ${data.message}
+                </div></div>
+            </div>
+            <!-- end template-->
+        `))
+
+        this.chatLog.scrollTop = this.chatLog.scrollHeight
     }
 
     renderOwnMessage(inputText) {
         this.chatLog.insertAdjacentHTML('beforeend', DOMPurify.sanitize(`
-        <!-- template for your own message -->
+          <!-- template for your own message -->
           <div class="chat-self">
             <div class="chat-message">
               <div class="chat-message-inner">
@@ -85,6 +87,8 @@ class Chat {
           </div>
           <!-- end template-->
         `))
+
+        this.chatLog.scrollTop = this.chatLog.scrollHeight
     }
 
     userGreetings() {
