@@ -79,7 +79,8 @@ followController.goToProfileFollowers = async function (req, res) {
             sucFollow: req.flash('sucFollow'),
             failFollow: req.flash('failFollow'),
             listOfFollowersAuthor: listOfFollowersAuthor,
-            numberOfFollowings: req.numberOfFollowings
+            numberOfFollowings: req.numberOfFollowings,
+            title: 'followers page'
         })
 
     } catch (err) {
@@ -114,7 +115,8 @@ followController.goToProfileFollowings = async function (req, res) {
             sucFollow: req.flash('sucFollow'),
             failFollow: req.flash('failFollow'),
             listOfFollowingsAuthor: listOfFollowingsAuthor,
-            numberOfFollowers: req.numberOfFollowers
+            numberOfFollowers: req.numberOfFollowers,
+            title: 'followings page'
         })
 
     } catch (err) {

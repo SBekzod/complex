@@ -7,7 +7,8 @@ postController.viewCreateScreen = function (req, res) {
     res.render('create-post', {
         avatar: req.session.user.avatar,
         postErrors: req.flash('postErrors'),
-        success: req.flash('success')
+        success: req.flash('success'),
+        title: 'create post'
     })
 }
 
@@ -38,7 +39,7 @@ postController.viewSingle = async function (req, res, next) {
             req.session.user.authorId == author._id ? author.isVisitorAuthor = true : author.isVisitorAuthor = false
         }
 
-        res.render('single-post-screen', {author: author, message: message})
+        res.render('single-post-screen', {author: author, message: message, title: message.title})
     } catch (err) {
         // next(err)
         res.render('error-404')
@@ -66,7 +67,8 @@ postController.goToProfilePosts = async function (req, res) {
             numberOfFollowings: req.numberOfFollowings,
             sucFollow: req.flash('sucFollow'),
             failFollow: req.flash('failFollow'),
-            genError: req.flash('genError')
+            genError: req.flash('genError'),
+            title: author.username
         })
     } catch (err) {
         res.render(err)
