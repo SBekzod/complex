@@ -141,7 +141,7 @@ postController.search = async function (req, res) {
             ele.avatar = author.avatar
         }
 
-        res.json(posts)
+        await res.json(posts)
     } catch (err) {
         res.sendStatus(500)
     }
