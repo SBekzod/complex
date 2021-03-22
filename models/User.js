@@ -1,5 +1,5 @@
 const validator = require('validator')
-const db = require('../db').db()
+const db = require('../server').db()
 const bcrypt = require('bcryptjs')
 const md5 = require('md5')
 const ObjectID = require('mongodb').ObjectID

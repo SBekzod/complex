@@ -12,7 +12,7 @@ const sanitizer = require('sanitize-html')
 const myapp = express()
 let sessionOpt = session({
     secret: 'JS is cool',
-    store: new MongoStore({client: require('./db')}),
+    store: new MongoStore({client: require('./server')}),
     resave: false,
     saveUninitialized: false,
     cookie: {maxAge: 1000 * 60 * 60, httpOnly: true}

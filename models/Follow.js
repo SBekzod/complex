@@ -1,4 +1,4 @@
-const db = require('../db').db().collection('follow')
+const db = require('../server').db().collection('follow')
 const ObjectID = require('mongodb').ObjectID
 const User = require('./User')
 const Post = require('./Post')
