@@ -3,6 +3,8 @@ const router = express.Router()
 const userController = require('./controllers/userController')
 const postController = require('./controllers/postController')
 const followController = require('./controllers/followController')
+const talkController = require('./controllers/talkController')
+
 
 // user related routes
 router.get('/', userController.mustBeLoggedInRes, followController.getFollowingIds, postController.getPostsWithInfo, userController.home)
@@ -32,5 +34,8 @@ router.post('/search', postController.search)
 // follow related routes
 router.post('/follow/:username', userController.mustBeLoggedIn, followController.subscribe)
 router.post('/unfollow/:username', userController.mustBeLoggedIn, userController.ifUserExists, followController.unsubscribe)
+
+// L-TALK related routes
+router.get('/l-talk', userController.mustBeLoggedIn, talkController.channelList)
 
 module.exports = router

@@ -63,7 +63,10 @@ userController.mustBeLoggedIn = function (req, res, next) {
     if (req.session.user) {
         return next()
     } else {
-        req.flash('errors', 'You must be logged in to post!')
+        console.log(req.url)
+        if (req.url === '/l-talk') req.flash('errors', `You must be logged in to enter Let's Talk page`)
+        else req.flash('errors', 'You must be logged in to post!')
+
         req.session.save(function () {
             res.redirect('/')
         })
@@ -117,7 +120,7 @@ userController.getPostsAndInfo = async function (req, res) {
         let username = req.session.user.username
         try {
             let followPosts = await User.getPostsAndInfo(username)
-            res.render('home-dashboard', { permitErrors: [] ,followPosts: followPosts})
+            res.render('home-dashboard', {permitErrors: [], followPosts: followPosts})
         } catch {
             res.render('error-404')
         }
