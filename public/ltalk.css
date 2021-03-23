@@ -1,0 +1,327 @@
+.ntalk_container {
+    display: flex;
+    flex-direction: column;
+}
+.ntalk_container .user_name {
+    display: flex;
+    align-items: center;
+}
+.ntalk_container .user_name .level {
+    width: 21px;
+    height: 21px;
+    object-fit: contain;
+    margin-right: 5px;
+}
+.ntalk_container .user_name > p {
+    color: #555;
+}
+.list_container .ntalk_tabs {
+    display: flex;
+    border-bottom: 1px solid #e5e5e5;
+    height: 50px;
+}
+.list_container .ntalk_tabs > a {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+.list_container .ntalk_tabs > a:not(:last-child):after {
+    content: '';
+    width: 1px;
+    height: 20px;
+    background-color: #e5e5e5;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 0;
+}
+.list_container .ntalk_tabs > a.active {
+    color: #e74c3c;
+    font-weight: bold;
+}
+.list_container .ntalk_list .ntalk_none {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #adb4b9;
+    font-size: 13px;
+}
+.list_container .ntalk_list .ntalk_none > img {
+    opacity: 0.4;
+    margin-bottom: 10px;
+}
+.list_container .ntalk_list {
+    flex: 1;
+    overflow-y: auto;
+}
+.list_container .ntalk_list .list_item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #d6d6d6;
+    background-color: #f9fcfe;
+    cursor: pointer;
+}
+.list_container .ntalk_list .list_item > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    object-fit: cover;
+}
+.list_container .ntalk_list .list_item .msg {
+    flex: 1;
+    margin: 0 8px;
+}
+.list_container .ntalk_list .list_item .msg > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.list_container .ntalk_list .list_item .msg > span,
+.list_container .ntalk_list .list_item .info > p { color: #adadad; }
+.list_container .ntalk_list .list_item > div > p { margin-bottom: 5px; }
+.list_container .ntalk_list .list_item .info {
+    text-align: right;
+}
+.list_container .ntalk_list .list_item .info .badge_wrap { min-height: 15px; }
+.list_container .ntalk_list .list_item .info .badge_wrap .cnt_badge {
+    min-width: 22px;
+    text-align: center;
+    padding: 3px 6px;
+    border-radius: 30px;
+    background-color: #e74c3c;
+    color: #fff;
+    font-weight: bold;
+    font-size: 10px;
+}
+.list_container .search_user {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.list_container .search_user .search_bar {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 0 15px;
+}
+.list_container .search_user .search_bar > input {
+    height: 100%;
+    border: 0;
+    flex: 1;
+    margin-right: 10px;
+}
+.list_container .search_user .search_bar .btn_search {
+    width:17px;
+    height:17px;
+    background:url('public/img/chat/sp_chat.png') no-repeat -241px -31px;
+    cursor: pointer;
+}
+.list_container .search_user .search_bar .btn_search:hover {background-position:-271px -1px;}
+.list_container .search_user .search_guide {
+    background-color: #f5f5f5;
+    border-top: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+    padding: 10px 15px;
+}
+.list_container .search_user .user_list {
+    flex: 1;
+    overflow-y: auto;
+}
+.list_container .search_user .user_list .user_item.recommend_user {
+    background-color: #fff0f0;
+    color: #333;
+}
+.list_container .search_user .user_list .user_item {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 0 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.list_container .search_user .user_list .user_item > img {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    object-fit: cover;
+}
+.list_container .search_user .user_list .user_item .user_name {
+    flex: 1;
+    margin: 0 10px;
+}
+.list_container .search_user .user_list .user_item .btn_talk {
+    width: 23px;
+    height: 23px;
+    background:url('public/img/chat/sp_chat.png') no-repeat -300px -20px;
+    cursor: pointer;
+}
+.list_container .search_user .user_list .user_item .btn_talk:hover {background-position:-330px -20px;}
+
+/*.view_container { position: relative; }*/
+/*.view_container:after {*/
+/*    content: '';*/
+/*    width: 100%;*/
+/*    height: calc(100% - 51px);*/
+/*    border: 1px solid #000;*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    left: 0;*/
+/*}*/
+.view_container .ntalk_header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    border-bottom: 1px solid #adadad;
+}
+.view_container .ntalk_header > div {
+    background: url('public/img/chat/sp_ntalk.png?v=210316') no-repeat;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+.view_container .ntalk_header > div.btn_list { background-position: -320px 0; }
+.view_container .ntalk_header > div.btn_list:hover { background-position: -340px 0; }
+.view_container .ntalk_header > div.btn_popup { background-position: -60px -110px; }
+.view_container .ntalk_header > div.btn_popup:hover { background-position: -100px -110px; }
+.view_container .ntalk_header > p {
+    flex: 1;
+    margin: 0 15px;
+    text-align: center;
+}
+.view_container .ntalk_wrap {
+    flex: 1;
+    overflow-y: scroll;
+    /*overflow: scroll;*/
+    background-color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+.view_container .ntalk_wrap > div:not(:nth-last-of-type(1)) {
+    margin-bottom: 15px;
+}
+.view_container .ntalk_wrap .load_more {
+    font-size: 11px;
+    cursor: pointer;
+    background-color: #7b7b7b;
+    color: #fff;
+    align-self: center;
+    padding: 5px 15px;
+    border-radius: 30px;
+}
+.view_container .ntalk_wrap .guide {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    width: 100%;
+    padding: 15px;
+    line-height: 19px;
+    box-sizing: border-box;
+}
+.view_container .ntalk_wrap .guide > a {
+    text-decoration: underline;
+    color: #e74c3c;
+}
+.view_container .ntalk_wrap .msg {
+    padding: 0 15px;
+    display: flex;
+    align-items: flex-end;
+}
+.view_container .ntalk_wrap .msg.mine { justify-content: flex-end; }
+.view_container .ntalk_wrap .msg > p {
+    /*display: inline;*/
+    word-break: break-all;
+    /*position: relative;*/
+    /*vertical-align: bottom;*/
+    padding: 8px;
+    border-radius: 3px;
+}
+.view_container .ntalk_wrap .msg .date {
+    color: #adadad;
+    font-size: 11px;
+    min-width: fit-content;
+}
+.view_container .ntalk_wrap .msg.mine > p {
+    color: #fff;
+    background-color: #3498db;
+    margin-left: 5px;
+}
+.view_container .ntalk_wrap .msg_wrap .user_name {
+    padding: 0 15px;
+    margin-bottom: 5px;
+}
+.view_container .ntalk_wrap .msg.yours > p {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-right: 5px;
+}
+.view_container .ntalk_input {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-top: 1px solid #adadad;
+    position: relative;
+}
+.view_container .ntalk_input > input {
+    border: 0;
+    height: 100%;
+    flex: 1;
+    margin-right: 30px;
+}
+.view_container .setting_area .btn_setup {
+    width: 17px;
+    height: 17px;
+    background: url('public/img/chat/sp_ntalk.png?v=200614') no-repeat 0 0;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    margin-top: -8.5px;
+    right: 15px;
+}
+.view_container .setting_area .btn_setup:hover { background-position: -30px 0; }
+.view_container .setting_area .setup { display: none; }
+.view_container .setting_area.open .btn_setup { background-position: -60px 0; }
+.view_container .setting_area.open .setup {
+    position: absolute;
+    width: 100%;
+    bottom: 51px;
+    left: 0;
+    border-top: 1px solid #727272;
+    display: block;
+}
+.view_container .setting_area.open .setup > li { cursor: pointer; }
+.view_container .setting_area.open .setup > li:not(:last-child) { border-bottom: 1px solid #efefef; }
+.view_container .setting_area.open .setup > li > a {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 0 15px;
+    background-color: #fff;
+}
+.view_container .setting_area.open .setup .ic {
+    width:31px;
+    height:31px;
+    background:url('public/img/chat/sp_ntalk.png?v=200614') no-repeat;
+    margin-right: 10px;
+}
+.view_container .setting_area.open .setup .btn_notify .ic {background-position:0 -30px;}
+.view_container .setting_area.open .setup .btn_delete .ic {background-position:-40px -30px;}
+.view_container .setting_area.open .setup .btn_blacklist .ic {background-position:-80px -30px;}
+.view_container .setting_area.open .setup .btn_report .ic {background-position:-240px -30px;}
+.view_container .setting_area.open .setup .btn_notify.on .ic,
+.view_container .setting_area.open .setup .btn_notify:hover .ic {background-position:0 -70px;}
+.view_container .setting_area.open .setup .btn_delete:hover .ic {background-position:-40px -70px;}
+.view_container .setting_area.open .setup .btn_blacklist:hover .ic {background-position:-80px -70px;}
+.view_container .setting_area.open .setup .btn_report:hover .ic {background-position:-240px -70px;}

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "watch": "start nodemon db --ignore frontend-js --ignore public/ && start webpack --watch",
+    "watch": "start nodemon server --ignore frontend-js --ignore public/ && start webpack --watch",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,6 +25,7 @@
     "express-session": "^1.17.1",
     "marked": "^1.2.0",
     "md5": "^2.3.0",
+    "moment": "^2.29.1",
     "mongodb": "^3.6.0",
     "nodemon": "^2.0.4",
     "sanitize-html": "^2.1.1",
@@ -33,6 +34,8 @@
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "regenerator-runtime": "^0.13.7"
+  },
   "description": ""
 }
