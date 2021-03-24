@@ -1,0 +1,76 @@
+<%- include('../includes/header') %>
+<!-- header ends here -->
+
+<div class="container py-md-5 container--narrow">
+    <div id="ltalk" class="text-center" channel="<%= channel_id %>">
+
+        <div class="ntalk_container list_container" style="height:578px;display:none;">
+            <div class="ntalk_tabs" style="height: 50px;">
+                <a id="con_list" href="/l-talk" class="active">대화목록</a>
+                <a href="/l-talk/user-search">회원검색</a>
+<!--                <a href="/ntalk/blacklist.php">블랙리스트</a>-->
+<!--                <a href="/ntalk/setting.php">설정</a>-->
+            </div>
+            <!-- 대화방 리스트-->
+            <div class="ntalk_list" style="height: 450px;">
+                <div class="ntalk_none">
+                    <img src="/img/chat/panic.png" alt="">
+                    <p>엔톡 대화방이 없습니다.</p>
+                </div>
+                <div class="list_item">
+                    <div class="msg">
+                        <div class="user_name">
+                            <img class="level" src="/img/level/50x50/3.png" alt="">
+                            <p>닉네임</p>
+                        </div>
+                        <span>대화내용</span>
+                    </div>
+                    <div class="info">
+                        <p>0일전</p>
+                        <div class="badge_wrap">
+                            <span class="cnt_badge">5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 엔톡 대화방 -->
+        <div class="ntalk_container view_container" style="height:578px;display:none;">
+            <div class="ntalk_header">
+                <div class="btn_list"></div>
+                <p><span class="div_other_user"></span>님과의 대화</p>
+                <div class="btn_popup"></div>
+            </div>
+            <div class="ntalk_wrap">
+                <div class="load_more">이전 대화내용 더보기</div>
+                <div class="guide">
+                    대화 내용은 7일 이후 순차적으로 삭제됩니다.<br/>
+                    개인정보노출은 제재 대상입니다.<br/>
+                    원치 않는 회원은 오른쪽 아래 설정 버튼을 눌러<br/>
+                    방나가기/방삭제 또는 차단하기를 이용해주세요.<br/>
+                    <?= $memberNick ?>님의 <a href="#" class="go_ntalk_notice">톡 신청 제한 횟수</a>는 <b
+                            class="count_used_ticket">0</b>/<?= $count_channel_ticket ?>회입니다.
+                </div>
+            </div>
+            <div class="ntalk_input">
+                <input id="ntalk_input_text" type="text" placeholder="이곳에 할말을 입력해 주세요.">
+                <div class="setting_area">
+                    <div class="btn_setup"></div>
+                    <ul class="setup">
+                        <li>
+                            <a class="btn_delete_channel">
+                                <span class="ic"></span>
+                                방나가기/방삭제
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+      </div>
+</div>
+
+<!-- footer begins -->
+<%- include('../includes/footer') %>

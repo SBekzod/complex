@@ -5,6 +5,7 @@
 .ntalk_container .user_name {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 .ntalk_container .user_name .level {
     width: 21px;
@@ -14,6 +15,29 @@
 }
 .ntalk_container .user_name > p {
     color: #555;
+}
+.ntalk_container .lnk_clear {
+    padding: 8px 0;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.ntalk_container .lnk_clear.by_point {
+    background-color: #608efb;
+    border: 1px solid #5882e8;
+    margin: 0 0 5px 0;
+}
+.ntalk_container .lnk_clear.by_star {
+    background-color: #ff9000;
+    border: 1px solid #e88500;
+}
+.ntalk_container .lnk_clear:disabled {
+    opacity: 0.3;
+    cursor: default;
 }
 .list_container .ntalk_tabs {
     display: flex;
@@ -63,17 +87,25 @@
 .list_container .ntalk_list .list_item {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 15px 10px;
     border-bottom: 1px solid #d6d6d6;
     background-color: #f9fcfe;
     cursor: pointer;
 }
-.list_container .ntalk_list .list_item > img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-    object-fit: cover;
+/*.list_container .ntalk_list .list_item > img {*/
+/*    width: 50px;*/
+/*    height: 50px;*/
+/*    border-radius: 50px;*/
+/*    object-fit: cover;*/
+/*}*/
+.list_container .ntalk_list .list_item .user_name .add_black {
+    padding: 5px;
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
 }
+.list_container .ntalk_list .list_item .user_name { margin-bottom: 5px; }
+/*.list_container .ntalk_list .list_item .user_name > p { width: 90px; }*/
 .list_container .ntalk_list .list_item .msg {
     flex: 1;
     margin: 0 8px;
@@ -123,7 +155,7 @@
 .list_container .search_user .search_bar .btn_search {
     width:17px;
     height:17px;
-    background:url('public/img/chat/sp_chat.png') no-repeat -241px -31px;
+    background:url('/img/chat/sp_chat.png') no-repeat -241px -31px;
     cursor: pointer;
 }
 .list_container .search_user .search_bar .btn_search:hover {background-position:-271px -1px;}
@@ -161,10 +193,12 @@
 .list_container .search_user .user_list .user_item .btn_talk {
     width: 23px;
     height: 23px;
-    background:url('public/img/chat/sp_chat.png') no-repeat -300px -20px;
+    background:url('/img/chat/sp_chat.png') no-repeat -300px -20px;
     cursor: pointer;
 }
 .list_container .search_user .user_list .user_item .btn_talk:hover {background-position:-330px -20px;}
+.list_container .search_user .user_list .bd_users .none {text-align:center; color:#b8b8b8;}
+.list_container .search_user .user_list .bd_users .none:before {display:block; margin:100px auto 10px auto; content:''; clear:both; width:91px; height:91px; background:url('/img/chat/sp_chat.png') no-repeat 0 -160px;}
 
 /*.view_container { position: relative; }*/
 /*.view_container:after {*/
@@ -185,7 +219,7 @@
     border-bottom: 1px solid #adadad;
 }
 .view_container .ntalk_header > div {
-    background: url('public/img/chat/sp_ntalk.png?v=210316') no-repeat;
+    background: url('/img/chat/sp_ntalk.png?v=210316') no-repeat;
     width: 15px;
     height: 15px;
     cursor: pointer;
@@ -283,7 +317,7 @@
 .view_container .setting_area .btn_setup {
     width: 17px;
     height: 17px;
-    background: url('public/img/chat/sp_ntalk.png?v=200614') no-repeat 0 0;
+    background: url('/img/chat/sp_ntalk.png?v=200614') no-repeat 0 0;
     cursor: pointer;
     position: absolute;
     top: 50%;
@@ -313,7 +347,7 @@
 .view_container .setting_area.open .setup .ic {
     width:31px;
     height:31px;
-    background:url('public/img/chat/sp_ntalk.png?v=200614') no-repeat;
+    background:url('/img/chat/sp_ntalk.png?v=200614') no-repeat;
     margin-right: 10px;
 }
 .view_container .setting_area.open .setup .btn_notify .ic {background-position:0 -30px;}
@@ -325,3 +359,99 @@
 .view_container .setting_area.open .setup .btn_delete:hover .ic {background-position:-40px -70px;}
 .view_container .setting_area.open .setup .btn_blacklist:hover .ic {background-position:-80px -70px;}
 .view_container .setting_area.open .setup .btn_report:hover .ic {background-position:-240px -70px;}
+
+.ntalk_container .setting_list .setting_item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f5f5f5;
+    color: #555;
+}
+.ntalk_container .setting_list .setting_item.alarm,
+.ntalk_container .setting_list .setting_item.reset .cnt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ntalk_container .setting_list .setting_item.reset .cnt { margin-bottom: 10px; }
+.ntalk_container .setting_list .setting_item > p { font-size: 13px; }
+.ntalk_container .setting_list .setting_item .cnt > span > strong { color: #E74C3C; }
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #e74c3c;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.user_list .bd_users .ntalk_none {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*justify-content: center;*/
+    color: #adb4b9;
+    font-size: 13px;
+}
+.user_list .bd_users .ntalk_none > img {
+    opacity: 0.4;
+    margin-bottom: 10px;
+}
+
+/*.talk_clear .lnk_clear {*/
+/*    display: block;*/
+/*    margin-bottom: 5px;*/
+/*    height: 33px;*/
+/*    line-height: 33px;*/
+/*    border: none;*/
+/*    text-align: center;*/
+/*    text-decoration: none;*/
+/*    color: #fff;*/
+/*}*/
+/*.talk_clear .lnk_clear.by_point {*/
+/*    background-color: #3498db;*/
+/*}*/
+/*.talk_clear .lnk_clear.by_star {*/
+/*    background-color: #e74c3c;*/
+/*}*/
+
+

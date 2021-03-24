@@ -37,5 +37,6 @@ router.post('/unfollow/:username', userController.mustBeLoggedIn, userController
 
 // L-TALK related routes
 router.get('/l-talk', userController.mustBeLoggedIn, talkController.channelList)
+router.get('/l-talk/user-search', userController.mustBeLoggedIn, talkController.userSearch)
 
 module.exports = router

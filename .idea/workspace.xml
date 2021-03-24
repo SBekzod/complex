@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:develop" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="95a0aeb7-a93e-44aa-9030-75e1b99da141" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/views/ltalk/l-talk-user-search.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/talkController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/talkController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/ltalk.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/ltalk.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/main-bundled.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/main-bundled.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/ltalk/l-talk-channel-list.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/ltalk/l-talk-channel-list.ejs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="ProjectId" id="1i8QpuzeAFVccf7a1wmkPqUKJG4" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="jsx.switch.disabled" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ltalk-graphql-server" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2020.1.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\views\ltalk" />
+      <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\public\img\chat" />
+      <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\public\img\level" />
+      <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\public\img" />
+      <recent name="C:\Users\bekzo\Documents\NTRY-proj\complex\views" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\views\ltalk" />
+      <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\frontend-js\ltalk" />
+      <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\public\img\chat" />
+      <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\public\img" />
+      <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\public" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="95a0aeb7-a93e-44aa-9030-75e1b99da141" name="Default Changelist" comment="" />
+      <created>1601286925198</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1601286925198</updated>
+      <workItem from="1601286926362" duration="15000" />
+      <workItem from="1601338382097" duration="5534000" />
+      <workItem from="1601459351808" duration="3633000" />
+      <workItem from="1601852680891" duration="5577000" />
+      <workItem from="1601938937138" duration="5013000" />
+      <workItem from="1602112241253" duration="4668000" />
+      <workItem from="1602132785043" duration="11000" />
+      <workItem from="1602316530428" duration="11171000" />
+      <workItem from="1602457650899" duration="17599000" />
+      <workItem from="1602830835288" duration="1290000" />
+      <workItem from="1603089304362" duration="8559000" />
+      <workItem from="1603189873245" duration="1835000" />
+      <workItem from="1603235490170" duration="3626000" />
+      <workItem from="1603409179028" duration="1686000" />
+      <workItem from="1603419736597" duration="1278000" />
+      <workItem from="1603421044078" duration="34000" />
+      <workItem from="1603446459307" duration="48000" />
+      <workItem from="1603707507605" duration="607000" />
+      <workItem from="1603753840725" duration="752000" />
+      <workItem from="1603755202947" duration="614000" />
+      <workItem from="1603926712230" duration="1205000" />
+      <workItem from="1604013628824" duration="44000" />
+      <workItem from="1604013680829" duration="15000" />
+      <workItem from="1604046107442" duration="3840000" />
+      <workItem from="1604481357518" duration="1942000" />
+      <workItem from="1605062135477" duration="315000" />
+      <workItem from="1605062939562" duration="3502000" />
+      <workItem from="1605143247204" duration="78000" />
+      <workItem from="1605143333643" duration="23000" />
+      <workItem from="1605170768523" duration="1275000" />
+      <workItem from="1605258195593" duration="610000" />
+      <workItem from="1606369154607" duration="1147000" />
+      <workItem from="1606386016657" duration="17000" />
+      <workItem from="1607914064348" duration="791000" />
+      <workItem from="1608538427514" duration="154000" />
+      <workItem from="1608630714640" duration="32000" />
+      <workItem from="1608630913216" duration="6000" />
+      <workItem from="1608713282884" duration="664000" />
+      <workItem from="1609137344662" duration="13000" />
+      <workItem from="1610104163988" duration="835000" />
+      <workItem from="1610327407890" duration="3199000" />
+      <workItem from="1610414524565" duration="4387000" />
+      <workItem from="1611282649181" duration="26000" />
+      <workItem from="1611315637667" duration="1223000" />
+      <workItem from="1611801305031" duration="70000" />
+      <workItem from="1611801700729" duration="1261000" />
+      <workItem from="1611816812308" duration="1698000" />
+      <workItem from="1613147557920" duration="14000" />
+      <workItem from="1613372509022" duration="613000" />
+      <workItem from="1613437676986" duration="56000" />
+      <workItem from="1613456573549" duration="608000" />
+      <workItem from="1613526542769" duration="618000" />
+      <workItem from="1613531116323" duration="1820000" />
+      <workItem from="1613635942516" duration="599000" />
+      <workItem from="1613698224092" duration="4000" />
+      <workItem from="1613698238590" duration="2810000" />
+      <workItem from="1613955676924" duration="3081000" />
+      <workItem from="1613981136195" duration="2578000" />
+      <workItem from="1613999448295" duration="174000" />
+      <workItem from="1614042126177" duration="1888000" />
+      <workItem from="1614252290323" duration="969000" />
+      <workItem from="1615985733152" duration="1647000" />
+      <workItem from="1616393506520" duration="5347000" />
+      <workItem from="1616399271285" duration="2966000" />
+      <workItem from="1616483477957" duration="16840000" />
+      <workItem from="1616565535404" duration="16842000" />
+      <workItem from="1616595169011" duration="696000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1295" y="646" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1613959085463">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1295" y="646" key="#com.intellij.fileTypes.FileTypeChooser/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1613959085463" />
+    <state x="300" y="152" width="2457" height="1378" key="DiffContextDialog" timestamp="1616581307702">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="300" y="152" width="2457" height="1378" key="DiffContextDialog/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616581307702" />
+    <state x="1317" y="599" width="1326" height="957" key="FileChooserDialogImpl" timestamp="1616595269528">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1317" y="599" width="1326" height="957" key="FileChooserDialogImpl/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616595269528" />
+    <state x="1914" y="416" key="FileChooserDialogImpl/0.0.3072.1688/3840.0.1920.1040@3840.0.1920.1040" timestamp="1613526559702" />
+    <state x="1325" y="565" key="RollbackChangesDialog" timestamp="1616574345389">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1325" y="565" key="RollbackChangesDialog/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616574345389" />
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1616499777117">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1129" y="577" key="Vcs.Push.Dialog.v2/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616499777117" />
+    <state x="1346" y="758" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1616499816679">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1346" y="758" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616499816679" />
+    <state x="1073" y="560" width="579" height="624" key="find.popup" timestamp="1616593032088">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1073" y="560" width="579" height="624" key="find.popup/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616593032088" />
+    <state x="4618" y="355" width="555" height="534" key="find.popup/0.0.3072.1688/3840.0.1920.1040@3840.0.1920.1040" timestamp="1613147566433" />
+    <state x="1199" y="387" width="672" height="160" key="search.everywhere.popup" timestamp="1616584688387">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1199" y="387" width="672" height="160" key="search.everywhere.popup/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616584688387" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/frontend-js/ltalk/ltalk.js</url>
+          <line>12</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
