@@ -3,6 +3,7 @@ import Chat from './modules/chat'
 import Ltalk from './ltalk/ltalk'
 import Graphql_client from "./modules/graphql_client";
 import moment from "moment";
+import SearchUser from './modules/searchUser'
 
 
 if (document.getElementById("009")) {
@@ -13,18 +14,32 @@ if (document.querySelector("#chat-wrapper")) {
     new Chat()
 }
 
+if (document.querySelector("#ltalk-users")) {
+    let searchUser = new SearchUser()
+
+    // $(document).on('click', '.btn_talk', function (e) {
+    //     console.log(e.target.attributes[0].value)
+    //     window.location.href("/l-talk")
+    //
+    // })
+
+}
+
 
 if (document.querySelector('#ltalk')) {
 
     let ltalk = new Ltalk()
     ltalk.checking()
+    let session_id, mb_id;
 
-    let session_id = 's3od97pt0cg8dv2lotgd854di0'
-    let mb_id = 'pwe49bar70955c80e1f2dae4dc748fd69799b419'
+    // session_id = 's3od97pt0cg8dv2lotgd854di0'
+    // mb_id = 'pwe49bar70955c80e1f2dae4dc748fd69799b419'
+
+    mb_id = $('#ltalk').attr('mb_id')
+    session_id = $('#ltalk').attr('mb_id')
+    console.log("THIS IS MEMBER ID: ", mb_id)
 
     /// -----------
-
-
     var gClient = null;
     var channels = [];
     var channelsActive = false;
@@ -47,11 +62,13 @@ if (document.querySelector('#ltalk')) {
     var isAutoScroll = true;
 
     $(document).ready(function () {
+
         if (session_id && mb_id) {
             gClient = new Graphql_client(session_id, mb_id);
             gClient.setLibraryObjects(graphql, Apollo);
 
-            // 채널 리스트 subscription 시작 !!
+            // sending to GraphQL server's context
+            // first request, ws subscription and channels update subscription
             gClient.startGraphQl((res) => {
                 if (!res.updateChannel) return false;
                 if (channelsActive) {
@@ -70,13 +87,14 @@ if (document.querySelector('#ltalk')) {
                         renderingChannel(channels[i], mb_id);
                     }
                     updateUnReadMessageCount();
+                    $('.ntalk_none').hide();
                 }
-                $('.ntalk_none').hide();
             });
 
+            // CHANNELS LIST
             gClient.getChannels(mb_id).then((datas) => {
                 channels = datas;
-                $('.ntalk_list').html('');
+                if (channels.length > 0) $('.ntalk_list').html('');
                 for (let i = 0; i < channels.length; i++) {
                     renderingChannel(channels[i], mb_id);
                 }
@@ -90,54 +108,27 @@ if (document.querySelector('#ltalk')) {
 
             $('.list_container').show()
 
-        // <
-        //         ?
-        //     if ($_GET['channel_id']) {
-        //             ?
-        //     >
-        //         setTimeout(() => {
-        //             goChannel("<?= $_GET['channel_id'] ?>");
-        //         }, 1000);
-        //     <
-        //             ?
-        //     } else {
-        //             ?
-        //     >
-        //         $('.list_container').show();
-        //     <
-        //             ?
-        //     }
-        //         ?
-        // >
-        //
-        // <
-        //         ?
-        //     if ($_GET['mb_id']) {
-        //             ?
-        //     >
-        //         gClient.createChannel("<?= $_GET['mb_id'] ?>").then((response) => {
-        //             if (response && response.createChannel) {
-        //                 setTimeout(() => {
-        //                     goChannel(response.createChannel.channel_id);
-        //                 }, 1000);
-        //             } else {
-        //                 let message = response.message ? response.message : "";
-        //                 if (message) sweet_alert(message);
-        //             }
-        //         });
-        //     <
-        //             ?
-        //     }
-        //         ?
-        // >
+            // IF THERE IS MB_ID then create the channel and then go to channel
+            if ($('#ltalk').attr('target_user') !== "none") {
+                gClient.createChannel($('#ltalk').attr('target_user')).then((response) => {
+                    if (response && response.createChannel) {
+                        setTimeout(() => {
+                            goChannel(response.createChannel.channel_id);
+                        }, 1000);
+                    } else {
+                        console.log('ERROR OCCURRED DURING CREATION')
+                        console.log(response.message)
+                        // let message = response.message ? response.message : "";
+                        // if (message) sweet_alert(message);
+                    }
+                });
+            }
+
+        } else {
+            window.location.href = "/"
         }
 
-        // 채널 세팅 버튼
-        $('.btn_setup').click(function () {
-            $('.setting_area').toggleClass('open');
-        })
-
-        // opening nTalk channel
+        // CHANNEL ENTER
         $(document).on('click', '.go_channel', async function () {
             if (activeChannelId) {
                 await gClient.leaveChannel(activeChannelId);
@@ -145,9 +136,10 @@ if (document.querySelector('#ltalk')) {
                 return false;
             }
             activeChannelId = $(this).attr('id')
-            goChannel($(this).attr('id'));
+            goChannel(activeChannelId);
         });
 
+        // CHANNEL LEAVE
         $('.btn_list').click(async () => {
             if (activeChannelId) {
                 await gClient.leaveChannel(activeChannelId);
@@ -156,7 +148,12 @@ if (document.querySelector('#ltalk')) {
             if ($('.setting_area').hasClass('open')) $('.setting_area').toggleClass('open');
         });
 
-        // sending messages
+        // CHANNEL DELETE
+        $('.btn_delete_channel').click(async () => {
+            if (activeChannelId) await deleteChannel(activeChannelId);
+        })
+
+        // MESSAGE SEND
         $('#ntalk_input_text').keypress(function (e) {
             if (e.which === 13 && typeof (activeChannelId) !== 'undefined') {
                 let message = $('#ntalk_input_text').val();
@@ -167,13 +164,7 @@ if (document.querySelector('#ltalk')) {
                 }
 
                 var lower = message.toLowerCase();
-                // Message filter
-                // for (let i = 0, offset; i < filter_words.length; i++) {
-                //     if ((offset = lower.indexOf($.trim(filter_words[i]))) === -1) continue;
-                //     console.log("입력하신 [" + $.trim(filter_words[i]) + "] (은)는  금지어 입니다.");
-                //     return false;
-                // }
-
+                // add message filters here
                 gClient.sendMessage(activeChannelId, message).then((data) => {
                     if (data) $('#ntalk_input_text').val("");
                 }).catch(err => {
@@ -182,15 +173,14 @@ if (document.querySelector('#ltalk')) {
             }
         });
 
-        // deleting the channel
-        $('.btn_delete_channel').click(async () => {
-            if (activeChannelId) await deleteChannel(activeChannelId);
+        // open configuration
+        $('.btn_setup').click(function () {
+            $('.setting_area').toggleClass('open');
         })
-
     });
 
 
-    // 메시지 리스트 더 읽기
+    // MESSAGES read more
     $(document).on('click', '.load_more', () => {
         if (messageStartAt === 0) return false;
         const messageStartAtBefore = messageStartAt;
@@ -209,39 +199,11 @@ if (document.querySelector('#ltalk')) {
         $('.ntalk_wrap').prepend(str);
     });
 
-    // 포인트로 엔톡 초기화
-    // $(document).on('click', '.by_point', async function () {
-    //     let res = await gClient.refillChannelTicket("point");
-    //     if (res) {
-    //         sweet_alert("제한 횟수가 초기화 되었습니다.");
-    //         countUsedTicket = 0;
-    //         $('.count_used_ticket').text(0);
-    //     } else {
-    //         sweet_alert("제한 횟수 초기화에 실패 하였습니다.");
-    //     }
-    // });
-
-    // 별사탕으로 엔톡 초기화
-    // $(document).on('click', '.by_star', async function () {
-    //     let res = await gClient.refillChannelTicket("star");
-    //     if (res) {
-    //         sweet_alert("제한 횟수가 초기화 되었습니다.");
-    //         countUsedTicket = 0;
-    //         $('.count_used_ticket').text(0);
-    //     } else {
-    //         sweet_alert("제한 횟수 초기화에 실패 하였습니다.");
-    //     }
-    // });
-
-    // 유저 홈으로 보내기
+    // go to the user feed
     $(document).on('click', '.go_user', function () {
         const mb_id = $(this).attr('mbid');
-        if (parent) parent.location.href = "/user/home.php?mb_id=" + mb_id;
-    });
-
-    // 엔톡 공지사항 가기
-    $(document).on('click', '.go_ntalk_notice', async function () {
-        parent.location.href = "/bbs/board.php?article_no=168173";
+        // go to user feed
+        // if (parent) parent.location.href = "/user/home.php?mb_id=" + mb_id;
     });
 
     async function goChannel(channel_id) {
@@ -250,7 +212,6 @@ if (document.querySelector('#ltalk')) {
         // 메시지 리스트 subscription 시작 !!
         gClient.enterChannel(channel_id, (res) => {
             if (!res.updateMessage) return false;
-
             parseMessage(res.updateMessage);
             console.log(res)
             if (messagesActive) renderingMessage(res.updateMessage, mb_id);
@@ -263,6 +224,7 @@ if (document.querySelector('#ltalk')) {
         gClient.getMessages(channel_id).then((datas) => {
             messages = datas;
             for (let i = 0; i < datas.length; i++) {
+                console.log('msg')
                 if (datas[i].index - messageLastIndex > 0) messageLastIndex = datas[i].index;
             }
         });
@@ -284,18 +246,18 @@ if (document.querySelector('#ltalk')) {
             let str = `
                     <div class="load_more">이전 대화내용 더보기</div>
                     <div class="guide">
-                        대화 내용은 7일 이후 순차적으로 삭제됩니다.<br/>
-                        개인정보노출은 제재 대상입니다.<br/>
-                        원치 않는 회원은 오른쪽 아래 설정 버튼을 눌러<br/>
-                        방나가기/방삭제 또는 차단하기를 이용해주세요.<br/>
+                        Welcome to our chat<br/>
+                        We are happy to have you here.<br/>
+                        The logged user can make 1x1 Chat<br/>
+                        GOOD LUCK.<br/>
                         <?= $memberNick ?>님의 <a href="#" class="go_ntalk_notice">톡 신청 제한 횟수</a>는 <b class="count_used_ticket">${countUsedTicket}</b>/${count_channel_ticket}회입니다.
                     </div>
                 `;
             if (countUsedTicket >= count_channel_ticket) {
                 str += `
                         <div class="talk_clear">
-                            <a class="lnk_clear by_point" href="javascript:;">30,000 포인트로 초기화</a>
-                            <a class="lnk_clear by_star" href="javascript:;">300 선물받은 별사탕으로 초기화</a>
+                            <a class="lnk_clear by_point" href="javascript:;">clear using 30 000 points</a>
+                            <a class="lnk_clear by_star" href="javascript:;">clear using 300 starts</a>
                         </div>
                     `;
             }
@@ -318,7 +280,7 @@ if (document.querySelector('#ltalk')) {
                     const chat = document.querySelector('.ntalk_wrap');
                     chat.scrollTop = chat.scrollHeight;
                 }
-            }, 2000); // 2초 후부터 메시지 리스너 활성화
+            }, 2000); // two seconds
         } else {
             console.log("엔톡방 입장에 실패 하였습니다.");
             initActiveChannel();
@@ -353,8 +315,10 @@ if (document.querySelector('#ltalk')) {
 }
 
 
-function parseChannel(channel) {
+// -----------------------  //  ------------  OTHERS  -------------  //  -----------------------  //
 
+
+function parseChannel(channel) {
 
     if (channel.type === "added") {
         if (channel.is_active === "Y") {
@@ -650,36 +614,6 @@ function changeDate(timestamp) {
 
     return returnDate;
 }
-
-// sweet alert
-// function sweet_alert(message, callback = null) {
-//     return new Promise(function (resolve) {
-//         if (callback) {
-//             Swal.fire({
-//                 html: '<br>' + message + '<br>',
-//                 showCancelButton: true,
-//                 confirmButtonColor: '#393939',
-//                 cancelButtonColor: '#b8b5b5',
-//                 confirmButtonText: '확인',
-//                 cancelButtonText: '취소'
-//             }).then(function (result) {
-//                 if (result.value) {
-//                     if (typeof callback === 'function') callback();
-//                 }
-//                 resolve();
-//             });
-//         } else {
-//             Swal.fire({
-//                 html: '<br>' + message + '<br>',
-//                 confirmButtonColor: '#393939',
-//                 confirmButtonText: '확인'
-//             }).then(function (result) {
-//                 if (typeof callback === 'function') callback();
-//                 resolve();
-//             });
-//         }
-//     });
-// }
 
 // 팝업창 열기
 function open_popup(url, win_name, width, height) {

@@ -48,6 +48,8 @@ class Chat {
         }
         this.openedChat = true
         this.chatWrapper.classList.add('chat--visible')
+        $('#chat-wrapper').show()
+
     }
 
     submitToChat() {

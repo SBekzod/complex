@@ -2,7 +2,7 @@
 <!-- header ends here -->
 
 <div class="container py-md-5 container--narrow">
-    <div id="ltalk" class="text-center" channel="<%= channel_id %>">
+    <div id="ltalk-users" class="text-center">
 
         <div class="ntalk_container list_container" style="height:578px;display:none;">
             <div class="ntalk_tabs" style="height: 50px;">
@@ -14,23 +14,18 @@
 
             <div class="search_user">
                 <div class="search_bar">
-                    <input type="text" id="search_val" placeholder="검색할 회원의 닉네임을 입력해 주세요.">
+                    <input type="text" id="search_val" placeholder="검색할 회원의 닉네임을 입력해 주세요." value="">
                     <div class="btn_search"></div>
                 </div>
                 <div class="search_guide">
                     <p><b>추천픽스터</b> (닉네임 클릭 시 유저홈으로 이동)</p>
                 </div>
-                <div class="user_list">
-                    <ul class="bd_users">
-                        <li class="user_item recommend_user">
-                            <div class="user_name" mbid="<?= $mb['mb_id'] ?>">
-                                <img class='level' src='<?=$image?>' alt=''>
-                            </div>
-                            <div id="<?= $mb['mb_id'] ?>" class="btn_talk"></div>
-                        </li>
-                    </ul>
+
+                <div class="user_list" style="display: none">
                 </div>
+
             </div>
+
         </div>
 
     </div>

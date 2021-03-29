@@ -20,21 +20,12 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:develop" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95a0aeb7-a93e-44aa-9030-75e1b99da141" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/ltalk/l-talk-user-search.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/talkController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/talkController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend-js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/ltalk.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/ltalk.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/main-bundled.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/main-bundled.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/ltalk/l-talk-channel-list.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/ltalk/l-talk-channel-list.ejs" afterDir="false" />
-    </list>
+    <list default="true" id="95a0aeb7-a93e-44aa-9030-75e1b99da141" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="0e81cec811c095f9b46c737860aeb1999dc47a15" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -64,7 +55,6 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="jsx.switch.disabled" value="true" />
@@ -93,6 +83,16 @@
       <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\public\img" />
       <recent name="C:\Users\bekzo\Desktop\onUse\NODE.js\complex\public" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="martest.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/martest.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.martest.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -171,6 +171,9 @@
       <workItem from="1616483477957" duration="16840000" />
       <workItem from="1616565535404" duration="16842000" />
       <workItem from="1616595169011" duration="696000" />
+      <workItem from="1617070697232" duration="5850000" />
+      <workItem from="1617090285531" duration="5193000" />
+      <workItem from="1617152204803" duration="9142000" />
     </task>
     <servers />
   </component>
@@ -188,7 +191,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="develop" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -206,19 +209,35 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1295" y="646" key="#com.intellij.fileTypes.FileTypeChooser/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1613959085463" />
-    <state x="300" y="152" width="2457" height="1378" key="DiffContextDialog" timestamp="1616581307702">
+    <state x="300" y="152" width="2457" height="1378" key="DiffContextDialog" timestamp="1617181342407">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="300" y="152" width="2457" height="1378" key="DiffContextDialog/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616581307702" />
-    <state x="1317" y="599" width="1326" height="957" key="FileChooserDialogImpl" timestamp="1616595269528">
+    <state x="300" y="152" width="2457" height="1378" key="DiffContextDialog/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1617181342407" />
+    <state x="1317" y="599" width="1326" height="957" key="FileChooserDialogImpl" timestamp="1617152260951">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1317" y="599" width="1326" height="957" key="FileChooserDialogImpl/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616595269528" />
+    <state x="1317" y="599" width="1326" height="957" key="FileChooserDialogImpl/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1617152260951" />
     <state x="1914" y="416" key="FileChooserDialogImpl/0.0.3072.1688/3840.0.1920.1040@3840.0.1920.1040" timestamp="1613526559702" />
-    <state x="1325" y="565" key="RollbackChangesDialog" timestamp="1616574345389">
+    <state width="3029" height="163" key="GridCell.Tab.0.bottom" timestamp="1617181737892">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1325" y="565" key="RollbackChangesDialog/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616574345389" />
+    <state width="3029" height="163" key="GridCell.Tab.0.bottom/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1617181737892" />
+    <state width="3029" height="163" key="GridCell.Tab.0.center" timestamp="1617181737892">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3029" height="163" key="GridCell.Tab.0.center/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1617181737892" />
+    <state width="3029" height="163" key="GridCell.Tab.0.left" timestamp="1617181737892">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3029" height="163" key="GridCell.Tab.0.left/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1617181737892" />
+    <state width="3029" height="163" key="GridCell.Tab.0.right" timestamp="1617181737892">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state width="3029" height="163" key="GridCell.Tab.0.right/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1617181737892" />
+    <state x="1325" y="565" key="RollbackChangesDialog" timestamp="1617181344081">
+      <screen x="0" y="0" width="3072" height="1688" />
+    </state>
+    <state x="1325" y="565" key="RollbackChangesDialog/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1617181344081" />
     <state x="1129" y="577" key="Vcs.Push.Dialog.v2" timestamp="1616499777117">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
@@ -227,15 +246,15 @@
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
     <state x="1346" y="758" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616499816679" />
-    <state x="1073" y="560" width="579" height="624" key="find.popup" timestamp="1616593032088">
+    <state x="1066" y="559" width="579" height="624" key="find.popup" timestamp="1617171328788">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1073" y="560" width="579" height="624" key="find.popup/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616593032088" />
+    <state x="1066" y="559" width="579" height="624" key="find.popup/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1617171328788" />
     <state x="4618" y="355" width="555" height="534" key="find.popup/0.0.3072.1688/3840.0.1920.1040@3840.0.1920.1040" timestamp="1613147566433" />
-    <state x="1199" y="387" width="672" height="160" key="search.everywhere.popup" timestamp="1616584688387">
+    <state x="1199" y="387" width="672" height="160" key="search.everywhere.popup" timestamp="1617107047070">
       <screen x="0" y="0" width="3072" height="1688" />
     </state>
-    <state x="1199" y="387" width="672" height="160" key="search.everywhere.popup/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1616584688387" />
+    <state x="1199" y="387" width="672" height="160" key="search.everywhere.popup/0.0.3072.1688/3840.0.1920.1040@0.0.3072.1688" timestamp="1617107047070" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

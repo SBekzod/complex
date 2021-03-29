@@ -172,6 +172,7 @@
 .list_container .search_user .user_list .user_item.recommend_user {
     background-color: #fff0f0;
     color: #333;
+    margin-left: -40px;
 }
 .list_container .search_user .user_list .user_item {
     display: flex;

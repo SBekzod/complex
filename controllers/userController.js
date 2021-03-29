@@ -103,6 +103,17 @@ userController.ifUserExists = async function (req, res, next) {
 
 }
 
+userController.getUserInfo = async function (req, res) {
+    let username = req.params.username
+    try {
+        let result = await User.findAuthorByUsername(username)
+        await res.json(result)
+    } catch (err) {
+        console.log("Error getUserInfo: ", err.message)
+        await res.json({result: false})
+    }
+}
+
 userController.isVisitorTheOwner = function (req, res, next) {
     let isVisitorTheOwner = false
     if (req.author.username == req.session.user.username) {
