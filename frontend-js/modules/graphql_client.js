@@ -7,7 +7,9 @@ class Graphql_client {
         this.mb_id = mb_id;
         this.subChannels = null;
         this.subMessages = null;
-        this.graphql_url = 'localhost:4000/graphql'; //
+        // this.graphql_url = 'localhost:4000/graphql'; // when running graphql server on local machine
+        this.graphql_url = 'http://31.220.109.104:4000/graphql'; // when running graphql server on martin:vps_ubuntu
+
 
         this.graphql = null;
         this.apollo = null;
