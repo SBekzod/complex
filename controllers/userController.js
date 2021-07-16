@@ -31,9 +31,13 @@ userController.logout = function (req, res) {
 
 userController.home = function (req, res) {
     let followPostsWithInfo = req.followPostsWithinfo
-    // console.log(followPostsWithInfo)
-    res.render('home-dashboard', {followPosts: followPostsWithInfo, permitErrors: req.flash('permitErrors')})
-
+    console.log(req.session.user)
+    let target_user = "none"
+    let mb_id = req.session.user['authorId']
+    if (req.query.hasOwnProperty('target_id')) target_user = req.query['target_id']
+    console.log("THIS IS TARGET_ID: ", target_user)
+    console.log("THIS IS MB_ID: ", mb_id)
+    res.render('home-dashboard', {followPosts: followPostsWithInfo, target_user: target_user, mb_id: mb_id, permitErrors: req.flash('permitErrors')})
 }
 
 userController.about = function (req, res) {
@@ -123,18 +127,18 @@ userController.isVisitorTheOwner = function (req, res, next) {
     next()
 }
 
-userController.getPostsAndInfo = async function (req, res) {
-
-    if (!req.session.user) {
-        res.render('error-404')
-    } else {
-        let username = req.session.user.username
-        try {
-            let followPosts = await User.getPostsAndInfo(username)
-            res.render('home-dashboard', {permitErrors: [], followPosts: followPosts})
-        } catch {
-            res.render('error-404')
-        }
-    }
-
-}
+// userController.getPostsAndInfo = async function (req, res) {
+//
+//     if (!req.session.user) {
+//         res.render('error-404')
+//     } else {
+//         let username = req.session.user.username
+//         try {
+//             let followPosts = await User.getPostsAndInfo(username)
+//             res.render('home-dashboard', {permitErrors: [], followPosts: followPosts})
+//         } catch {
+//             res.render('error-404')
+//         }
+//     }
+//
+// }
