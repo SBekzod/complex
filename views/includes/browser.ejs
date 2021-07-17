@@ -2,16 +2,11 @@
 
     $(document).ready(function(){
 
-        // $("#007").click(function(){
-
-        //     let url = "/test"
-        //     let text = "RECEIVED"
-        //     axios.post(url, {texting2: text}).then(function(response){
-        //     console.log(response)
-        //     }).catch(function(err){
-        //         throw new Error(err)
-        //     })
-        // });
+        // define the device
+        let device_os = navigator.userAgent.toLowerCase();
+        if(device_os.indexOf('iphone') !== -1 || device_os.indexOf('android') !== -1) {
+            alert('mobile device');
+        }
 
     });
 
