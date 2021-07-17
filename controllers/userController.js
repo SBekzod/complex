@@ -68,7 +68,7 @@ userController.mustBeLoggedIn = function (req, res, next) {
         return next()
     } else {
         console.log(req.url)
-        if (req.url === '/l-talk') req.flash('errors', `You must be logged in to enter Let's Talk page`)
+        if (req.url === '/l-talk-list') req.flash('errors', `You must log in to make ltalk 🥶, please login 😅`)
         else req.flash('errors', 'You must be logged in to post!')
 
         req.session.save(function () {

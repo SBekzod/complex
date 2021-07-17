@@ -5,7 +5,8 @@
         // define the device
         let device_os = navigator.userAgent.toLowerCase();
         if(device_os.indexOf('iphone') !== -1 || device_os.indexOf('android') !== -1) {
-            alert('mobile device');
+            $('#ltalk.on_feed').attr('hidden', 'hidden');
+            $('#main_feed').removeClass('col-7')
         }
 
     });

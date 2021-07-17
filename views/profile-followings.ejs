@@ -22,7 +22,7 @@
             </form>
         <% } else if(user && !isVisitorFollowing && !isVisitorTheOwner) { %>
             <form class="ml-2 d-inline" action="/follow/<%= username %>" method="POST">
-                <button class="btn btn-primary btn-sm">Follow <i class="fas fa-user-plus"></i></button>
+                <button class="btn btn-primary btn-sm" style="background-color: #28a745">Follow <i class="fas fa-user-plus"></i></button>
             </form>
         <% } %>
 

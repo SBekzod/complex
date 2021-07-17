@@ -168,7 +168,7 @@ textarea.tall-textarea {
 }
 
 .search-overlay-icon {
-  color: #007bff;
+  color: orange;
   font-size: 1.4rem;
   margin: 0;
   margin-right: 10px;
@@ -180,7 +180,7 @@ textarea.tall-textarea {
   font-size: 1.1rem;
   outline: none;
   flex: 1;
-  color: #007bff;
+  color: grey;
 }
 
 .text-center {
@@ -287,8 +287,8 @@ textarea.tall-textarea {
   z-index: 5;
   bottom: 0;
   right: 20px;
-  width: 290px;
-  height: 350px;
+  width: 350px;
+  height: 450px;
   background-color: #FFF;
   display: flex;
   flex-direction: column;
@@ -303,7 +303,7 @@ textarea.tall-textarea {
 }
 
 .chat-title-bar {
-  background-color: #292929;
+  background-color: orange;
   color: #FFF;
   padding: 4px 7px;
   display: flex;
@@ -391,7 +391,6 @@ textarea.tall-textarea {
 .newUser {
   font-size: 10px;
 }
-
 
 
 

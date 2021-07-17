@@ -6,7 +6,7 @@
     <div id="feed-container" class="row">
 
         <!-- ONE TO ONE L-TALK-->
-        <div id="ltalk" class="text-center col-4" target_user="<%= target_user %>" mb_id="<%= mb_id %>" style="margin-right: 10px;">
+        <div id="ltalk" class="text-center col-4 on_feed" target_user="<%= target_user %>" mb_id="<%= mb_id %>" style="margin-right: 10px;">
             <div class="ntalk_container list_container" style="height:420px;display:none;">
                 <div class="ntalk_tabs" style="height: 50px;">
                     <a id="con_list" href="/l-talk-list" class="active">대화목록</a>
@@ -61,7 +61,7 @@
             <% } %>
 
             <% if(followPosts.length == 0) { %>
-                <div>
+                <div style="margin-top: 40px">
                     <h2> Hello <strong> <%= user.username %></strong>, your feed is empty.</h2>
                     <p class="lead text-muted">Your feed displays the latest posts from the people you follow. If you
                         don&rsquo;t

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= typeof (title) == 'undefined' ? 'OurApp' : title %></title>
+    <title><%= typeof (title) == 'undefined' ? 'The Civitas' : title %></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js"
@@ -23,14 +23,16 @@
 <% if(user) { %>
 
 <body>
-<header class="header-bar mb-3">
+<header class="header-bar mb-3" style="background-color: orange">
     <div class="container d-flex flex-column flex-md-row align-items-center p-3">
-        <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">
-                <img src="/img/nav_images/home.png" style="width: 40px">
-            </a></h4>
-        <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/l-talk-list" class="text-white">
-                <img src="/img/nav_images/ltalk.png" style="width: 40px">
-            </a></h4>
+        <h4 class="my-0 mr-md-auto font-weight-normal">
+            <a href="/" class="text-white">
+                <img src="/img/nav_images/home.png" style="width: 40px; margin-right: 10px;">
+            </a>
+            <a href="/l-talk-list" class="text-white">
+                <img src="/img/nav_images/ltalk.png" style="width: 40px;">
+            </a>
+        </h4>
         <div class="flex-row my-3 my-md-0">
             <a href="#" id="009" class="text-white mr-2 header-search-icon" title="Search" data-toggle="tooltip"
                data-placement="bottom"><i class="fas fa-search"></i></a>
@@ -51,23 +53,29 @@
 <% } else { %>
 
 <body>
-<header class="header-bar mb-3">
+<header class="header-bar mb-3" style="background-color: orange">
 
     <div class="container d-flex flex-column flex-md-row align-items-center p-3">
-        <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">OurApp</a></h4>
-        <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/l-talk" class="text-white">L-TALK</a></h4>
+        <h4 class="my-0 mr-md-auto font-weight-normal">
+            <a href="/" class="text-white">
+                <img src="/img/nav_images/home.png" style="width: 40px; margin-right: 10px;">
+            </a>
+            <a href="/l-talk-list" class="text-white">
+                <img src="/img/nav_images/ltalk.png" style="width: 40px;">
+            </a>
+        </h4>
         <form action="/login" method="POST" class="mb-0 pt-2 pt-md-0">
             <div class="row align-items-center">
                 <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
                     <input name="username" class="form-control form-control-sm input-dark" type="text"
-                           placeholder="Username" autocomplete="off">
+                           placeholder="Username" autocomplete="off" style="background-color: lightgoldenrodyellow">
                 </div>
                 <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
                     <input name="password" class="form-control form-control-sm input-dark" type="password"
-                           placeholder="Password">
+                           placeholder="Password" style="background-color: lightgoldenrodyellow">
                 </div>
                 <div class="col-md-auto">
-                    <button class="btn btn-primary btn-sm">Sign In</button>
+                    <button class="btn btn-primary btn-sm" style="background-color: #28a745">Sign In</button>
                 </div>
             </div>
         </form>
