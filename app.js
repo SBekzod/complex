@@ -10,6 +10,11 @@ const sanitizer = require('sanitize-html')
 
 //---------------
 const myapp = express()
+myapp.use(express.urlencoded({extended: true}))
+myapp.use(express.json())
+myapp.use(express.static('public'))
+
+
 let sessionOpt = session({
     secret: 'JS is cool',
     store: new MongoStore({client: require('./server')}),
@@ -17,26 +22,23 @@ let sessionOpt = session({
     saveUninitialized: false,
     cookie: {maxAge: 1000 * 60 * 60, httpOnly: true}
 })
-
 myapp.use(flash())
 myapp.use(sessionOpt)
-myapp.use(express.urlencoded({extended: true}))
-myapp.use(express.json())
+
 
 myapp.set('views', 'views')
 myapp.set('view engine', 'ejs')
 
-myapp.use(express.static('public'))
+
 // enabling user object from session within each ejs pages
 myapp.use(function (req, res, next) {
     res.locals.user = req.session.user
     next()
 })
 myapp.use('/', router)
-
 //---------------
-const server = http.createServer(myapp)
 
+const server = http.createServer(myapp)
 const io = require('socket.io')(server)
 
 // getting connected user's session data via socket
