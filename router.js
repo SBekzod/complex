@@ -1,10 +1,10 @@
-const express = require('express')
-const router = express.Router()
-const userController = require('./controllers/userController')
-const postController = require('./controllers/postController')
-const followController = require('./controllers/followController')
-const talkController = require('./controllers/talkController')
-
+const express = require('express');
+const router = express.Router();
+const userController = require('./controllers/userController');
+const postController = require('./controllers/postController');
+const followController = require('./controllers/followController');
+const talkController = require('./controllers/talkController');
+const chatController = require('./controllers/chatController');
 
 // user related routes
 router.get('/', userController.mustBeLoggedInRes, followController.getFollowingIds, postController.getPostsWithInfo, userController.home)
@@ -39,5 +39,9 @@ router.post('/unfollow/:username', userController.mustBeLoggedIn, userController
 router.get('/l-talk-list', userController.mustBeLoggedIn, talkController.channelList)
 router.get('/l-talk/user-search', userController.mustBeLoggedIn, talkController.userSearch)
 router.get('/l-talk/user-search/:username', userController.mustBeLoggedIn, userController.getUserInfo)
+
+// L-CHAT related routes
+router.get('/chat/list', userController.mustBeLoggedIn, chatController.channelList);
+
 
 module.exports = router
