@@ -40,13 +40,15 @@ const server = http.createServer(app);
 const io = require('socket.io')(server, {serveClient: false, origins: '*:*', transport: ['websocket', 'xhr-polling']});
 
 // getting connected user's session data via socket
-io.use(function (socket, next) {
-    sessionOpt(socket.request, socket.request.res, next);
-});
+// io.use(function (socket, next) {
+//     sessionOpt(socket.request, socket.request.res, next);
+// });
 
 io.on('connection', function (socket) {
-    console.log('server was ready, the connection is set');
-    let user = socket.request.session.user;
+    console.log('OPEN TALK SOCKET SERVER RUNS ON: ', process.env['PORT']);
+
+    //TODO: AVOID HARD CODING AND GET USER DATA FROM TOKENS
+    let user = {username: 'martin', avatar: 'https://gravatar.com/avatar/414b9fc9c6bbd580e66dfe0904a36e96?s=128'};
 
     // welcome connected user and provide with session data via socket connection
     if (user) {
@@ -58,7 +60,6 @@ io.on('connection', function (socket) {
     socket.on('createMsg', function (data) {
         // then, server is sending the message to every connected user except the sender
         io.emit('newMsg', {message: sanitizer(data.message, {allowedTags: [], allowedAttributes: {}}), username: user.username, avatar: user.avatar})
-
     });
 
 });
