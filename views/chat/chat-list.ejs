@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
     const user_name = '<%= user.username %>';
-    const socket = io();
+    const socket = io('http://31.220.109.104:4004', {transports: ['websocket', 'xhr-polling']});
 
     console.log('this: ', socket);
 
@@ -22,7 +22,7 @@
         list_section.html('');
         if (msg.hasOwnProperty('data')) {
             msg.data.map(channel => {
-                let html = `<li><a href="/chat-room?channel_id=${channel.id}&name=${channel['chat_name']}&username=${user_name}">${channel['chat_name']}</a></li>`;
+                let html = `<li><a href="/l-chat/room?channel_id=${channel.id}&name=${channel['chat_name']}&username=${user_name}">${channel['chat_name']}</a></li>`;
                 list_section.append(html);
             });
         }

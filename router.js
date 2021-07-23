@@ -41,7 +41,8 @@ router.get('/l-talk/user-search', userController.mustBeLoggedIn, talkController.
 router.get('/l-talk/user-search/:username', userController.mustBeLoggedIn, userController.getUserInfo)
 
 // L-CHAT related routes
-router.get('/chat/list', userController.mustBeLoggedIn, chatController.channelList);
+router.get('/l-chat/list', userController.mustBeLoggedIn, chatController.channelList);
+router.get('/l-chat/room', userController.mustBeLoggedIn, chatController.enterRoom);
 
 
 module.exports = router

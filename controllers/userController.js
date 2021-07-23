@@ -31,7 +31,6 @@ userController.logout = function (req, res) {
 
 userController.home = function (req, res) {
     let followPostsWithInfo = req.followPostsWithinfo
-    console.log(req.session.user)
     let target_user = "none"
     let mb_id = req.session.user['authorId']
     if (req.query.hasOwnProperty('target_id')) target_user = req.query['target_id']
@@ -70,10 +69,10 @@ userController.mustBeLoggedIn = function (req, res, next) {
         console.log(req.url)
         if (req.url === '/l-talk-list') {
             req.flash('errors', `You must log in to make ltalk 🥶, please login 😅`)
-        } else if (req.url === '/chat/list') {
+        } else if (req.url === '/l-chat/list') {
             req.flash('errors', `You must log in to use topic chats 🥶, please login 😅`)
         }
-        else req.flash('errors', 'You must be logged in to post!')
+        else req.flash('errors', 'You must be logged in 😅!')
         req.session.save(function () {
             res.redirect('/')
         })

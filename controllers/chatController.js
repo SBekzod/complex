@@ -1,7 +1,11 @@
-const chatController = module.exports
+const chatController = module.exports;
 
 chatController.channelList = function (req, res) {
-    console.log(req.session.user)
-    let mb_id = req.session.user['authorId']
-    res.render('chat/chat-list', {mb_id: mb_id})
+    res.render('chat/chat-list');
+}
+
+chatController.enterRoom = function (req, res) {
+    const channel_info = req.query;
+    //TODO: CHECKING CHANNELS' EXISTENCE AND PERMISSION ON MY-DB
+    res.render('chat/chat-room', {channel_info: channel_info});
 }

@@ -1,0 +1,57 @@
+<%- include('../includes/header')%>
+
+<body>
+<div>
+    <p>Hi Dude <strong><%=user.username%></strong>, welcome to <strong><%=channel_info.name%></strong></p>
+    <input id="text" name="message" type="text"/>
+    <button id="butt1">send</button>
+
+    <lu id="chatting_text"></lu>
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        const chat_section = $('#chatting_text');
+
+        const user_name = '<%=user.username%>';
+        const user_id = '<%=user.authorId%>';
+        const channel_id = '<%=channel_info.channel_id%>';
+        const channel_name = '<%=channel_info.name%>';
+        const socket = io('http://31.220.109.104:4004', {transports: ['websocket', 'xhr-polling']});
+        socket.on('connect', function () {
+            console.log('browser connection on process');
+        });
+
+
+        socket.emit('join', {username: user_name, channel_id: channel_id, user_id: user_id}, function (err) {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log(`connected to ${channel_name}`);
+            }
+        });
+
+        socket.on('newMessage', function (msg) {
+            console.log(msg);
+            if(msg.from === 'admin') {
+                let html = `<li style="font-size: small; margin-top: 20px; margin-right: 40px"><strong>${msg.from}</strong>: ${msg.text} at ${msg.time}</li>`;
+                chat_section.append(html);
+            } else {
+                let html = `<li style="display: flex; flex-direction: column; margin-top: 10px" >
+                            <p><strong>${msg.from}</strong></p>
+                            <div style="margin-top: -20px">${msg.text}  ${msg.time}</div>
+                        </li>`;
+                chat_section.append(html);
+            }
+        });
+
+        $('#butt1').on('click', function () {
+            let text = $('input[name=message]').val();
+            socket.emit('createMessage', {room: channel_name, from: user_name, text: text, type: 'message'});
+        })
+
+    });
+</script>
+
+<%- include('../includes/footer')%>
