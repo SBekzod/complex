@@ -54,7 +54,7 @@ class Chat {
 
     submitToChat() {
         let inputText = sanitizeHTML(this.chatField.value, {allowedTags: [], allowedAttributes: {}})
-        this.socket.emit('sentMessageByBrowser', {message: inputText, sender_name: this.socket_username})
+        this.socket.emit('createMsg', {message: inputText, sender_name: this.socket_username})
         this.renderOwnMessage(inputText)
         this.chatField.value = ''
         this.chatField.focus()
@@ -102,10 +102,15 @@ class Chat {
     }
 
     openConnection() {
-        this.socket = io()
+        this.socket = io();
+        this.socket.connect('http://localhost:3003', {transports: ['websocket', 'xhr-polling']});
+
+        console.log('Started');
+        console.log('Socket: ', this.socket);
 
         // receiving server's message called welcome and getting session data via socket connection
         this.socket.on('welcome', (data) => {
+            console.log('welcome arrived');
             this.socket_username = data.username
             this.socket_avatar = data.avatar
             this.userGreetings()
@@ -118,7 +123,7 @@ class Chat {
         })
 
         // receiving server's message called sentByServer
-        this.socket.on('sentByServer', (data) => {
+        this.socket.on('newMsg', (data) => {
             // checking for being the author of message
             this.renderOthersMessage(data)
 

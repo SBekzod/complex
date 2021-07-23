@@ -6,14 +6,14 @@ const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash')
 // const markDown = require('marked')
 const sanitizer = require('sanitize-html')
-
+const cors = require('cors');
 
 //---------------
 const myapp = express()
 myapp.use(express.urlencoded({extended: true}))
 myapp.use(express.json())
 myapp.use(express.static('public'))
-
+myapp.use(cors());
 
 let sessionOpt = session({
     secret: 'JS is cool',
@@ -22,7 +22,7 @@ let sessionOpt = session({
     saveUninitialized: false,
     cookie: {maxAge: 1000 * 60 * 60, httpOnly: true}
 })
-myapp.use(flash())
+myapp.use(flash());
 myapp.use(sessionOpt)
 
 
@@ -39,7 +39,8 @@ myapp.use('/', router)
 //---------------
 
 const server = http.createServer(myapp)
-const io = require('socket.io')(server)
+const io = require('socket.io')(server, {serveClient: false, origins: '*:*', transport: ['websocket', 'xhr-polling']});
+
 
 // getting connected user's session data via socket
 io.use(function (socket, next) {
@@ -57,10 +58,10 @@ io.on('connection', function (socket) {
     }
 
     // user send message to server
-    socket.on('sentMessageByBrowser', function (data) {
+    socket.on('createMsg', function (data) {
 
         // then, server is sending the message to every connected user except the sender
-        socket.broadcast.emit('sentByServer', {message: sanitizer(data.message, {allowedTags: [], allowedAttributes: {}}), username: user.username, avatar: user.avatar})
+        socket.broadcast.emit('newMsg', {message: sanitizer(data.message, {allowedTags: [], allowedAttributes: {}}), username: user.username, avatar: user.avatar})
 
     })
 
