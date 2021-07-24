@@ -3,38 +3,36 @@
 <body>
 <div>
     <p style="margin: 20px">hi dude <strong><%= user.username %></strong>, Here is chatting rooms those we have:</p>
-    <lu id="channel_list" style="font-size: large"></lu>
+    <lu id="channel_list" style="font-size: large">
+        <% channel_list.forEach(channel => { %>
+        <li>
+            <a href="/l-chat/room?room_id=<%= channel['room_id'] %>"><%= channel['room_title'] %></a>
+        </li>
+        <% }) %>
+    </lu>
 </div>
 
 <script type="text/javascript">
     const user_name = '<%= user.username %>';
     const socket = io('http://31.220.109.104:4004', {transports: ['websocket', 'xhr-polling']});
-
     console.log('this: ', socket);
 
     socket.on('connect', function () {
         console.log('browser connection on process');
     });
 
-    socket.on('newChannelsData', function (msg) {
+    //TODO: Get updates on channel list and put on top
+    socket.on('newChannelData', function (msg) {
         console.log('MSG: ', msg);
-        let list_section = $('#channel_list');
-        list_section.html('');
-        if (msg.hasOwnProperty('data')) {
-            msg.data.map(channel => {
-                let html = `<li><a href="/l-chat/room?channel_id=${channel.id}&name=${channel['chat_name']}&username=${user_name}">${channel['chat_name']}</a></li>`;
-                list_section.append(html);
-            });
-        }
-    })
+    });
 
     socket.on('disconnect', function () {
-        console.log('disconnected')
-    })
+        console.log('disconnected');
+    });
 
     socket.on('connect_error', (err) => {
         console.log(err);
-    })
+    });
 </script>
 
 <%- include('../includes/footer') %>
