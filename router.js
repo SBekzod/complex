@@ -43,6 +43,7 @@ router.get('/l-talk/user-search/:username', userController.mustBeLoggedIn, userC
 // L-CHAT related routes
 router.get('/l-chat/list', userController.mustBeLoggedIn, chatController.channelList);
 router.get('/l-chat/room', userController.mustBeLoggedIn, chatController.enterRoom);
-
+router.get('/l-chat/creat-room', userController.mustBeLoggedIn, chatController.createRoom);
+router.post('/l-chat/creat-room', userController.mustBeLoggedIn, chatController.createRoomProcess);
 
 module.exports = router

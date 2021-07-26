@@ -12,7 +12,7 @@ class Ltalk {
     // checking function
 
     checking() {
-        console.log(`The checking function is executed at ${moment.utc().format()}`)
+        // console.log(`The checking function is executed at ${moment.utc().format()}`)
     }
 
 }

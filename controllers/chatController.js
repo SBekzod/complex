@@ -7,7 +7,7 @@ chatController.channelList = async function (req, res) {
         let channel_list = await chat.getActiveChannels();
         res.render('chat/chat-list', {channel_list: channel_list ? channel_list : []});
     } catch (e) {
-        console.log('ERROR, channelList: ', e);
+        logger.error(`channelList:  ${e}`);
     }
 }
 
@@ -22,6 +22,17 @@ chatController.enterRoom = async function (req, res) {
             res.redirect('/l-chat/list');
         }
     } catch (e) {
-        console.log('ERROR, enterRoom: ', e);
+        logger.error(`enterRoom: ${e}`);
     }
+}
+
+chatController.createRoom = function (req, res) {
+    res.render('chat/create-room');
+}
+
+chatController.createRoomProcess = async function (req, res) {
+    // console.losg(req.body);
+    const chat = new Chat();
+    await chat.createNewRoom(req.body);
+    res.send('done');
 }

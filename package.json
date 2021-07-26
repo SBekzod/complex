@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "watch": "start nodemon server --ignore frontend-js --ignore public/ && start webpack --watch",
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
@@ -35,7 +35,8 @@
     "socket.io": "^2.3.0",
     "validator": "^13.1.1",
     "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "regenerator-runtime": "^0.13.7"

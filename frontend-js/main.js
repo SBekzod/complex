@@ -37,7 +37,7 @@ if (document.querySelector('#ltalk')) {
 
     mb_id = $('#ltalk').attr('mb_id')
     session_id = $('#ltalk').attr('mb_id')
-    console.log("THIS IS MEMBER ID: ", mb_id)
+    logger.info(`THIS IS MEMBER ID: ${mb_id}`);
 
     /// -----------
     var gClient = null;
@@ -75,7 +75,6 @@ if (document.querySelector('#ltalk')) {
                     checkMessagePopup(res.updateChannel);
                     if (checkRemoveChannel(res.updateChannel)) {
                         $('.btn_list').click();
-                        console.log('상대방이 입장하신 방을 삭제 하였습니다.');
                     }
                 }
                 parseChannel(res.updateChannel);
@@ -116,8 +115,8 @@ if (document.querySelector('#ltalk')) {
                             goChannel(response.createChannel.channel_id);
                         }, 1000);
                     } else {
-                        console.log('ERROR OCCURRED DURING CREATION')
-                        console.log(response.message)
+                        logger.error('ERROR OCCURRED DURING CREATION');
+                        logger.error(response.message);
                         // let message = response.message ? response.message : "";
                         // if (message) sweet_alert(message);
                     }
@@ -159,7 +158,7 @@ if (document.querySelector('#ltalk')) {
                 let message = $('#ntalk_input_text').val();
                 if (message.length === 0) return false;
                 if (message.length > 1000) {
-                    console.log('메시지는 최대 1,000자 까지 보낼 수 있습니다.');
+                    logger.warn('메시지는 최대 1,000자 까지 보낼 수 있습니다.');
                     return false;
                 }
 
@@ -168,7 +167,7 @@ if (document.querySelector('#ltalk')) {
                 gClient.sendMessage(activeChannelId, message).then((data) => {
                     if (data) $('#ntalk_input_text').val("");
                 }).catch(err => {
-                    console.log(err);
+                    logger.error(err);
                 });
             }
         });
@@ -213,7 +212,7 @@ if (document.querySelector('#ltalk')) {
         gClient.enterChannel(channel_id, (res) => {
             if (!res.updateMessage) return false;
             parseMessage(res.updateMessage);
-            console.log(res)
+            logger.error(res)
             if (messagesActive) renderingMessage(res.updateMessage, mb_id);
 
             const chat = document.querySelector('.ntalk_wrap');
@@ -224,7 +223,7 @@ if (document.querySelector('#ltalk')) {
         gClient.getMessages(channel_id).then((datas) => {
             messages = datas;
             for (let i = 0; i < datas.length; i++) {
-                console.log('msg')
+                logger.warn('msg')
                 if (datas[i].index - messageLastIndex > 0) messageLastIndex = datas[i].index;
             }
         });
@@ -282,7 +281,7 @@ if (document.querySelector('#ltalk')) {
                 }
             }, 2000); // two seconds
         } else {
-            console.log("엔톡방 입장에 실패 하였습니다.");
+            logger.warn("엔톡방 입장에 실패 하였습니다.");
             initActiveChannel();
         }
     }
@@ -322,12 +321,12 @@ function parseChannel(channel) {
 
     if (channel.type === "added") {
         if (channel.is_active === "Y") {
-            console.log('added ---------------------------------------');
+            logger.info('added ---------------------------------------');
             if (!channels.find((item) => item.channel_id === channel.channel_id)) {
                 channels.unshift(channel);
             }
         } else {
-            console.log('removed ---------------------------------------');
+            logger.info('removed ---------------------------------------');
             const channels_final = channels.filter(({channel_id}) => {
                 return channel_id !== channel.channel_id;
             });
@@ -336,13 +335,13 @@ function parseChannel(channel) {
     }
     if (channel.type === "modified") {
         if (channel.is_active === "Y") {
-            console.log('modified ---------------------------------------');
+            logger.info('modified ---------------------------------------');
             const channels_final = channels.filter(({channel_id}) => {
                 return channel_id !== channel.channel_id;
             });
             channels = Object.assign([], [channel, ...channels_final]);
         } else {
-            console.log('removed ---------------------------------------');
+            logger.info('removed ---------------------------------------');
             const channels_final = channels.filter(({channel_id}) => {
                 return channel_id !== channel.channel_id;
             });

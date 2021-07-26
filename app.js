@@ -45,7 +45,7 @@ const io = require('socket.io')(server, {serveClient: false, origins: '*:*', tra
 // });
 
 io.on('connection', function (socket) {
-    console.log('OPEN TALK SOCKET SERVER RUNS ON: ', process.env['PORT']);
+    logger.warn('OPEN TALK SOCKET SERVER RUNS ON: ', process.env['PORT']);
 
     //TODO: AVOID HARD CODING AND GET USER DATA FROM TOKENS
     let user = {username: 'martin', avatar: 'https://gravatar.com/avatar/414b9fc9c6bbd580e66dfe0904a36e96?s=128'};

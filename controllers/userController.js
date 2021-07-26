@@ -34,8 +34,6 @@ userController.home = function (req, res) {
     let target_user = "none"
     let mb_id = req.session.user['authorId']
     if (req.query.hasOwnProperty('target_id')) target_user = req.query['target_id']
-    console.log("THIS IS TARGET_ID: ", target_user)
-    console.log("THIS IS MB_ID: ", mb_id)
     res.render('home-dashboard', {followPosts: followPostsWithInfo, target_user: target_user, mb_id: mb_id, permitErrors: req.flash('permitErrors')})
 }
 
@@ -66,7 +64,6 @@ userController.mustBeLoggedIn = function (req, res, next) {
     if (req.session.user) {
         return next()
     } else {
-        console.log(req.url)
         if (req.url === '/l-talk-list') {
             req.flash('errors', `You must log in to make ltalk 🥶, please login 😅`)
         } else if (req.url === '/l-chat/list') {
@@ -115,7 +112,7 @@ userController.getUserInfo = async function (req, res) {
         let result = await User.findAuthorByUsername(username)
         await res.json(result)
     } catch (err) {
-        console.log("Error getUserInfo: ", err.message)
+        logger.error(`getUserInfo: : ${err.message}`);
         await res.json({result: false})
     }
 }

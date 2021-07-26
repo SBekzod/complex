@@ -19,7 +19,7 @@ class Chat {
     async getTargetChannelInfo(room_id) {
         try {
             let data = await this.db.getTargetChannelInfo(room_id);
-            console.log('room data: ', data);
+            logger.warn('room data', data);
             if(data) return data;
             else return false;
         } catch (e) {
@@ -27,6 +27,11 @@ class Chat {
             return false;
         }
     }
+
+    async createNewRoom() {
+
+    }
+
 }
 
 module.exports = Chat;

@@ -25,7 +25,7 @@ class MySql {
                 return query_result[0];
             }
         } catch (e) {
-            console.log('ERROR, getActiveChatRooms: ', e);
+            logger.error(`getActiveChatRooms: ${e}`);
             return false;
         }
 
@@ -41,7 +41,7 @@ class MySql {
                 return query_result[0][0];
             }
         } catch (e) {
-            console.log('ERROR getTargetChannelInfo: ', e);
+            logger.error( `getTargetChannelInfo: ${e}`);
             return false;
         }
     }
