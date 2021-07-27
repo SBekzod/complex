@@ -6,6 +6,7 @@
 <body>
     <div>
         <form method="POST" action="/l-chat/creat-room" style="display: flex; flex-direction: column; margin: 50px">
+            <input name="owner_id" value="<%=owner_id%>" hidden/>
             <div class="form-floating mb-2">
                 <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="write title">
                 <label for="floatingTitle">Chat room title</label>

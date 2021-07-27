@@ -27,12 +27,18 @@ chatController.enterRoom = async function (req, res) {
 }
 
 chatController.createRoom = function (req, res) {
-    res.render('chat/create-room');
+    logger.warn('params', req.params);
+    res.render('chat/create-room', {owner_id: req.params['id']});
 }
 
 chatController.createRoomProcess = async function (req, res) {
-    // console.losg(req.body);
-    const chat = new Chat();
-    await chat.createNewRoom(req.body);
-    res.send('done');
+    try{
+        logger.warn('req.body', req.body);
+        const chat = new Chat();
+        await chat.createRoomProcess(req.body);
+        res.end('<div><script>alert("chat room created"); window.close();</script></div>')
+    } catch(e) {
+        res.send('error');
+    }
+
 }

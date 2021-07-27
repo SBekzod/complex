@@ -28,8 +28,13 @@ class Chat {
         }
     }
 
-    async createNewRoom() {
-
+    async createRoomProcess(data) {
+        try {
+            await this.db.createRoomProcess(data);
+        } catch(e) {
+            logger.error('Chat model createRoomProcess', e);
+            throw e;
+        }
     }
 
 }
