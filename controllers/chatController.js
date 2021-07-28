@@ -17,6 +17,7 @@ chatController.enterRoom = async function (req, res) {
         const room_id = req.query['room_id'];
         const chat = new Chat();
         let channel_info = await chat.getTargetChannelInfo(room_id);
+        channel_info.room_title = channel_info.room_title.toUpperCase();
         if (channel_info) {
             res.render('chat/chat-room', {channel_info: channel_info});
         } else {
