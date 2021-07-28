@@ -7,6 +7,8 @@
         if(device_os.indexOf('iphone') !== -1 || device_os.indexOf('android') !== -1) {
             $('#ltalk.on_feed').attr('hidden', 'hidden');
             $('#main_feed').removeClass('col-7');
+            $('#footer_target').hide();
+            $('#message_section').css('margin-bottom', '40px');
         }
 
     });
