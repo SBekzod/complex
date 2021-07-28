@@ -4,9 +4,11 @@ const router = require('./router');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
-// const markDown = require('marked');
 const sanitizer = require('sanitize-html');
 const cors = require('cors');
+// for l-chat part only need cookie-parser usage
+const cookieParser = require('cookie-parser')
+
 
 //---------------
 const app = express();
@@ -24,6 +26,7 @@ let sessionOpt = session({
 });
 app.use(flash());
 app.use(sessionOpt);
+app.use(cookieParser()); // only for l-chat
 
 app.set('views', 'views');
 app.set('view engine', 'ejs');

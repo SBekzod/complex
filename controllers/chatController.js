@@ -1,6 +1,7 @@
 const chatController = module.exports;
 const Chat = require('../models_chat/Chat');
 
+
 chatController.channelList = async function (req, res) {
     try {
         const chat = new Chat();
@@ -41,4 +42,9 @@ chatController.createRoomProcess = async function (req, res) {
         res.send('error');
     }
 
+}
+
+chatController.createVerifiedDataOnCookies = function (req, res, next) {
+    res.cookie('verified_data', req.session.user, {httpOnly: true});
+    next();
 }
