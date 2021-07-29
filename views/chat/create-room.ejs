@@ -5,19 +5,19 @@
 </head>
 <body>
     <div>
-        <form method="POST" action="/l-chat/creat-room" style="display: flex; flex-direction: column; margin: 50px">
+        <form method="POST" action="/l-chat/creat-room" class="form_create">
             <input name="owner_id" value="<%=owner_id%>" hidden/>
             <div class="form-floating mb-2">
                 <input type="text" class="form-control" name="title" id="floatingTitle" placeholder="write title">
-                <label for="floatingTitle">Chat room title</label>
+                <label for="floatingTitle">chat room title</label>
             </div>
             <div class="form-floating mb-2">
                 <input type="number" class="form-control" name="visitors" id="floatingVisitors" placeholder="Password">
-                <label for="floatingVisitors">Visitors</label>
+                <label for="floatingVisitors">visitors</label>
             </div>
             <div class="form-floating mb-2">
                 <input type="text" class="form-control" name="description" id="floatingDescription" placeholder="write title">
-                <label for="floatingDescription">Chat room title</label>
+                <label for="floatingDescription">description</label>
             </div>
             <button type="submit" class="btn btn-secondary">create room</button>
         </form>

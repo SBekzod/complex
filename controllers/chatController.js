@@ -30,17 +30,30 @@ chatController.enterRoom = async function (req, res) {
 
 chatController.createRoom = function (req, res) {
     logger.warn('params', req.params);
-    res.render('chat/create-room', {owner_id: req.params['id']});
+    res.render('chat/create-room', {owner_id: req.params['id'], result: null});
 }
 
 chatController.createRoomProcess = async function (req, res) {
     try{
-        logger.warn('req.body', req.body);
+        logger.warn('createRoomProcess: req.body', req.body);
         const chat = new Chat();
-        await chat.createRoomProcess(req.body);
-        res.end('<div><script>alert("chat room created"); window.close();</script></div>')
+        let room_created = await chat.createRoomProcess(req.body);
+        logger.warn('room_id on ctrl: ', room_created);
+        let room_url = `/l-chat/room?room_id=${room_created['insertId']}`;
+        res.end(`<div>
+                    <script>
+                        if(window.confirm("Room created, do you want to log into it?")) {
+                            window.opener.location.href='${room_url}'
+                        } else {
+                            window.opener.location.reload(true)
+                        }
+                    window.close();
+                    </script>
+                </div>`);
     } catch(e) {
-        res.send('error');
+        res.end(`<div>
+                    <script>alert('error occurred'); window.close()</script>
+                </div>`);;
     }
 
 }

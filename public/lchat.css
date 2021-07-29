@@ -306,6 +306,10 @@ body, html {
     position: relative;
 }
 
+.form_create {
+    display: flex; flex-direction: column; margin: 50px
+}
+
 /*.sp-msg_time_send {*/
 /*    position: relative;*/
 /*    right: 0;*/

@@ -61,8 +61,8 @@ class MySql {
         try {
             const query_result = await this.con.execute('insert into channel_info set owner_id = ?, room_title = ?, visitors_limit = ?, description = ?, created_date = ?',
                 [data.owner_id, data.title, data['visitors'], data['description'], time]);
-            logger.warn(query_result);
-            return true;
+            logger.warn('query_result on mysql: ', query_result);
+            return query_result[0];
         } catch(e) {
             logger.error('mysql createRoomProcess ', e);
             throw e;
