@@ -1,9 +1,7 @@
 body, html {
     height: 100%;
     margin: 0;
-    background: #7F7FD5;
     background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
-    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
 }
 
 .chat {
@@ -101,7 +99,7 @@ body, html {
     margin-bottom: 15px !important;
 }
 
-.active {
+.contacts .active {
     background-color: rgba(0, 0, 0, 0.3);
 }
 

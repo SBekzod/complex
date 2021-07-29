@@ -3,8 +3,17 @@ body, .tooltip
   font-family: 'Open Sans', sans-serif;
 }
 
+body, html {
+  background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
+
+
 .header-bar {
   background-color: #292929;
+}
+
+.header_design {
+  background: linear-gradient(to right, #5f5879, #7f7d84, #ffc11f);
 }
 
 .container--narrow {
@@ -405,3 +414,7 @@ textarea.tall-textarea {
 /*  display: flex;*/
 /*  flex-direction: row;*/
 /*}*/
+
+
+
+
