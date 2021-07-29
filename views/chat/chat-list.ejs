@@ -15,6 +15,7 @@
        onclick="OpenPopupCenter('/l-chat/creat-room/<%=user.authorId%>','create chat room', 600, 400); return false;">
         Open Link in Popup
     </a>
+    <button id="private_msg">PM</button>
 
 </div>
 
@@ -45,6 +46,23 @@
         let top =  Math.round((screen.height/2)-(h/2));
         window.open(pageURL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
     }
+
+
+
+    socket.on("private message", msg => {
+        console.log('** private message **');
+        console.log(msg);
+    });
+
+    $('#private_msg').click(function () {
+        console.log('clicked');
+        let msg = {
+            text: 'secret messaging',
+            to: '5f8d82bb3897c708d161151e'
+        }
+        socket.emit('private message', msg);
+    });
+
 
 </script>
 
