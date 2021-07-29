@@ -318,7 +318,7 @@ textarea.tall-textarea {
 }
 
 .chat-title-bar {
-  background-color: orange;
+  background: linear-gradient(to right, #5f5879, #7f7d84, #ffc11f);
   color: #FFF;
   padding: 4px 7px;
   display: flex;
