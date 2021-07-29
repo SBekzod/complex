@@ -28,6 +28,17 @@ class Chat {
         }
     }
 
+    async getTargetChannelUsers(room_id) {
+        try {
+            let data = await this.db.getTargetChannelUsers(room_id);
+            if(data) return data;
+            else return false;
+        } catch (e) {
+            // never reaches here
+            return false;
+        }
+    }
+
     async createRoomProcess(data) {
         try {
             return await this.db.createRoomProcess(data);

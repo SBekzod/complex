@@ -18,55 +18,32 @@
             <div class="card mb-sm-3 mb-md-0 contacts_card">
                 <div class="contacts-format">
                     <div class="user_info">
-                        <span><strong><%= channel_info['room_title'] %></strong> users</span>
+                        <span><strong>ROOM USERS: </strong> </span>
                     </div>
                     <div class="user_info">
-                        <span><i class="fas fa-users"></i>   500</span>
+                        <span><i class="fas fa-users"></i> <%=channel_users.length%></span>
                     </div>
                 </div>
 
                 <div class="card-body contacts_body">
 
                     <ui class="contacts">
-                        <li class="active">
-                            <div class="d-flex bd-highlight">
-                                <div class="img_cont">
-                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                                         class="rounded-circle user_img">
-                                    <span class="online_icon"></span>
-                                </div>
-                                <div class="user_info">
-                                    <span>Khalid</span>
-                                    <p>Kalid is online</p>
-                                </div>
-                            </div>
-                        </li>
+                        <% channel_users.forEach(function (ele_user) { %>
+                        <!-- <li class="active"> -->
                         <li>
                             <div class="d-flex bd-highlight">
                                 <div class="img_cont">
-                                    <img src="https://2.bp.blogspot.com/-8ytYF7cfPkQ/WkPe1-rtrcI/AAAAAAAAGqU/FGfTDVgkcIwmOTtjLka51vineFBExJuSACLcBGAs/s320/31.jpg"
+                                    <img src="<%= ele_user['avatar'] %>"
                                          class="rounded-circle user_img">
-                                    <span class="online_icon offline"></span>
+                                    <span class="online_icon <%= ele_user['status'] === 'out' ? 'offline' : '' %>"></span>
                                 </div>
                                 <div class="user_info">
-                                    <span>Taherah Big</span>
-                                    <p>Taherah left 7 mins ago</p>
+                                    <span><%= ele_user['username'] %></span>
+                                    <p><%= ele_user['username'] %> <%= ele_user['status'] !== 'out' ? 'is online' : 'left'%></p>
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="d-flex bd-highlight">
-                                <div class="img_cont">
-                                    <img src="https://static.turbosquid.com/Preview/001214/650/2V/boy-cartoon-3D-model_D.jpg"
-                                         class="rounded-circle user_img">
-                                    <span class="online_icon offline"></span>
-                                </div>
-                                <div class="user_info">
-                                    <span>Rashid Samim</span>
-                                    <p>Rashid left 50 mins ago</p>
-                                </div>
-                            </div>
-                        </li>
+                        <% }) %>
 
                     </ui>
                 </div>
@@ -136,8 +113,8 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        $('#action_menu_btn').click(function(){
+    $(document).ready(function () {
+        $('#action_menu_btn').click(function () {
             $('.action_menu').toggle();
         });
     });
@@ -182,7 +159,7 @@
             } else {
                 let prepared_time = msg.text.length > 12 ? msg.time : '';
                 let html = '';
-                if(msg.from.mb_id === user_data.mb_id){
+                if (msg.from.mb_id === user_data.mb_id) {
                     html = `<li class="d-flex justify-content-end mb-4">
                                 <div class="msg_cotainer_send">
                                     ${msg.text}
@@ -212,13 +189,13 @@
             console.log(err);
         });
 
-        $('input[name=new_message]').on('keypress', function(e) {
-            if(e.key === 'Enter') {
+        $('input[name=new_message]').on('keypress', function (e) {
+            if (e.key === 'Enter') {
                 let text = $('input[name=new_message]').val();
-                if(text.length === 0) {
+                if (text.length === 0) {
                     e.preventDefault();
                     alert("empty message")
-                }  else {
+                } else {
                     $('input[name=new_message]').val('').focus();
                     socket.emit('createMessage', {room_id: room_id, from: user_data, text: text, type: 'message'});
                 }

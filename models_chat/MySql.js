@@ -47,6 +47,21 @@ class MySql {
         }
     }
 
+    async getTargetChannelUsers(room_id) {
+        try {
+            if (!this.con) await this.connection();
+            const query_result = await this.con.execute('select * from channel_users where room_id = ?', [room_id]);
+            if (query_result[0].length === 0) {
+                return false;
+            } else {
+                return query_result[0];
+            }
+        } catch (e) {
+            logger.error( `getTargetChannelUsers: ${e}`);
+            return false;
+        }
+    }
+
     async checkRoomExist(id) {
         if (!this.con) await this.connection();
         const query_result = await this.con.execute('select * from channel_info where room_id = ? ', [id]);
