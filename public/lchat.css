@@ -276,9 +276,8 @@ body, html {
     align-content: center;
     height: 50px;
     border-radius: 15px !important;
-    background-color: rgba(0, 0, 0, 0.4) !important;
     font-size: 33px;
-    color: mintcream;
+    color: #5c4f8a;
 }
 
 .sp_type_msg {
