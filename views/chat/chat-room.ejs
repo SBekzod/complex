@@ -114,38 +114,27 @@
 
         const user_data = {username: '<%= user.username %>', mb_id: '<%= user.authorId %>'};
         const room_id = '<%= channel_info['room_id'] %>';
-        const room_title = '<%= channel_info['room_title'] %>';
 
         const socket = io('http://31.220.109.104:4004', {transports: ['websocket', 'xhr-polling']});
         socket.on('connect', function () {
-            console.log('browser connection on process');
+            console.log('connect: browser connection on process');
         });
 
-        socket.emit('join', {user_data: user_data, room_id: room_id}, function (err) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(`connected to ${room_title}`);
-            }
-        });
+        socket.emit('joinRoom', {room_id: room_id});
 
         socket.on('newMessage', function (msg) {
-            console.log(msg);
-            if (msg.from === 'admin') {
-                console.log(msg);
+            console.log('newMessage', msg);
+
+            if (msg.from.mb_id === 'admin') {
                 let html = `<li class="d-flex justify-content-center mb-4">
-                        <div class="img_cont_msg" style="margin-right: 10px">
-                            <img src="/img/l-chat/robot-admin.jpg"
-                                 class="rounded-circle sp-user_img_msg">
-                        </div>
                         <div class="sp-msg_cotainer_send">${msg.text}</div>
                         <div class="img_cont_msg">
-                            <img src="/img/l-chat/robo-admin.jpg"
-                                 class="rounded-circle sp-user_img_msg">
+                            <img src=${msg.from.avatar} class="rounded-circle sp-user_img_msg">
                         </div>
                     </li>`;
                 chat_section.append(html);
-            } else {
+            }
+            else {
                 let prepared_time = msg.text.length > 12 ? msg.time : '';
                 let html = '';
                 if (msg.from.mb_id === user_data.mb_id) {
@@ -175,7 +164,7 @@
         });
 
         socket.on('connect_error', (err) => {
-            console.log(err);
+            console.log('connect_error', err);
         });
 
         $('input[name=new_message]').on('keypress', function (e) {
@@ -186,7 +175,7 @@
                     alert("empty message")
                 } else {
                     $('input[name=new_message]').val('').focus();
-                    socket.emit('createMessage', {room_id: room_id, from: user_data, text: text, type: 'message'});
+                    socket.emit('createMessage', {room_id: room_id, type: 'msg:common', text: text});
                 }
             }
         })
@@ -194,7 +183,7 @@
         $('#button_1').on('click', function () {
             let text = $('input[name=new_message]').val();
             $('input[name=new_message]').val('').focus();
-            socket.emit('createMessage', {room_id: room_id, from: user_data, text: text, type: 'message'});
+            socket.emit('createMessage', {room_id: room_id, type: 'msg:common', text: text});
         });
 
     });
