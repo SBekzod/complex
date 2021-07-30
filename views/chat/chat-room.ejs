@@ -21,7 +21,7 @@
                         <span><strong>ROOM USERS: </strong> </span>
                     </div>
                     <div class="user_info">
-                        <span><i class="fas fa-users"></i> <%=channel_users.length%></span>
+                        <span style="display: flex; flex-direction: row"><i class="fas fa-users"></i><div id="user_counts" style="margin-left: 10px"><%= channel_users.length %></div></span>
                     </div>
                 </div>
 
@@ -29,22 +29,22 @@
 
                     <ui class="contacts">
                         <% channel_users.forEach(function (ele_user) { %>
-                        <!-- <li class="active"> -->
-                        <li>
-                            <div class="d-flex bd-highlight">
-                                <div class="img_cont">
-                                    <img src="<%= ele_user['avatar'] %>"
-                                         class="rounded-circle user_img">
-                                    <span class="online_icon <%= ele_user['status'] === 'out' ? 'offline' : '' %>"></span>
+                            <!-- <li class="active"> -->
+                            <li>
+                                <div class="d-flex bd-highlight">
+                                    <div class="img_cont">
+                                        <img src="<%= ele_user['avatar'] %>"
+                                             class="rounded-circle user_img">
+                                        <span id="s_<%= ele_user['mb_id'] %>"
+                                              class="online_icon <%= ele_user['status'] === 'out' ? 'offline' : '' %>"></span>
+                                    </div>
+                                    <div class="user_info">
+                                        <span><%= ele_user['username'] %></span>
+                                        <p id="p_<%= ele_user['mb_id'] %>"><%= ele_user['status'] !== 'out' ? 'online' : 'offline' %></p>
+                                    </div>
                                 </div>
-                                <div class="user_info">
-                                    <span><%= ele_user['username'] %></span>
-                                    <p><%= ele_user['username'] %> <%= ele_user['status'] !== 'out' ? 'is online' : 'left'%></p>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
                         <% }) %>
-
                     </ui>
                 </div>
                 <div class="card-footer"></div>
@@ -108,7 +108,6 @@
         });
     });
 
-
     $(function () {
         const chat_section = $('#chatting_text_area');
 
@@ -126,6 +125,7 @@
             console.log('newMessage', msg);
 
             if (msg.from.mb_id === 'admin') {
+                // chat board notice
                 let html = `<li class="d-flex justify-content-center mb-4">
                         <div class="sp-msg_cotainer_send">${msg.text}</div>
                         <div class="img_cont_msg">
@@ -133,8 +133,21 @@
                         </div>
                     </li>`;
                 chat_section.append(html);
-            }
-            else {
+
+                // editing channel users data
+                let channel_user_counts = $('#user_counts').text();
+                console.log(channel_user_counts);
+                if ((msg.type === 'user:greet' || msg.type === 'user:in') && msg.to !== '*') {
+                    console.log('case 1');
+                    $(`#s_${msg.to}`).removeClass('offline');
+                    $(`#p_${msg.to}`).text('online');
+                } else if (msg.type === 'user:out' && msg.to != '*') {
+                    console.log('case 2');
+                    $(`#s_${msg.to}`).addClass('offline');
+                    $(`#p_${msg.to}`).text('offline');
+                }
+
+            } else {
                 let prepared_time = msg.text.length > 12 ? msg.time : '';
                 let html = '';
                 if (msg.from.mb_id === user_data.mb_id) {
