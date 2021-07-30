@@ -39,11 +39,11 @@
                                         <span id="s_<%= ele_user['mb_id'] %>"
                                               class="online_icon <%= ele_user['status'] === 'out' ? 'offline' : '' %>"></span>
                                     </div>
-                                    <div class="user_info">
+                                    <div id="p_<%= ele_user['mb_id'] %>" class="user_info">
                                         <span style="margin-right: 15px"><%= ele_user['username'] %></span>
-                                        <p id="p_<%= ele_user['mb_id'] %>"><%= ele_user['status'] !== 'out' ? 'online' : 'offline' %></p>
+                                        <p ><%= ele_user['status'] !== 'out' ? 'online' : 'offline' %></p>
                                         <% if(ele_user['status'] !== 'out') { %>
-                                        <div style="margin-right: 5px; margin-top: -10px"><i style="margin-right: 5px;" class="fas fa-user-secret"></i><input mb_id="<%=ele_user['mb_id']%>" type="checkbox"/></div>
+                                          <div style="margin-right: 5px; margin-top: -10px"><i style="margin-right: 5px;" class="fas fa-user-secret"></i><input mb_id="<%=ele_user['mb_id']%>" type="checkbox"/></div>
                                         <% } %>
                                     </div>
                                 </div>
@@ -127,7 +127,6 @@
         });
 
 
-
         socket.emit('joinRoom', {room_id: room_id});
 
         socket.on('newMessage', function (msg) {
@@ -147,30 +146,38 @@
                 let channel_user_counts = $('#user_counts').text();
                 console.log(channel_user_counts);
                 if ((msg.type === 'user:greet' || msg.type === 'user:in') && msg.to !== '*') {
-                    $(`#s_${msg.to.mb_id}`).removeClass('offline');
-                    $(`#p_${msg.to.mb_id}`).text('online');
+
                     if (msg.to['case'] === 'new') {
                         channel_user_counts = parseInt(channel_user_counts) + 1;
                         $('#user_counts').text(channel_user_counts);
-                        let html = `<li>
-                                        <div class="d-flex bd-highlight">
-                                            <div class="img_cont">
-                                                <img src="${msg.to['avatar']}"
-                                                     class="rounded-circle user_img">
-                                                <span id="s_${msg.to['mb_id']}"
-                                                      class="online_icon"></span>
-                                            </div>
-                                            <div class="user_info">
-                                                <span>${msg.to['username']}</span>
-                                                <p id="p_${msg.to['mb_id']}">online</p>
-                                            </div>
-                                        </div>
-                                    </li>`
+                        let html = `<li id="l_${msg.to['mb_id']}">
+                                <div class="d-flex bd-highlight">
+                                    <div class="img_cont">
+                                        <img src="${msg.to['avatar']}"
+                                             class="rounded-circle user_img">
+                                        <span id="s_${msg.to['mb_id']}"
+                                              class="online_icon"></span>
+                                    </div>
+                                    <div id="p_${msg.to['mb_id']}" class="user_info">
+                                        <span style="margin-right: 15px">${msg.to['username']}</span>
+                                        <p>online</p>
+                                        <div style="margin-right: 5px; margin-top: -10px"><i style="margin-right: 5px;" class="fas fa-user-secret"></i><input mb_id="${msg.to['mb_id']}" type="checkbox"/></div>
+                                    </div>
+                                </div>
+                            </li>`;
                         $('.contacts_body ui').prepend(html);
+                    } else {
+                        $(`#s_${msg.to.mb_id}`).removeClass('offline');
+                        $(`#p_${msg.to.mb_id} p`).text('online');
+                        if($(`#p_${msg.to.mb_id} div`).length == 0) {
+                            $(`#p_${msg.to.mb_id}`).append(`<div style="margin-right: 5px; margin-top: -10px"><i style="margin-right: 5px;" class="fas fa-user-secret"></i><input mb_id="${msg.to['mb_id']}" type="checkbox"/></div>`)
+                        }
                     }
+
                 } else if (msg.type === 'user:out' && msg.to != '*') {
                     $(`#s_${msg.to.mb_id}`).addClass('offline');
-                    $(`#p_${msg.to.mb_id}`).text('offline');
+                    $(`#p_${msg.to.mb_id} p`).text('offline');
+                    $(`#p_${msg.to.mb_id} div`).remove();
                 }
 
             } else {
