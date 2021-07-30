@@ -21,7 +21,8 @@
                         <span><strong>ROOM USERS: </strong> </span>
                     </div>
                     <div class="user_info">
-                        <span style="display: flex; flex-direction: row"><i class="fas fa-users"></i><div id="user_counts" style="margin-left: 10px"><%= channel_users.length %></div></span>
+                        <span style="display: flex; flex-direction: row"><i class="fas fa-users"></i><div
+                                    id="user_counts" style="margin-left: 10px"><%= channel_users.length %></div></span>
                     </div>
                 </div>
 
@@ -138,13 +139,30 @@
                 let channel_user_counts = $('#user_counts').text();
                 console.log(channel_user_counts);
                 if ((msg.type === 'user:greet' || msg.type === 'user:in') && msg.to !== '*') {
-                    console.log('case 1');
-                    $(`#s_${msg.to}`).removeClass('offline');
-                    $(`#p_${msg.to}`).text('online');
+                    $(`#s_${msg.to.mb_id}`).removeClass('offline');
+                    $(`#p_${msg.to.mb_id}`).text('online');
+                    if (msg.to['case'] === 'new') {
+                        channel_user_counts = parseInt(channel_user_counts) + 1;
+                        $('#user_counts').text(channel_user_counts);
+                        let html = `<li>
+                                        <div class="d-flex bd-highlight">
+                                            <div class="img_cont">
+                                                <img src="${msg.to['avatar']}"
+                                                     class="rounded-circle user_img">
+                                                <span id="s_${msg.to['mb_id']}"
+                                                      class="online_icon"></span>
+                                            </div>
+                                            <div class="user_info">
+                                                <span>${msg.to['username']}</span>
+                                                <p id="p_${msg.to['mb_id']}">online</p>
+                                            </div>
+                                        </div>
+                                    </li>`
+                        $('.contacts_body ui').prepend(html);
+                    }
                 } else if (msg.type === 'user:out' && msg.to != '*') {
-                    console.log('case 2');
-                    $(`#s_${msg.to}`).addClass('offline');
-                    $(`#p_${msg.to}`).text('offline');
+                    $(`#s_${msg.to.mb_id}`).addClass('offline');
+                    $(`#p_${msg.to.mb_id}`).text('offline');
                 }
 
             } else {
