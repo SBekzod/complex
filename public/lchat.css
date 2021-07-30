@@ -290,9 +290,9 @@ body, html {
 }
 
 .sp-user_img_msg {
-    height: 40px;
-    width: 40px;
-    border: 1.5px solid springgreen;
+    height: 28px;
+    width: 28px;
+    border: 1.5px solid #64ae88;
 }
 
 .sp-msg_cotainer_send {
@@ -300,9 +300,9 @@ body, html {
     margin-bottom: auto;
     margin-right: 10px;
     border-radius: 25px;
-    background-color: ivory;
-    padding: 10px;
     position: relative;
+    height: 35px;
+    color: #ffe505;
 }
 
 .form_create {
