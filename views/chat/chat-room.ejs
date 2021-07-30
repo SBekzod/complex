@@ -31,7 +31,7 @@
                     <ui class="contacts">
                         <% channel_users.forEach(function (ele_user) { %>
                             <!-- <li class="active"> -->
-                            <li>
+                            <li id="l_<%= ele_user['mb_id'] %>">
                                 <div class="d-flex bd-highlight">
                                     <div class="img_cont">
                                         <img src="<%= ele_user['avatar'] %>"
@@ -40,8 +40,11 @@
                                               class="online_icon <%= ele_user['status'] === 'out' ? 'offline' : '' %>"></span>
                                     </div>
                                     <div class="user_info">
-                                        <span><%= ele_user['username'] %></span>
+                                        <span style="margin-right: 15px"><%= ele_user['username'] %></span>
                                         <p id="p_<%= ele_user['mb_id'] %>"><%= ele_user['status'] !== 'out' ? 'online' : 'offline' %></p>
+                                        <% if(ele_user['status'] !== 'out') { %>
+                                        <div style="margin-right: 5px; margin-top: -10px"><i style="margin-right: 5px;" class="fas fa-user-secret"></i><input mb_id="<%=ele_user['mb_id']%>" type="checkbox"/></div>
+                                        <% } %>
                                     </div>
                                 </div>
                             </li>
@@ -103,6 +106,9 @@
 
 
 <script type="text/javascript">
+    let private_messaging = false;
+    let to_mb_id = null;
+
     $(document).ready(function () {
         $('#action_menu_btn').click(function () {
             $('.action_menu').toggle();
@@ -119,6 +125,8 @@
         socket.on('connect', function () {
             console.log('connect: browser connection on process');
         });
+
+
 
         socket.emit('joinRoom', {room_id: room_id});
 
@@ -198,6 +206,7 @@
             console.log('connect_error', err);
         });
 
+        // creating common messages
         $('input[name=new_message]').on('keypress', function (e) {
             if (e.key === 'Enter') {
                 let text = $('input[name=new_message]').val();
@@ -206,16 +215,56 @@
                     alert("empty message")
                 } else {
                     $('input[name=new_message]').val('').focus();
-                    socket.emit('createMessage', {room_id: room_id, type: 'msg:common', text: text});
+                    if(!private_messaging) {
+                        socket.emit('createMessage', {room_id: room_id, type: 'msg:common', text: text});
+                    }  else {
+                        let msg = { type: 'msg:private', text: text, to: to_mb_id}
+                        socket.emit('private message', msg);
+                    }
                 }
             }
         })
 
-        $('#button_1').on('click', function () {
+        $('#button_1').on('click', function (e) {
             let text = $('input[name=new_message]').val();
-            $('input[name=new_message]').val('').focus();
-            socket.emit('createMessage', {room_id: room_id, type: 'msg:common', text: text});
+            if (text.length === 0) {
+                e.preventDefault();
+                alert("empty message")
+            } else {
+                $('input[name=new_message]').val('').focus();
+                if(!private_messaging) {
+                    socket.emit('createMessage', {room_id: room_id, type: 'msg:common', text: text});
+                }  else {
+                    let msg = { type: 'msg:private', text: 'secret messaging', to: to_mb_id}
+                    socket.emit('private message', msg);
+                }
+            }
         });
+
+        // private messaging
+        $('input[type=checkbox]').click(function (e) {
+            let status = e.currentTarget.checked;
+            to_mb_id = e.currentTarget.attributes['mb_id'].value
+
+            $('.contacts').find('input[type=checkbox]').each(function(){
+                $(this).prop('checked', false)
+            });
+
+            $('.contacts').find('li').each(function(){
+                $(this).removeClass('active');
+            });
+            if(status) {
+                $(`#l_${to_mb_id}`).addClass('active');
+                private_messaging = true;
+            }
+            e.currentTarget.checked = status;
+        });
+
+        socket.on("private message", msg => {
+            console.log('** private message **');
+            console.log(msg);
+        });
+
 
     });
 </script>
