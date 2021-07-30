@@ -41,9 +41,11 @@
                                     </div>
                                     <div id="p_<%= ele_user['mb_id'] %>" class="user_info">
                                         <span style="margin-right: 15px"><%= ele_user['username'] %></span>
-                                        <p ><%= ele_user['status'] !== 'out' ? 'online' : 'offline' %></p>
-                                        <% if(ele_user['status'] !== 'out') { %>
-                                          <div style="margin-right: 5px; margin-top: -10px"><i style="margin-right: 5px;" class="fas fa-user-secret"></i><input mb_id="<%=ele_user['mb_id']%>" type="checkbox"/></div>
+                                        <p><%= ele_user['status'] !== 'out' ? 'online' : 'offline' %></p>
+                                        <% if(ele_user['status'] !== 'out' && ele_user['mb_id'] != user['authorId']) { %>
+                                        <div style="margin-right: 5px; margin-top: -10px"><i style="margin-right: 5px;"
+                                                                                             class="fas fa-user-secret"></i><input
+                                                    mb_id="<%= ele_user['mb_id'] %>" type="checkbox"/></div>
                                         <% } %>
                                     </div>
                                 </div>
@@ -148,8 +150,10 @@
                 if ((msg.type === 'user:greet' || msg.type === 'user:in') && msg.to !== '*') {
 
                     if (msg.to['case'] === 'new') {
+
                         channel_user_counts = parseInt(channel_user_counts) + 1;
                         $('#user_counts').text(channel_user_counts);
+
                         let html = `<li id="l_${msg.to['mb_id']}">
                                 <div class="d-flex bd-highlight">
                                     <div class="img_cont">
@@ -160,16 +164,17 @@
                                     </div>
                                     <div id="p_${msg.to['mb_id']}" class="user_info">
                                         <span style="margin-right: 15px">${msg.to['username']}</span>
-                                        <p>online</p>
-                                        <div style="margin-right: 5px; margin-top: -10px"><i style="margin-right: 5px;" class="fas fa-user-secret"></i><input mb_id="${msg.to['mb_id']}" type="checkbox"/></div>
-                                    </div>
-                                </div>
-                            </li>`;
+                                        <p>online</p>`
+                        if (msg.type !== 'user:greet') {
+                            html += `<div style="margin-right: 5px; margin-top: -10px"><i style="margin-right: 5px;" class="fas fa-user-secret"></i><input mb_id="${msg.to['mb_id']}" type="checkbox"/></div>`
+                        }
+                        html += `</div></div></li>`;
                         $('.contacts_body ui').prepend(html);
+
                     } else {
                         $(`#s_${msg.to.mb_id}`).removeClass('offline');
                         $(`#p_${msg.to.mb_id} p`).text('online');
-                        if($(`#p_${msg.to.mb_id} div`).length == 0) {
+                        if ($(`#p_${msg.to.mb_id} div`).length == 0 && msg.type !== 'user:greet') {
                             $(`#p_${msg.to.mb_id}`).append(`<div style="margin-right: 5px; margin-top: -10px"><i style="margin-right: 5px;" class="fas fa-user-secret"></i><input mb_id="${msg.to['mb_id']}" type="checkbox"/></div>`)
                         }
                     }
@@ -222,10 +227,10 @@
                     alert("empty message")
                 } else {
                     $('input[name=new_message]').val('').focus();
-                    if(!private_messaging) {
+                    if (!private_messaging) {
                         socket.emit('createMessage', {room_id: room_id, type: 'msg:common', text: text});
-                    }  else {
-                        let msg = { type: 'msg:private', text: text, to: to_mb_id}
+                    } else {
+                        let msg = {type: 'msg:private', text: text, to: to_mb_id}
                         socket.emit('private message', msg);
                     }
                 }
@@ -239,32 +244,13 @@
                 alert("empty message")
             } else {
                 $('input[name=new_message]').val('').focus();
-                if(!private_messaging) {
+                if (!private_messaging) {
                     socket.emit('createMessage', {room_id: room_id, type: 'msg:common', text: text});
-                }  else {
-                    let msg = { type: 'msg:private', text: 'secret messaging', to: to_mb_id}
+                } else {
+                    let msg = {type: 'msg:private', text: 'secret messaging', to: to_mb_id}
                     socket.emit('private message', msg);
                 }
             }
-        });
-
-        // private messaging
-        $('input[type=checkbox]').click(function (e) {
-            let status = e.currentTarget.checked;
-            to_mb_id = e.currentTarget.attributes['mb_id'].value
-
-            $('.contacts').find('input[type=checkbox]').each(function(){
-                $(this).prop('checked', false)
-            });
-
-            $('.contacts').find('li').each(function(){
-                $(this).removeClass('active');
-            });
-            if(status) {
-                $(`#l_${to_mb_id}`).addClass('active');
-                private_messaging = true;
-            }
-            e.currentTarget.checked = status;
         });
 
         socket.on("private message", msg => {
@@ -274,6 +260,31 @@
 
 
     });
+
+    // private messaging
+    $(document).on('click', 'input[type=checkbox]', function (e) {
+        let status = e.currentTarget.checked;
+
+        $('.contacts').find('input[type=checkbox]').each(function () {
+            $(this).prop('checked', false)
+        });
+        $('.contacts').find('li').each(function () {
+            $(this).removeClass('active');
+        });
+
+        if (status) {
+            to_mb_id = e.currentTarget.attributes['mb_id'].value
+            $(`#l_${to_mb_id}`).addClass('active');
+            private_messaging = true;
+        } else {
+            private_messaging = false;
+            to_mb_id = null;
+        }
+
+        e.currentTarget.checked = status;
+    })
+
+
 </script>
 
 <%- include('../includes/footer') %>
