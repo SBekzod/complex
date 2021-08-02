@@ -121,10 +121,13 @@
     $(function () {
         const chat_section = $('#chatting_text_area');
 
-        const user_data = {username: '<%= user.username %>', mb_id: '<%= user.authorId %>'};
+        const user_data = {username: '<%= user.username %>', mb_id: '<%= user.authorId %>', avatar: '<%= user.avatar %>'};
         const room_id = '<%= channel_info['room_id'] %>';
 
-        const socket = io('http://31.220.109.104:4004', {transports: ['websocket', 'xhr-polling']});
+        const socket = io('http://31.220.109.104:4004', {
+            transports: ['websocket', 'xhr-polling'],
+            query: user_data,
+        });
         socket.on('connect', function () {
             console.log('connect: browser connection on process');
         });
@@ -148,10 +151,9 @@
                 // editing channel users data
                 let channel_user_counts = $('#user_counts').text();
                 console.log(channel_user_counts);
-                if ((msg.type === 'user:greet' || msg.type === 'user:in') && msg.to !== '*') {
+                if ((msg.type === 'user:greet' || (msg.type === 'user:in' && msg.to['mb_id'] !== user_data.mb_id)) && msg.to !== '*') {
 
                     if (msg.to['case'] === 'new') {
-
                         channel_user_counts = parseInt(channel_user_counts) + 1;
                         $('#user_counts').text(channel_user_counts);
 
@@ -180,7 +182,7 @@
                         }
                     }
 
-                } else if (msg.type === 'user:out' && msg.to != '*') {
+                } else if (msg.type === 'user:out' && msg.to['mb_id'] !== user_data.mb_id && msg.to != '*') {
                     $(`#s_${msg.to.mb_id}`).addClass('offline');
                     $(`#p_${msg.to.mb_id} p`).text('offline');
                     $(`#p_${msg.to.mb_id} div`).remove();
