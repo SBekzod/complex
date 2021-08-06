@@ -5,6 +5,7 @@
   "scripts": {
     "watch": "start nodemon server --ignore frontend-js --ignore public/ && start webpack --watch",
     "start": "nodemon server.js",
+    "dev" : "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
