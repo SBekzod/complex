@@ -1,0 +1,46 @@
+########################################
+#				       #
+#           DEV PRODUCTION             #
+#                                      # 
+########################################
+version: "3"
+services:
+  node:
+    container_name: complex
+    restart: always
+    # build: .
+    image: node:14.17.2
+    ports:
+      - "3003:3003"
+    volumes:
+      - "/home/martin/complex:/usr/src/applications"
+
+    working_dir: "/usr/src/applications"
+
+    expose:
+      - "3003"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # FOR DEVELOPMENT
+    command: bash -c "npm install && npm run build && npm run dev"
+  
+
+#   WHEN NODE-SASS/VENDOR FOLDER DOESN'T EXIST
+    #    command: bash -c "npm install && npm rebuild node-sass && npm run dev"
+    # FOR PRODUCTION
+#    command: bash -c "npm install --production && npm start"
+#    command: bash -c "npm install && node server.js && node schedule.js"
+    ## WITH THE BUILT SOURCE
+#    command: bash -c "npm start"
+# IMPORTANT FOR IWINV SERVER
+
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
