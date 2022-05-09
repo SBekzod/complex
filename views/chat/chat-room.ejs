@@ -124,10 +124,16 @@
         const user_data = {username: '<%= user.username %>', mb_id: '<%= user.authorId %>', avatar: '<%= user.avatar %>'};
         const room_id = '<%= channel_info['room_id'] %>';
 
-        const socket = io('http://31.220.109.104:4004', {
+        // const socket = io('http://localhost:5003', {
+        //     transports: ['websocket', 'xhr-polling'],
+        //     query: user_data,
+        // });
+
+        const socket = io('http://45.13.132.208:5003', {
             transports: ['websocket', 'xhr-polling'],
             query: user_data,
         });
+
         socket.on('connect', function () {
             console.log('connect: browser connection on process');
         });

@@ -8,9 +8,9 @@ class MySql {
 
     async connection() {
         this.con = await mysql.createConnection({
-            host: '31.220.109.104',
-            user: 'martindb',
-            password: 'Damir2014@',
+            host: '45.13.132.208',
+            user: 'root_dev',
+            password: 'Damir2014!',
             port: '3306',
             database: 'lchat_complex'
         })

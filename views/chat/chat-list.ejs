@@ -21,7 +21,8 @@
 
 <script type="text/javascript">
     const user_name = '<%= user.username %>';
-    const socket = io('http://31.220.109.104:4004', {transports: ['websocket', 'xhr-polling']});
+    // const socket = io('http://localhost:5003', {transports: ['websocket', 'xhr-polling']});
+    const socket = io('http://45.13.132.208:5003', {transports: ['websocket', 'xhr-polling']});
     console.log('this: ', socket);
 
     socket.on('connect', function () {

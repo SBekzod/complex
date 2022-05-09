@@ -101,7 +101,8 @@ class Chat {
     }
 
     openConnection() {
-        this.socket = io('http://31.220.109.104:3003', {transports: ['websocket', 'xhr-polling']});
+        // this.socket = io('http://localhost:5003', {transports: ['websocket', 'xhr-polling']});
+        this.socket = io('http://45.13.132.208:5003', {transports: ['websocket', 'xhr-polling']});
 
         console.log('Started');
         console.log('Socket: ', this.socket);
