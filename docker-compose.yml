@@ -9,11 +9,11 @@ services:
     container_name: complex
     restart: always
     # build: .
-    image: node:14.17.2
+    image: node:16.7.0
     ports:
       - "3003:3003"
     volumes:
-      - "/home/martin/complex:/usr/src/applications"
+      - "/home/martin/civitas/complex:/usr/src/applications"
 
     working_dir: "/usr/src/applications"
 
