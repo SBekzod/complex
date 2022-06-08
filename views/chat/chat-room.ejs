@@ -124,12 +124,12 @@
         const user_data = {username: '<%= user.username %>', mb_id: '<%= user.authorId %>', avatar: '<%= user.avatar %>'};
         const room_id = '<%= channel_info['room_id'] %>';
 
-        // const socket = io('http://localhost:5003', {
+        // const socket = io('http://localhost:5004', {
         //     transports: ['websocket', 'xhr-polling'],
         //     query: user_data,
         // });
 
-        const socket = io('http://45.13.132.208:5003', {
+        const socket = io('http://45.13.132.208:5004', {
             transports: ['websocket', 'xhr-polling'],
             query: user_data,
         });

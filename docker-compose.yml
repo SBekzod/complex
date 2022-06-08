@@ -11,14 +11,14 @@ services:
     # build: .
     image: node:16.7.0
     ports:
-      - "3003:3003"
+      - "3004:3004"
     volumes:
       - "/home/martin/civitas/complex:/usr/src/applications"
 
     working_dir: "/usr/src/applications"
 
     expose:
-      - "3003"
+      - "3004"
     logging:
       driver: "json-file"
       options:
